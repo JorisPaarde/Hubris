@@ -4,9 +4,23 @@
 
 {% block content %}
 
-<h1>Connected!</h1>
-<img src="{{ MEDIA_URL }}ORK_02_IDLE_000.png" alt="My image">
-<p class="text-danger">{% static 'css/base.css' %}</p>
+<div class="container-fluid menu-bg">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mt-1 text-center title">Hubris</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="d-grid gap-2 col-6 offset-3 col-lg-4 offset-lg-4">
+                <button class="button" type="button">login</button>
+                <button class="button" type="button">Register</button>
+                <button class="button" type="button">Full version</button>
+                <button class="button" type="button">Play</button>
+                <button class="button" type="button">How to play</button>
+                <button class="button" type="button">Leaderboard</button>
+        </div>
+    </div>
+</div>
 
 
 {% endblock %}

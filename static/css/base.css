@@ -1,9 +1,66 @@
-h1 {
-    color: red;
+/* colors */
+
+:root {
+    --ice: #0CF9F8;
+    --offwhite: #FFFBE7;
+    --drain: #2FE809;
+    --fire: #FF5C28;
+    --healing: #BED2F8;
+    --golem: #D08617;
+    --grey: #A0A0A0;
+    --lightning: #F91EED;
+  }
+  
+/* text */
+
+body, h1, h2, h3, h4, h5, p{
+    font-family: 'Stylish', sans-serif;
 }
-p {
-    font-size: x-large;
+
+.title{
+    color: var(--offwhite);
+    font-size: 14vw;
+    -webkit-text-stroke: 1.5px black;
+    text-shadow: 5px 5px 8px black;
 }
-html{
-    background-color: black;
+
+/* main menu */
+
+.menu-bg{
+    background-image: url('../../media/game_background_3840_2160.png');
+    height: 100vh;
+    width: 100vw;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* buttons */
+
+.button {
+    border-radius: 5px;
+    font-family: 'Stylish', sans-serif;
+    font-size: calc(12px + 1.5vw);
+    background-color: var(--offwhite);
+    border: black solid 0.8px;
+    margin: 10px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25),0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+}
+
+.button:active {
+    transform: translateY(4px);
+  }
+
+/* media queries */
+
+@media screen and (max-width: 1820px) {
+    .menu-bg{
+        background-image: url('../../media/game_background_1820_1024.png');
+    }
+}
+
+@media screen and (max-width: 834px) {
+    .menu-bg{
+        background-image: url('../../media/game_background_834_1194.png');
+    }
 }
