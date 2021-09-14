@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+{% load socialaccount %}
+{% load static %}
+
+<div class="container-fluid menu-bg">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mt-1 text-center title">Hubris</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-11 col-md-10 offset-md-1 col-lg-6 offset-lg-3 menu-banner">
+            <div class="signin text-center">
+                <a href="{% provider_login_url 'google' %}" class="text-dark"><img
+                        src="{{ MEDIA_URL }}btn_google_signin_light_normal_web@2x.png" style="width:14rem; height:auto"></a>
+            </div>
+            <div>
+                <span class="text-muted">
+                    OR
+                </span>
+            </div>
+            <form class="register-form" method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="button">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
