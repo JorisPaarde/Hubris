@@ -66,5 +66,5 @@ def login_request(request):
 
 def logout_request(request):
     logout(request)
-    messages.info(request, "You have successfully logged out.") 
+    messages.info(request, "You have successfully logged out.")
     return redirect("home:main_menu")
