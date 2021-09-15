@@ -8,7 +8,7 @@ from django.contrib import messages
 def main_menu(request):
     """view to return main menu page"""
 
-    return render(request, 'home/index.html')
+    return render(request, 'googlefc0344c68955a208.html')
 
 # https://www.ordinarycoders.com/blog/article/django-allauth
 
