@@ -73,6 +73,7 @@ a.button:hover{
 
 .register-form::marker{
     font-size: 2px;
+    color: blue;
 }
 
 /* media queries */
