@@ -8,9 +8,9 @@ from django.contrib.auth.models import User
 
 class NewUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
-    password1 = forms.CharField(label='Enter password', 
+    password1 = forms.CharField(label='Enter password',
                                 widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Confirm password', 
+    password2 = forms.CharField(label='Confirm password',
                                 widget=forms.PasswordInput)
 
     class Meta:
