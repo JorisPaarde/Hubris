@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
+from .forms import NewUserForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 # Create your views here.
@@ -15,7 +15,7 @@ def main_menu(request):
 
 def register(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = NewUserForm(request.POST)
         if form.is_valid():
             user = form.save()
             username = form.cleaned_data.get('username')
@@ -27,7 +27,12 @@ def register(request):
 
         return redirect("home:main_menu")
 
-    form = UserCreationForm()
-    return render(request, "register/register.html", {"form": form})
+    form = NewUserForm()
+
+    template = "register/register.html"
+
+    context = {"form": form}
+
+    return render(request, template, context)
 
 # https://www.ordinarycoders.com/blog/article/django-allauth
