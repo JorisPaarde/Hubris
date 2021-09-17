@@ -35,6 +35,14 @@ body, h1, h2, h3, h4, h5, p{
     background-size: cover;
 }
 
+.menu-bg-banner{
+    background-image: url('../../media/game_background_banner_3840_2160.png');
+    width: 100vw;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .menu-banner{
     border-radius: 5px;
     font-family: 'Stylish', sans-serif;
@@ -80,11 +88,15 @@ a.button:hover{
 @media screen and (max-width: 1820px) {
     .menu-bg{
         background-image: url('../../media/game_background_1820_1024.png');
+    } .menu-bg-banner{
+        background-image: url('../../media/game_background_banner_1820_1024.png');
     }
 }
 
 @media screen and (max-width: 834px) {
     .menu-bg{
         background-image: url('../../media/game_background_834_1194.png');
+    }.menu-bg-banner{
+        background-image: url('../../media/game_background_banner_834_1194.png');
     }
 }
