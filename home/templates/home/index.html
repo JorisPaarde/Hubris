@@ -2,9 +2,11 @@
 
 {% load static %}
 
+{% block body_background %}class="menu-bg"{% endblock %}
+
 {% block content %}
 
-<div class="container-fluid menu-bg">
+<div class="container-fluid">
     <div class="row">
         <div class="col-12">
             <h1 class="mt-1 text-center title">Hubris</h1>
@@ -20,7 +22,7 @@
                 <a class="button text-center" href="{% url 'home:register' %}"><h2 class="m-1">Register</h2></a>
             {% endif %}
             <a class="button text-center" href=""><h2 class="m-1">Full version</h2></a>
-            <a class="button text-center" href=""><h2 class="m-1">How to play</h2></a>
+            <a class="button text-center" href="{% url 'home:how-to-play' %}"><h2 class="m-1">How to play</h2></a>
             <a class="button text-center" href=""><h2 class="m-1">Leaderboard</h2></a>
         </div>
     </div>

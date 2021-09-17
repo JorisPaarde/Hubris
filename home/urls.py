@@ -9,6 +9,7 @@ urlpatterns = [
   path("register/", views.register_request, name="register"),
   path("login/", views.login_request, name="login"),
   path("logout/", views.logout_request, name="logout"),
+  path("how-to-play/", views.how_to_play, name="how-to-play"),
 ]
 
 if settings.DEBUG:

@@ -26,10 +26,11 @@
     {% endblock %}
     <title>Hubris</title>
 </head>
-
-<body>
+ 
+<body {% block body_background %}{% endblock %}>
+    {% block header %}
+    {% endblock %}
     {% block content %}
     {% endblock %}
 </body>
-
 </html>

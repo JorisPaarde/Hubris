@@ -11,10 +11,17 @@ def main_menu(request):
 
     return render(request, 'home/index.html')
 
+
+def how_to_play(request):
+    """view to return how to play page"""
+
+    return render(request, 'how-to-play/how-to-play.html')
+
 # https://www.ordinarycoders.com/blog/article/django-allauth
 
 
 def register_request(request):
+    """view to return register page"""
     if request.method == "POST":
         form = NewUserForm(request.POST)
         if form.is_valid():
@@ -40,6 +47,7 @@ def register_request(request):
 
 
 def login_request(request):
+    """view to return login page"""
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -65,6 +73,7 @@ def login_request(request):
 
 
 def logout_request(request):
+    """view to log out to main_page"""
     logout(request)
     messages.info(request, "You have successfully logged out.")
     return redirect("home:main_menu")

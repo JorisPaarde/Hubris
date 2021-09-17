@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
-{% block content %}
-
 {% load crispy_forms_tags %}
 {% load socialaccount %}
 {% load static %}
 
-<div class="container-fluid menu-bg">
+{% block header %}
+    {% include "../includes/header.html" %}
+{% endblock %}
+
+{% block body_background %}class="menu-bg"{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
     <div class="row">
-        <div class="col-12">
-            <h1 class="mt-1 text-center title">Hubris</h1>
-        </div>
-    </div>
-    <div class="row h-75 d-flex align-items-center">
         <div class="col-11 col-md-6 offset-md-3 col-lg-4 offset-lg-4 menu-banner">
             <div class="signin mt-2 text-center">
                 <a href="{% provider_login_url 'google' %}" class="text-dark"><img alt="google sign-in"
