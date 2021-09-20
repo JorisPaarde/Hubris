@@ -1,4 +1,7 @@
 /* colors */
+html{
+    height: 100%;
+}
 
 :root {
     --ice: #0CF9F8;
@@ -9,8 +12,42 @@
     --golem: #D08617;
     --grey: #A0A0A0;
     --lightning: #F91EED;
+    --mana: #FFE922;
+    --xp-color:#E8FEFF;
   }
-  
+
+.ice{
+    color: var(--ice);
+}
+
+.drain{
+    color: var(--drain);
+}
+
+.fire{
+    color: var(--fire);
+}
+
+.healing{
+    color: var(--healing);
+}
+
+.golem{
+    color: var(--golem);
+}
+
+.lightning{
+    color: var(--lightning);
+}
+
+.mana{
+    color: var(--mana);
+}
+
+.xp-color{
+    color: var(--xp-color);
+}
+
 /* text */
 
 body, h1, h2, h3, h4, h5, p{
@@ -33,6 +70,10 @@ body, h1, h2, h3, h4, h5, p{
     color: var(--offwhite);
     -webkit-text-stroke: 1px black;
     text-shadow: 5px 5px 8px black;
+}
+
+.stroke{
+    -webkit-text-stroke: 1px black;
 }
 
 /* main menu */

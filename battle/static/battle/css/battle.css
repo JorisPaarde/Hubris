@@ -7,13 +7,13 @@
 }
 
 .action-bar{
-    width: 90%;
-    height: max-content;
+    width: fit-content;
+    height: fit-content;
 }
 
 .stats-bar{
-    height: 79vh;
-    max-width: max-content;
+    height: fit-content;
+    width: fit-content;
 }
 
 .battle-bg{
@@ -25,14 +25,17 @@
     background-size: cover;
 }
 
-.battle-screen{
+.battle-screen, .card-screen{
     position:fixed;
-    z-index: 0;
     height: 100vh;
 }
 
 .floor{
     width: 98%;
+}
+
+.z0{
+    z-index: 0;
 }
 
 .z500{
@@ -41,6 +44,11 @@
 }
 
 .z1000{
+    position: fixed;
+    z-index: 1000;
+}
+
+.z2000{
     position: fixed;
     z-index: 1000;
 }
