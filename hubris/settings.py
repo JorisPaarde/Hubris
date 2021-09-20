@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home',
     'crispy_forms',
+    'battle',
 
     # https://www.ordinarycoders.com/blog/article/django-allauth
     'django.contrib.sites',
