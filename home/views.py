@@ -33,7 +33,7 @@ def register_request(request):
         else:
             messages.error(request, "Account creation failed")
 
-        return redirect("main_menu")
+        return redirect("home:main_menu")
 
     form = NewUserForm()
 
@@ -57,7 +57,7 @@ def login_request(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, f"You are now logged in as {username}.")
-                return redirect("main_menu")
+                return redirect("home:main_menu")
             else:
                 messages.error(request, "Invalid username or password.")
         else:
