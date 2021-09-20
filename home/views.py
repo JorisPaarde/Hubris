@@ -33,7 +33,7 @@ def register_request(request):
         else:
             messages.error(request, "Account creation failed")
 
-        return redirect("home:main_menu")
+        return redirect("main_menu")
 
     form = NewUserForm()
 
