@@ -8,6 +8,12 @@
 
 .action-bar{
     width: 90%;
+    height: max-content;
+}
+
+.stats-bar{
+    height: 79vh;
+    max-width: max-content;
 }
 
 .battle-bg{
@@ -19,8 +25,22 @@
     background-size: cover;
 }
 
+.battle-screen{
+    position:fixed;
+    z-index: 0;
+    height: 100vh;
+}
+
 .floor{
-    position: fixed;
-    z-index: -100;
     width: 98%;
+}
+
+.z500{
+    position: fixed;
+    z-index: 500;
+}
+
+.z1000{
+    position: fixed;
+    z-index: 1000;
 }

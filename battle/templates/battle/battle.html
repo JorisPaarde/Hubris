@@ -13,18 +13,19 @@
 
 {% block content %}
 <div class="container-fluid">
-    <div class="row m-2 floor">
+    <div class="row m-2 z1000 floor">
         <div class="col-12">
             <!-- title and menu button -->
             <div class="row">
-                <div class="col-10 title text-center">
-                    <h1 class="fs-2 mb-0">Floor 12</h1>
+                <div class="col-12 title text-center">
+                    <h1 class="fs-1 mb-0">Floor 12</h1>
+                    <h2 class="fs-3">Phase ..</h2>
                 </div>
                 <!-- main menu button -->
-                <div class="col-2">
+                <div class="col-2 offset-9 mt-1 z500">
                     <div class="d-grid">
                         <a class="button fs-6 text-center" href="{% url 'home:main_menu' %}">
-                            Menu
+                            Main menu
                         </a>
                     </div>
                 </div>
@@ -34,7 +35,7 @@
     </div>
     <div class="row">
         <!-- stats column left -->
-        <div class="col-1 stats-bar">
+        <div class="col-1 m-3 z500 stats-bar">
             <ul class="list-unstyled">
                 <li>icon</li>
                 <li>icon</li>
@@ -47,24 +48,27 @@
             </ul>
         </div>
         <!-- main battle screen -->
-        <div class="col-11">
+        <div class="col-12 battle-screen">
             battle
         </div>
-        <div class="row fixed-bottom d-flex justify-content-center">
-            <!-- action selection bar -->
-            <div class="col-12 ml-4 mb-2 action-bar">
-                <ul class="d-flex justify-content-between">
-                    <li class="d-inline">icon</li>
-                    <li class="d-inline">icon</li>
-                    <li class="d-inline">icon</li>
-                    <li class="d-inline">icon</li>
-                    <li class="d-inline">icon</li>
-                    <li class="d-inline">icon</li>
-                    <li class="d-inline">icon</li>
-                    <li class="d-inline">icon</li>
-                </ul>
+        <div class="col-12">
+            <div class="row z500 fixed-bottom d-flex justify-content-center">
+                <!-- action selection bar -->
+                <div class="col-12 ml-4 mb-2 action-bar">
+                    <ul class="d-flex justify-content-between">
+                        <li class="d-inline">icon</li>
+                        <li class="d-inline">icon</li>
+                        <li class="d-inline">icon</li>
+                        <li class="d-inline">icon</li>
+                        <li class="d-inline">icon</li>
+                        <li class="d-inline">icon</li>
+                        <li class="d-inline">icon</li>
+                        <li class="d-inline">icon</li>
+                    </ul>
+                </div>
             </div>
         </div>
+
     </div>
 </div>
 {% endblock %}
