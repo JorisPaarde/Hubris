@@ -31,9 +31,9 @@ def register_request(request):
             login(request, user,
                   backend='django.contrib.auth.backends.ModelBackend')
         else:
-            messages.error(request, "Account creation failed")
+            messages.error(request, "Account creation failed {error}")
 
-        return redirect("main_menu")
+        return redirect("home:main_menu")
 
     form = NewUserForm()
 
