@@ -1,22 +1,21 @@
-<header> 
-{% if request.path == '/how-to-play/' %}
-<div class="container-fluid menu-bg-banner">
-{% else %}
-<div class="container-fluid">
-{% endif %}
-        <div class="row d-flex align-items-center">
-            <div class="col-6 col-sm-6 col-md-8 col-xl-10">
-                <h1 class="title text-center">Hubris</h1>
-            </div>
-            <div class="col-6 col-sm-6 col-md-4 col-xl-2">
-                <div class="row">
-                    <div class="d-grid gap-2 col-12">
-                        <a class="button text-center" href="{% url 'home:main_menu' %}">
-                            <h2 class="m-1">Main menu</h2>
-                        </a>
+<header>
+    {% if request.path == '/how-to-play/' %}
+    <div class="container-fluid menu-bg-banner">
+        {% else %}
+        <div class="container-fluid">
+            {% endif %}
+            <div class="row d-flex align-items-center">
+                <div class="col-6 col-sm-8 col-md-9 col-xl-10">
+                    <h1 class="title text-center medium-large-text">Hubris</h1>
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                    <div class="row">
+                        <!-- main menu button -->
+                        <div class="d-grid gap-2 col-12">
+                            <a class="button text-center medium-text" href="{% url 'home:main_menu' %}">Main menu</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </header>
