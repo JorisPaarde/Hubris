@@ -12,17 +12,17 @@
 
 {% block content %}
   <div class="container-fluid">
-      <div class="row">
+      <div class="row d-flex align-items-center">
           <div class="col-11 col-md-6 offset-md-3 col-lg-4 offset-lg-4 menu-banner">
-            <form class="signup" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
+            <form class="signup text-center m-4" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
               <p>{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are about to use your {{provider_name}} account to login to
-                {{site_name}}. As a final step, please complete the following form:{% endblocktrans %}</p>
+                Hubris. As a final step, please complete the following form:{% endblocktrans %}</p>
               {% csrf_token %}
               {{ form.as_p }}
               {% if redirect_field_value %}
               <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
               {% endif %}
-              <button class="button" type="submit">{% trans "Sign Up" %} &raquo;</button>
+              <button class="button" type="submit">{% trans "Sign Up" %}</button>
             </form>
           </div>
       </div>
