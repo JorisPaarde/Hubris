@@ -23,7 +23,7 @@
 }
 
 .stats-bar li{
-    line-height: 1.2em;;
+    line-height: 1.1em;;
 }
 
 .fa-stack.stat-icon{
@@ -33,13 +33,13 @@
 }
 
 .stat-icon .stat-number{
-    font-size: 0.8em;
+    font-size: 0.9em;
 }
 
 .action-stats{
     top: 50%;
     left: 50%;
-    transform: translate(0, -400%);
+    transform: translate(0, -300%);
 }
 
 .stat-skip{
@@ -51,7 +51,8 @@
 .action-stats .stat-number{
     top: 50%;
     left: 50%;
-    transform: translate(-40%, -20%);
+    transform: translate(-100%, -10%);
+    font-size: calc(10px + 1vw);
 }
 
 .action-stats .fa-infinity{
