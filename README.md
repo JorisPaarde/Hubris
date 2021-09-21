@@ -118,3 +118,7 @@ artwork
 
 Google login resulted in : "Error 400: redirect_uri_mismatch"
 Menu button was not clickable in game screen. Fixed by making sure no div was blocking it with a higher z-index value.
+
+# technologies used:
+
+https://ezgif.com/maker

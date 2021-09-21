@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="col-12 title text-center">
                     <h1 class="medium-large-text mb-0">Floor 15</h1>
-                    <h2 class="fs-2">Phase 5</h2>
+                    <h2 class="fs-2">Phase 1</h2>
                 </div>
                 <!-- main menu button -->
                 <div class="col-2 offset-9 mt-1 mt-md-4 z500">
@@ -43,28 +43,28 @@
                 <li class="mt-lg-2 fire stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-heart"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">37</span>
+                        <span class="fa-stack-1x fa-inverse stat-number">10</span>
                     </span>
                 </li>
                 <!-- lightning defence -->
                 <li class="mt-lg-2 lightning stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-shield-alt"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">6</span>
+                        <span class="fa-stack-1x fa-inverse stat-number">2</span>
                     </span>
                 </li>
                 <!-- fire defence -->
                 <li class="mt-lg-2 fire stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-shield-alt"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">5</span>
+                        <span class="fa-stack-1x fa-inverse stat-number">0</span>
                     </span>
                 </li>
                 <!-- ice defence -->
                 <li class="mt-lg-2 ice stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-shield-alt"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">1</span>
+                        <span class="fa-stack-1x fa-inverse stat-number">0</span>
                     </span>
                 </li>
                 <!-- drain defence -->
@@ -78,28 +78,35 @@
                 <li class="mt-lg-2 golem stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-shield-alt"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">8</span>
+                        <span class="fa-stack-1x fa-inverse stat-number">0</span>
                     </span>
                 </li>
                 <!-- mana -->
                 <li class="mt-lg-2 mana stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-flask"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">12</span>
+                        <span class="fa-stack-1x fa-inverse stat-number">4</span>
                     </span>
                 </li>
                 <!-- experience -->
                 <li class="mt-lg-2 xp-color stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-lightbulb"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">99</span>
+                        <span class="fa-stack-1x fa-inverse stat-number">0</span>
                     </span>
                 </li>
             </ul>
         </div>
         <!-- main battle screen -->
         <div class="col-12 z0 battle-screen">
-            battle
+            <div class="row h-100">
+                <!-- player -->
+                <div class="col-4 h-75 d-flex justify-content-end align-items-end">
+                    <img src="{{MEDIA_URL}}/players/thunder/wizard-thunder-idle.gif" class="player-image" alt="player">
+                </div>
+                <!-- enemies -->
+                <div class="col-8"></div>
+            </div>
         </div>
         <!-- Card screen -->
         <div class="col-12 d-none z2000 card-screen">
@@ -125,7 +132,7 @@
                             <div class="row action-stats">
                                 <div class="col p-1 position-relative">
                                     <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_lightning.svg" alt="lightning attack"></span>
-                                    <span class="position-absolute fa-inverse stat-number stroke">4</span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">2</span>
                                 </div>
                                 <div class="col p-1 position-relative">
                                     <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
@@ -136,12 +143,12 @@
                         <!-- fire action icon -->
                         <div class="col px-2 m-lg-2">
                             <div class="row">
-                                <i class="fas m-2 action-icon fa-fire-alt fire stroke"></i>
+                                <i class="fas m-2 action-icon fa-fire-alt fire text-muted stroke"></i>
                             </div>
                             <div class="row action-stats">
                                 <div class="col p-1 position-relative">
                                     <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_fire.svg" alt="fire attack"></span>
-                                    <span class="position-absolute fa-inverse stat-number stroke">4</span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">0</span>
                                 </div>
                                 <div class="col p-1 position-relative">
                                     <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
@@ -152,13 +159,13 @@
                         <!-- ice action icon -->
                         <div class="col px-2 m-lg-2">
                             <div class="row">
-                                <i class="fas m-2 action-icon fa-snowflake ice stroke"></i>
+                                <i class="fas m-2 action-icon fa-snowflake text-muted ice stroke"></i>
                             </div>
                             <div class="row action-stats">
                                 <div class="col p-1 position-relative">
                                     <i class="position-absolute fas fa-infinity fa-inverse mt-2 fs-6 stroke"></i>
                                     <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_ice.svg" alt="ice attack"></span>
-                                    <span class="position-absolute fa-inverse stat-number stroke">4</span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">0</span>
                                 </div>
                                 <div class="col p-1 position-relative">
                                     <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
@@ -174,7 +181,7 @@
                             <div class="row action-stats">
                                 <div class="col p-1 position-relative">
                                     <span><i class="position-absolute fas fa-heart fire stroke fs-3"></i></span>
-                                    <span class="position-absolute fa-inverse stat-number stroke">4</span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">0</span>
                                 </div>
                                 <div class="col p-1 position-relative">
                                     <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
@@ -191,7 +198,7 @@
                                 <div class="col p-1 position-relative">
                                     <span><i class="position-absolute fas fa-heart fire stroke fs-3"></i></span>
                                     <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_drain.svg" alt="drain attack"></span>
-                                    <span class="position-absolute fa-inverse stat-number stroke">4</span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">0</span>
                                 </div>
                                 <div class="col p-1 position-relative">
                                     <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
@@ -202,12 +209,12 @@
                         <!-- golem action icon -->
                         <div class="col px-2 m-lg-2">
                             <div class="row">
-                                <i class="fas m-2 action-icon fa-robot golem stroke"></i>
+                                <i class="fas m-2 action-icon fa-robot golem text-muted stroke"></i>
                             </div>
                             <div class="row action-stats">
                                 <div class="col p-1 position-relative">
                                     <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_golem.svg" alt="golem attack"></span>
-                                    <span class="position-absolute fa-inverse stat-number stroke">4</span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">0</span>
                                 </div>
                                 <div class="col p-1 position-relative">
                                     <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
