@@ -1,7 +1,9 @@
-/* colors */
 html{
     height: 100%;
+    width: 100%;
 }
+
+/* colors */
 
 :root {
     --ice: #0CF9F8;
@@ -59,7 +61,7 @@ body, h1, h2, h3, h4, h5, p{
 }
 
 .medium-large-text{
-    font-size: calc(20px + 4vw);
+    font-size: calc(10px + 3vw);
 }
 
 .medium-text{

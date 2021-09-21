@@ -13,18 +13,19 @@
 
 {% block content %}
 <div class="container-fluid">
+    <!-- title and menu button -->
     <div class="row m-2 z1000 floor">
         <div class="col-12">
-            <!-- title and menu button -->
+            
             <div class="row">
                 <div class="col-12 title text-center">
-                    <h1 class="fs-1 mb-0">Floor 15</h1>
-                    <h2 class="fs-3">Phase 5</h2>
+                    <h1 class="medium-large-text mb-0">Floor 15</h1>
+                    <h2 class="fs-2">Phase 5</h2>
                 </div>
                 <!-- main menu button -->
-                <div class="col-2 offset-9 mt-1 z500">
+                <div class="col-2 offset-9 mt-1 mt-md-4 z500">
                     <div class="d-grid">
-                        <a class="button fs-6 text-center" href="{% url 'home:main_menu' %}">
+                        <a class="button medium-text text-center" href="{% url 'home:main_menu' %}">
                             Menu
                         </a>
                     </div>
@@ -33,46 +34,202 @@
 
         </div>
     </div>
+    <!-- main game screen -->
     <div class="row g-2">
         <!-- stats column left -->
-        <div class="col-1 m-3 z500 stats-bar">
-            <ul class="list-unstyled mt-2 mb-2 text-center">
-                <!-- stats icons -->
-                <li class="m-1 fire stroke"><i class="fas fs-3 fa-heart"></i></li>
-                <li class="m-1 lightning stroke"><i class="fas fs-3 fa-shield-alt"></i></li>
-                <li class="m-1 fire stroke"><i class="fas fs-3 fa-shield-alt"></i></li>
-                <li class="m-1 ice stroke"><i class="fas fs-3 fa-shield-alt"></i></li>
-                <li class="m-1 drain stroke"><i class="fas fs-3 fa-shield-alt"></i></li>
-                <li class="m-1 golem stroke"><i class="fas fs-3 fa-shield-alt"></i></li>
-                <li class="m-1 mana stroke"><i class="fas fs-3 fa-flask"></i></li>
-                <li class="m-1 xp-color stroke"><i class="fas fs-3 fa-lightbulb"></i></li>
+        <div class="col-1 mt-2 m-lg-4 z500 stats-bar">
+            <!-- stats icons -->
+            <ul class="list-unstyled mt-2 mb-2 medium-large-text stroke text-center">
+                <!-- health icon -->
+                <li class="mt-lg-2 fire stroke">
+                    <span class="fa-stack stat-icon fa-fw">
+                        <i class="fas fa-stack-1x fa-heart"></i>
+                        <span class="fa-stack-1x fa-inverse stat-number">37</span>
+                    </span>
+                </li>
+                <!-- lightning defence -->
+                <li class="mt-lg-2 lightning stroke">
+                    <span class="fa-stack stat-icon fa-fw">
+                        <i class="fas fa-stack-1x fa-shield-alt"></i>
+                        <span class="fa-stack-1x fa-inverse stat-number">6</span>
+                    </span>
+                </li>
+                <!-- fire defence -->
+                <li class="mt-lg-2 fire stroke">
+                    <span class="fa-stack stat-icon fa-fw">
+                        <i class="fas fa-stack-1x fa-shield-alt"></i>
+                        <span class="fa-stack-1x fa-inverse stat-number">5</span>
+                    </span>
+                </li>
+                <!-- ice defence -->
+                <li class="mt-lg-2 ice stroke">
+                    <span class="fa-stack stat-icon fa-fw">
+                        <i class="fas fa-stack-1x fa-shield-alt"></i>
+                        <span class="fa-stack-1x fa-inverse stat-number">1</span>
+                    </span>
+                </li>
+                <!-- drain defence -->
+                <li class="mt-lg-2 drain stroke">
+                    <span class="fa-stack stat-icon fa-fw">
+                        <i class="fas fa-stack-1x fa-shield-alt"></i>
+                        <span class="fa-stack-1x fa-inverse stat-number">0</span>
+                    </span>
+                </li>
+                <!-- golem defence -->
+                <li class="mt-lg-2 golem stroke">
+                    <span class="fa-stack stat-icon fa-fw">
+                        <i class="fas fa-stack-1x fa-shield-alt"></i>
+                        <span class="fa-stack-1x fa-inverse stat-number">8</span>
+                    </span>
+                </li>
+                <!-- mana -->
+                <li class="mt-lg-2 mana stroke">
+                    <span class="fa-stack stat-icon fa-fw">
+                        <i class="fas fa-stack-1x fa-flask"></i>
+                        <span class="fa-stack-1x fa-inverse stat-number">12</span>
+                    </span>
+                </li>
+                <!-- experience -->
+                <li class="mt-lg-2 xp-color stroke">
+                    <span class="fa-stack stat-icon fa-fw">
+                        <i class="fas fa-stack-1x fa-lightbulb"></i>
+                        <span class="fa-stack-1x fa-inverse stat-number">123</span>
+                    </span>
+                </li>
             </ul>
         </div>
         <!-- main battle screen -->
         <div class="col-12 z0 battle-screen">
             battle
         </div>
-         <!-- Card screen -->
-         <div class="col-12 z2000 card-screen">
+        <!-- Card screen -->
+        <div class="col-12 z2000 card-screen">
             cards
         </div>
+        <!-- action selection bar -->
         <div class="col-12">
-            <div class="row z500 fixed-bottom d-flex justify-content-center">
-                <!-- action selection bar -->
+            <div class="row z500 d-flex fixed-bottom justify-content-center"> 
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-12 title text-center">
+                            <h3 class="fs-5">action selection</h3>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-12 ml-4 mb-2 action-bar">
-                    <ul class="d-flex justify-content-between">
-                        <li class="m-1 d-inline">icon</li>
-                        <li class="m-1 d-inline">icon</li>
-                        <li class="m-1 d-inline">icon</li>
-                        <li class="m-1 d-inline">icon</li>
-                        <li class="m-1 d-inline">icon</li>
-                        <li class="m-1 d-inline">icon</li>
-                        <li class="m-1 d-inline">icon</li>
-                    </ul>
+                    <div class="row d-flex justify-content-between">
+                        <!-- lightning action icon -->
+                        <div class="col px-2 mx-lg-2">
+                            <div class="row">
+                                <i class="fas m-2 action-icon fa-bolt lightning stroke"></i>
+                            </div>
+                            <div class="row action-stats">
+                                <div class="col p-1 position-relative">
+                                    <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_icon_138128.svg" alt="sword"></span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">4</span>
+                                </div>
+                                <div class="col p-1 position-relative">
+                                    <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
+                                    <span class="position-absolute fa-inverse stat-number stroke">2</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- fire action icon -->
+                        <div class="col px-2 mx-lg-2">
+                            <div class="row">
+                                <i class="fas m-2 action-icon fa-fire-alt fire stroke"></i>
+                            </div>
+                            <div class="row action-stats">
+                                <div class="col p-1 position-relative">
+                                    <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_icon_138128.svg" alt="sword"></span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">4</span>
+                                </div>
+                                <div class="col p-1 position-relative">
+                                    <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
+                                    <span class="position-absolute fa-inverse stat-number stroke">4</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ice action icon -->
+                        <div class="col px-2 mx-lg-2">
+                            <div class="row">
+                                <i class="fas m-2 action-icon fa-snowflake ice stroke"></i>
+                            </div>
+                            <div class="row action-stats">
+                                <div class="col p-1 position-relative">
+                                    <i class="position-absolute fas fa-infinity fa-inverse mt-2 fs-6 stroke"></i>
+                                    <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_icon_138128.svg" alt="sword"></span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">4</span>
+                                </div>
+                                <div class="col p-1 position-relative">
+                                    <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
+                                    <span class="position-absolute fa-inverse stat-number stroke">2</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- heal action icon -->
+                        <div class="col px-2 mx-lg-2">
+                            <div class="row">
+                                <i class="fas m-2 action-icon fa-heart healing stroke"></i>
+                            </div>
+                            <div class="row action-stats">
+                                <div class="col p-1 position-relative">
+                                    <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_icon_138128.svg" alt="sword"></span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">4</span>
+                                </div>
+                                <div class="col p-1 position-relative">
+                                    <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
+                                    <span class="position-absolute fa-inverse stat-number stroke">2</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- drain action icon -->
+                        <div class="col px-2 mx-lg-2">
+                            <div class="row">
+                                <i class="fas m-2 p-0 action-icon fa-skull drain stroke"></i>
+                            </div>
+                            <div class="row action-stats">
+                                <div class="col p-1 position-relative">
+                                    <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_icon_138128.svg" alt="sword"></span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">4</span>
+                                </div>
+                                <div class="col p-1 position-relative">
+                                    <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
+                                    <span class="position-absolute fa-inverse stat-number stroke">1</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- golem action icon -->
+                        <div class="col px-2 mx-lg-2">
+                            <div class="row">
+                                <i class="fas m-2 p-0 action-icon fa-robot golem stroke"></i>
+                            </div>
+                            <div class="row action-stats">
+                                <div class="col p-1 position-relative">
+                                    <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_icon_138128.svg" alt="sword"></span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">4</span>
+                                </div>
+                                <div class="col p-1 position-relative">
+                                    <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
+                                    <span class="position-absolute fa-inverse stat-number stroke">2</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- skip action -->
+                        <div class="col p-0 mx-lg-2">
+                            <div class="row">
+                                <i class="fas m-2 action-icon fa-forward lightning text-primary stroke"></i>
+                            </div>
+                            <div class="row action-stats">
+                                <div class="col p1 position-relative">
+                                    <span class="position-absolute medium-text fa-inverse stat-skip stroke">Skip</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 {% endblock %}
