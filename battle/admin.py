@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Card, Enemy
+from .models import Card, Enemy, Player_type
 # Register your models here.
 
 
@@ -9,5 +9,10 @@ class CardAdmin(admin.ModelAdmin):
 
 
 @admin.register(Enemy)
-class EnemyAdmin(admin.ModelAdmin):
+class EnemiesAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Player_type)
+class PlayerTypeAdmin(admin.ModelAdmin):
     pass

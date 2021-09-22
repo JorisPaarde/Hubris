@@ -25,14 +25,17 @@ class Enemy(models.Model):
 
     in_fullversion = models.BooleanField(default=True)
     name = models.CharField(max_length=254)
-    image_idle = models.ImageField
-    image_attack = models.ImageField
-    image_die = models.ImageField
-    max_health = models.IntegerField
-    attack_power = models.IntegerField
+    image_idle = models.ImageField(null=True, blank=True)
+    image_idle_url = models.URLField(null=True, blank=True)
+    image_attack = models.ImageField(null=True, blank=True)
+    image_attack_url = models.URLField(null=True, blank=True)
+    image_die = models.ImageField(null=True, blank=True)
+    image_die_url = models.URLField(null=True, blank=True)
+    max_health = models.IntegerField(default=0)
+    attack_power = models.IntegerField(default=0)
     skill_style = models.CharField(max_length=2, choices=SKILL_STYLES)
     attack_phase = models.CharField(max_length=1, choices=ATTACK_PHASES)
-    xp_value = models.IntegerField
+    xp_value = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
@@ -47,9 +50,12 @@ class Player_type(models.Model):
     )
 
     selected = models.CharField(max_length=2, choices=PLAYER_STYLES)
-    image_idle = models.ImageField
-    image_attack = models.ImageField
-    image_die = models.ImageField
+    image_idle = models.ImageField(null=True, blank=True)
+    image_idle_url = models.URLField(null=True, blank=True)
+    image_attack = models.ImageField(null=True, blank=True)
+    image_attack_url = models.URLField(null=True, blank=True)
+    image_die = models.ImageField(null=True, blank=True)
+    image_die_url = models.URLField(null=True, blank=True)
 
     def __str__(self):
         return self.selected
@@ -97,14 +103,15 @@ class Card(models.Model):
     )
 
     in_fullversion = models.BooleanField(default=True)
-    title = models.CharField
-    description = models.TextField
-    image = models.ImageField
-    effect_text = models.CharField
+    title = models.CharField(max_length=254, null=True, blank=True)
+    description = models.TextField(max_length=1024, null=True, blank=True)
+    image = models.ImageField(null=True, blank=True)
+    image_url = models.URLField(null=True, blank=True)
+    effect_text = models.CharField(max_length=254, null=True, blank=True)
     allowed_in_phase = models.CharField(max_length=4, choices=ALLOWED_PHASES)
     attack_all = models.BooleanField(default=False)
     skill_style = models.CharField(max_length=2, choices=SKILL_STYLES)
-    mana_cost = models.IntegerField
+    mana_cost = models.IntegerField(default=2)
     cards_discard_cost = models.IntegerField(default=0)
 
     def __str__(self):
@@ -113,7 +120,7 @@ class Card(models.Model):
 
 class Hand_card(models.Model):
 
-    date_time_created = models.DateTimeField
+    date_time_created = models.DateTimeField(auto_now=True)
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -122,7 +129,7 @@ class Hand_card(models.Model):
 
 class Player(models.Model):
 
-    date_time_created = models.DateTimeField
+    date_time_created = models.DateTimeField(auto_now=True)
     type = models.ForeignKey(Player_type, on_delete=models.CASCADE)
     stats = models.ForeignKey(Player_stat, on_delete=models.CASCADE)
     hand = models.ForeignKey(Hand_card, on_delete=models.CASCADE)
@@ -141,7 +148,7 @@ class Game(models.Model):
         ('5', 'Step 5'),
     )
 
-    date_time_created = models.DateTimeField
+    date_time_created = models.DateTimeField(auto_now=True)
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     completed = models.BooleanField(default=False)
     score = models.BigIntegerField(default=0)
@@ -153,7 +160,7 @@ class Game(models.Model):
 
 class Current_game_floor(models.Model):
 
-    date_time_created = models.DateTimeField
+    date_time_created = models.DateTimeField(auto_now=True)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     current_phase = models.CharField(max_length=1, choices=ATTACK_PHASES)
 
@@ -163,7 +170,7 @@ class Current_game_floor(models.Model):
 
 class Game_floor_enemy(models.Model):
 
-    health_current = models.IntegerField
+    health_current = models.IntegerField(null=True, blank=True)
     enemy = models.ForeignKey(Enemy, on_delete=models.CASCADE)
     game_floor = models.ForeignKey(Current_game_floor,
                                    on_delete=models.CASCADE)
