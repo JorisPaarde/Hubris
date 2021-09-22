@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -61,35 +62,6 @@ class Player_type(models.Model):
         return self.selected
 
 
-class Player_stat(models.Model):
-
-    fire_defense = models.IntegerField(default=0)
-    ice_defense = models.IntegerField(default=0)
-    drain_defense = models.IntegerField(default=0)
-    thunder_defense = models.IntegerField(default=0)
-    physical_defense = models.IntegerField(default=0)
-    fire_attack_power = models.IntegerField(default=0)
-    fire_attack_cost = models.IntegerField(default=0)
-    ice_attack_power = models.IntegerField(default=0)
-    ice_attack_cost = models.IntegerField(default=0)
-    drain_attack_power = models.IntegerField(default=0)
-    drain_attack_cost = models.IntegerField(default=0)
-    thunder_attack_power = models.IntegerField(default=0)
-    thunder_attack_cost = models.IntegerField(default=0)
-    golem_attack_power = models.IntegerField(default=0)
-    golem_attack_cost = models.IntegerField(default=0)
-    healing_power = models.IntegerField(default=0)
-    healing_attack_cost = models.IntegerField(default=0)
-    mana_current = models.IntegerField(default=0)
-    mana_max = models.IntegerField(default=0)
-    xp = models.IntegerField(default=0)
-    health_current = models.IntegerField(default=0)
-    health_max = models.IntegerField(default=0)
-
-    def __str__(self):
-        return self
-
-
 class Card(models.Model):
 
     ALLOWED_PHASES = (
@@ -124,18 +96,39 @@ class Hand_card(models.Model):
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self
+        return str(self.id)
 
 
 class Player(models.Model):
 
     date_time_created = models.DateTimeField(auto_now=True)
     type = models.ForeignKey(Player_type, on_delete=models.CASCADE)
-    stats = models.ForeignKey(Player_stat, on_delete=models.CASCADE)
-    hand = models.ForeignKey(Hand_card, on_delete=models.CASCADE)
+    fire_defense = models.IntegerField(default=0)
+    ice_defense = models.IntegerField(default=0)
+    drain_defense = models.IntegerField(default=0)
+    thunder_defense = models.IntegerField(default=0)
+    physical_defense = models.IntegerField(default=0)
+    fire_attack_power = models.IntegerField(default=0)
+    fire_attack_cost = models.IntegerField(default=0)
+    ice_attack_power = models.IntegerField(default=0)
+    ice_attack_cost = models.IntegerField(default=0)
+    drain_attack_power = models.IntegerField(default=0)
+    drain_attack_cost = models.IntegerField(default=0)
+    thunder_attack_power = models.IntegerField(default=0)
+    thunder_attack_cost = models.IntegerField(default=0)
+    golem_attack_power = models.IntegerField(default=0)
+    golem_attack_cost = models.IntegerField(default=0)
+    healing_power = models.IntegerField(default=0)
+    healing_attack_cost = models.IntegerField(default=0)
+    mana_current = models.IntegerField(default=0)
+    mana_max = models.IntegerField(default=0)
+    xp = models.IntegerField(default=0)
+    health_current = models.IntegerField(default=0)
+    health_max = models.IntegerField(default=0)
+    hand = models.ManyToManyField(Hand_card)
 
     def __str__(self):
-        return self
+        return str(self.id)
 
 
 class Game(models.Model):
@@ -155,7 +148,7 @@ class Game(models.Model):
     game_step = models.CharField(max_length=1, choices=GAME_STEPS)
 
     def __str__(self):
-        return self
+        return str(self.id)
 
 
 class Current_game_floor(models.Model):
@@ -165,7 +158,7 @@ class Current_game_floor(models.Model):
     current_phase = models.CharField(max_length=1, choices=ATTACK_PHASES)
 
     def __str__(self):
-        return self
+        return str(self.id)
 
 
 class Game_floor_enemy(models.Model):
@@ -176,4 +169,4 @@ class Game_floor_enemy(models.Model):
                                    on_delete=models.CASCADE)
 
     def __str__(self):
-        return self
+        return str(self.id)

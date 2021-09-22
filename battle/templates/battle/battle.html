@@ -102,10 +102,12 @@
             <div class="row h-100">
                 <!-- player -->
                 <div class="col-4 h-75 d-flex justify-content-end align-items-end">
-                    <img src="{{MEDIA_URL}}1_IDLE_000_srvZHuL.png" class="player-image" alt="player">
+                    {% for player_type in player_type %}
+                    <img src="{{MEDIA_URL}}{{ player_type.image_idle.name }}" class="player-image" alt="player">
+                    {% endfor %}
                 </div>
                 <!-- enemies -->
-                <div class="col-8"><h1>{{ player_type }} hoi {{ player_image }}</h1></div>
+                <div class="col-8"></div>
             </div>
         </div>
         <!-- Card screen -->

@@ -1,18 +1,13 @@
 from django.contrib import admin
-from .models import Card, Enemy, Player_type
+from .models import *
 # Register your models here.
 
 
-@admin.register(Card)
-class CardAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Enemy)
-class EnemiesAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Player_type)
-class PlayerTypeAdmin(admin.ModelAdmin):
-    pass
+admin.site.register(Card)
+admin.site.register(Enemy)
+admin.site.register(Player_type)
+admin.site.register(Hand_card)
+admin.site.register(Player)
+admin.site.register(Game)
+admin.site.register(Current_game_floor)
+admin.site.register(Game_floor_enemy)
