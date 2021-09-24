@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'home',
     'crispy_forms',
     'battle',
+    'profiles',
 
     # https://www.ordinarycoders.com/blog/article/django-allauth
     'django.contrib.sites',
@@ -172,3 +173,45 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# choices used in various models
+ATTACK_PHASES = (
+    ('1', 'I'),
+    ('2', 'II'),
+    ('3', 'III'),
+    ('4', 'IV'),
+    ('5', 'V'),
+)
+
+SKILL_STYLES = (
+    ('LN', 'Lightning'),
+    ('FR', 'Fire'),
+    ('GL', 'Golem'),
+    ('DR', 'Drain'),
+    ('IC', 'Ice'),
+)
+
+PLAYER_STYLES = (
+    ('LN', 'Lightning'),
+    ('FR', 'Fire'),
+    ('IC', 'Ice'),
+)
+
+ALLOWED_PHASES = (
+    ('1', 'I'),
+    ('2', 'II'),
+    ('3', 'III'),
+    ('4', 'IV'),
+    ('5', 'V'),
+    ('ALL', 'I-V'),
+    ('NONE', ''),
+)
+
+GAME_STEPS = (
+    ('1', 'Step 1'),
+    ('2', 'Step 2'),
+    ('3', 'Step 3'),
+    ('4', 'Step 4'),
+    ('5', 'Step 5'),
+)
