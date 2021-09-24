@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+
+
+{% load crispy_forms_tags %}
+{% load socialaccount %}
+
+{% block header %}
+{% include "../includes/header.html" %}
+{% endblock %}
+
+{% block body_background %}class="menu-bg"{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row menu d-flex align-items-center">
+        <div class="col-10 offset-1 col-md-6 offset-md-3 col-lg-4 offset-lg-4 menu-banner">
+            <h1>Select your character</h1>
+        </div>
+    </div>
+</div>
+{% endblock %}

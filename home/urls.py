@@ -5,7 +5,7 @@ from django.conf import settings
 app_name = "home"
 
 urlpatterns = [
-  path("", views.main_menu, name="main_menu"),
+  path("", views.main_menu, name="main-menu"),
   path("register/", views.register_request, name="register"),
   path("login/", views.login_request, name="login"),
   path("logout/", views.logout_request, name="logout"),
