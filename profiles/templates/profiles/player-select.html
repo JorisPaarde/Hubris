@@ -10,16 +10,20 @@
 <link rel="stylesheet" href="{% static 'profiles/css/profiles.css' %}">
 {% endblock %}
 
-profiles/static/profiles/css/profiles.css
-<!-- images -->
+
 {% block body_background %}class="menu-bg"{% endblock %}
 
 {% block content %}
 <div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h1 class="text-center title mb-1 medium-large-text">select your hero</h1>
+        </div>
+    </div>
     <div class="row menu d-flex justify-content-around align-items-center">
 
         <!-- fire wizard -->
-        <div class="col-3 h-100 menu-banner">
+        <div class="col-3 wizard-card h-100 menu-banner">
             <!-- title -->
             <div class="row">
                 <h2 class="text-center mb-0 medium-small-text">fire wizard</h2>
@@ -82,7 +86,7 @@ profiles/static/profiles/css/profiles.css
             </div>
         </div>
         <!-- ice wizard -->
-        <div class="col-3 h-100 menu-banner">
+        <div class="col-3 wizard-card h-100 menu-banner">
             <!-- title -->
             <div class="row">
                 <h2 class="text-center mb-0 medium-small-text">Ice wizard</h2>
@@ -145,7 +149,7 @@ profiles/static/profiles/css/profiles.css
             </div>
         </div>
         <!-- thunder wizard -->
-        <div class="col-3 h-100 menu-banner">
+        <div class="col-3 h-100 wizard-card menu-banner">
             <div class="row">
                 <!-- title -->
                 <h2 class="text-center mb-0 medium-small-text">Thunder wizard</h2>
