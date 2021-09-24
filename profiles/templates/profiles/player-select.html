@@ -1,21 +1,212 @@
 {% extends "base.html" %}
 
-
-
-{% load crispy_forms_tags %}
-{% load socialaccount %}
-
+{% load static %}
+<!-- block header %} -->
 {% block header %}
 {% include "../includes/header.html" %}
 {% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'profiles/css/profiles.css' %}">
+{% endblock %}
+
+profiles/static/profiles/css/profiles.css
+<!-- images -->
 {% block body_background %}class="menu-bg"{% endblock %}
 
 {% block content %}
 <div class="container-fluid">
-    <div class="row menu d-flex align-items-center">
-        <div class="col-10 offset-1 col-md-6 offset-md-3 col-lg-4 offset-lg-4 menu-banner">
-            <h1>Select your character</h1>
+    <div class="row menu d-flex justify-content-around align-items-center">
+
+        <!-- fire wizard -->
+        <div class="col-3 h-100 menu-banner">
+            <!-- title -->
+            <div class="row">
+                <h2 class="text-center mb-0 medium-small-text">fire wizard</h2>
+            </div>
+            <!-- images -->
+            <div class="row p-0 h-50">
+                <div class="col-2 p-0">
+                    <ul class="list-unstyled mt-3 mb-2 medium-small-text stroke">
+                        <!-- fire defence -->
+                        <li class="mt-lg-2 fire stroke">
+                            <span class="fa-stack stat-icon fa-fw">
+                                <i class="fas fa-stack-1x fa-shield-alt"></i>
+                                <span class="fa-stack-1x fa-inverse stat-number">3</span>
+                            </span>
+                        </li>
+                        <!-- health icon -->
+                        <li class="mt-lg-2 fire stroke">
+                            <span class="fa-stack stat-icon fa-fw">
+                                <i class="fas fa-stack-1x fa-heart"></i>
+                                <span class="fa-stack-1x fa-inverse stat-number">10</span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-8 d-flex align-items-center">
+                    {% for player_type in player_type %}
+                    {% if player_type.selected == 'FR' %}
+                    <img src="{{ MEDIA_URL }}{{player_type.image_idle}}" width="100%" alt="fire wizard">
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="col-2 p-0">
+                    <ul class="list-unstyled mt-3 mb-2 medium-small-text stroke select-player-icons-right">
+                        <!-- fire attack -->
+                        <li class="mt-lg-2 fire stroke">
+                            <span class="fa-stack stat-icon fa-fw">
+                                <i class="fas fa-stack-1x fa-fire-alt"></i>
+                            </span>
+                        </li>
+                        <!-- mana icon -->
+                        <li class="mt-lg-2 mana stroke">
+                            <span class="fa-stack stat-icon fa-fw">
+                                <i class="fas fa-stack-1x fa-flask"></i>
+                                <span class="fa-stack-1x fa-inverse stat-number">4</span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- description -->
+            <div class="row h-25">
+                <p class="text-center small-text">The fire wizard starts with 3 fire defence and the dragonsbreath
+                    spell.</p>
+            </div>
+            <!-- select button -->
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button type="submit" class="button medium-text m-2 m-lg-4">Select</button>
+                </div>
+            </div>
+        </div>
+        <!-- ice wizard -->
+        <div class="col-3 h-100 menu-banner">
+            <!-- title -->
+            <div class="row">
+                <h2 class="text-center mb-0 medium-small-text">Ice wizard</h2>
+            </div>
+            <!-- images -->
+            <div class="row h-50">
+                <div class="col-2 p-0">
+                    <ul class="list-unstyled mt-3 mb-2 medium-small-text stroke">
+                        <!-- fire defence -->
+                        <li class="mt-lg-2 fire stroke">
+                            <span class="fa-stack stat-icon fa-fw">
+                                <i class="fas fa-stack-1x fa-shield-alt"></i>
+                                <span class="fa-stack-1x fa-inverse stat-number">3</span>
+                            </span>
+                        </li>
+                        <!-- health icon -->
+                        <li class="mt-lg-2 fire stroke">
+                            <span class="fa-stack stat-icon fa-fw">
+                                <i class="fas fa-stack-1x fa-heart"></i>
+                                <span class="fa-stack-1x fa-inverse stat-number">10</span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-8 d-flex align-items-center">
+                    {% for player_type in player_type %}
+                    {% if player_type.selected == 'IC' %}
+                    <img src="{{ MEDIA_URL }}{{player_type.image_idle}}" width="100%" alt="ice wizard">
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="col-2 p-0">
+                    <ul class="list-unstyled mt-3 mb-2 medium-small-text stroke select-player-icons-right">
+                        <!-- fire defence -->
+                        <li class="mt-lg-2 ice stroke">
+                            <span class="fa-stack stat-icon fa-fw">
+                                <i class="fas fa-stack-1x fa-snowflake"></i>
+                            </span>
+                        </li>
+                         <!-- mana icon -->
+                         <li class="mt-lg-2 mana stroke">
+                            <span class="fa-stack stat-icon fa-fw">
+                                <i class="fas fa-stack-1x fa-flask"></i>
+                                <span class="fa-stack-1x fa-inverse stat-number">4</span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- description -->
+            <div class="row h-25">
+                <p class="text-center small-text">The Ice wizard starts with 4 frost defence and the frost storm spell.
+                </p>
+            </div>
+            <!-- select button -->
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button type="submit" class="button medium-text m-2 m-lg-4">Select</button>
+                </div>
+            </div>
+        </div>
+        <!-- thunder wizard -->
+        <div class="col-3 h-100 menu-banner">
+            <div class="row">
+                <!-- title -->
+                <h2 class="text-center mb-0 medium-small-text">Thunder wizard</h2>
+            </div>
+            <!-- images -->
+            <div class="row h-50">
+                <div class="col-2 p-0">
+                    <ul class="list-unstyled mt-3 mb-2 medium-small-text stroke">
+                        <!-- lightning defence -->
+                        <li class="mt-lg-2 lightning stroke">
+                            <span class="fa-stack stat-icon fa-fw">
+                                <i class="fas fa-stack-1x fa-shield-alt"></i>
+                                <span class="fa-stack-1x fa-inverse stat-number">3</span>
+                            </span>
+                        </li>
+                        <!-- health icon -->
+                        <li class="mt-lg-2 fire stroke">
+                            <span class="fa-stack stat-icon fa-fw">
+                                <i class="fas fa-stack-1x fa-heart"></i>
+                                <span class="fa-stack-1x fa-inverse stat-number">10</span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-8 d-flex align-items-center">
+                    {% for player_type in player_type %}
+                    {% if player_type.selected == 'LN' %}
+                    <img src="{{ MEDIA_URL }}{{player_type.image_idle}}" width="100%" alt="thunder wizard">
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="col-2 p-0">
+                    <ul class="list-unstyled mt-3 mb-2 medium-small-text stroke select-player-icons-right">
+                        <!-- lightning attack -->
+                        <li class="mt-lg-2 lightning stroke">
+                            <span class="fa-stack stat-icon fa-fw">
+                                <i class="fas fa-stack-1x fa-bolt"></i>
+                            </span>
+                        </li>
+                         <!-- mana icon -->
+                         <li class="mt-lg-2 mana stroke">
+                            <span class="fa-stack stat-icon fa-fw">
+                                <i class="fas fa-stack-1x fa-flask"></i>
+                                <span class="fa-stack-1x fa-inverse stat-number">4</span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- description -->
+            <div class="row h-25">
+                <p class="text-center small-text">The thunder wizard starts with 2 lightning defence and the
+                    thunderstorm spell.
+                </p>
+            </div>
+            <!-- select button -->
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button type="submit" class="button medium-text m-2 m-lg-4">Select</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

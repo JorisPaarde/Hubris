@@ -73,7 +73,7 @@ def login_request(request):
 
 
 def logout_request(request):
-    """view to log out to main_page"""
+    """view to log out to main page"""
     logout(request)
     messages.info(request, "You have successfully logged out.")
     return redirect("home:main-menu")
