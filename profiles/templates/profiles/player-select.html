@@ -18,10 +18,12 @@
     <div class="row">
         <div class="col">
             <h1 class="text-center title mb-1 medium-large-text">select your hero</h1>
+            {% if selected %}
+            <h2>selected: {{ selected }}</h2>
+            {% endif %}
         </div>
     </div>
     <div class="row menu d-flex justify-content-around align-items-center">
-
         <!-- fire wizard -->
         <div class="col-3 wizard-card h-100 menu-banner">
             <!-- title -->
@@ -81,8 +83,12 @@
             <!-- select button -->
             <div class="row">
                 <div class="col-12 text-center">
+                    <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" value="fire" name="fire"/>
                     <button type="submit" class="button medium-text m-2 m-lg-4">Select</button>
-                </div>
+                </form>
+                </div>  
             </div>
         </div>
         <!-- ice wizard -->
@@ -144,7 +150,11 @@
             <!-- select button -->
             <div class="row">
                 <div class="col-12 text-center">
+                     <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" value="ice" name="ice"/>
                     <button type="submit" class="button medium-text m-2 m-lg-4">Select</button>
+                </form>
                 </div>
             </div>
         </div>
@@ -208,7 +218,11 @@
             <!-- select button -->
             <div class="row">
                 <div class="col-12 text-center">
-                    <button type="submit" class="button medium-text m-2 m-lg-4">Select</button>
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" value="thunder" name="thunder"/>
+                        <button type="submit" class="button medium-text m-2 m-lg-4">Select</button>
+                    </form>
                 </div>
             </div>
         </div>
