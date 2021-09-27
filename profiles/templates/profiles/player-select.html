@@ -80,14 +80,13 @@
                 <p class="text-center small-text">The fire wizard starts with 3 fire defence and the dragonsbreath
                     spell.</p>
             </div>
-            <!-- select button -->
+            <!--fire select button -->
             <div class="row">
                 <div class="col-12 text-center">
-                    <form method="post">
+                    <form method="post" action="{% url 'profiles:game_setup' 'fire' %}">
                     {% csrf_token %}
-                    <input type="hidden" value="fire" name="fire"/>
                     <button type="submit" class="button medium-text m-2 m-lg-4">Select</button>
-                </form>
+                    </form>
                 </div>  
             </div>
         </div>
@@ -126,7 +125,7 @@
                 </div>
                 <div class="col-2 p-0">
                     <ul class="list-unstyled mt-3 mb-2 medium-small-text stroke select-player-icons-right">
-                        <!-- fire defence -->
+                        <!-- ice defence -->
                         <li class="mt-lg-2 ice stroke">
                             <span class="fa-stack stat-icon fa-fw">
                                 <i class="fas fa-stack-1x fa-snowflake"></i>
@@ -147,12 +146,11 @@
                 <p class="text-center small-text">The Ice wizard starts with 4 frost defence and the frost storm spell.
                 </p>
             </div>
-            <!-- select button -->
+            <!-- ice select button -->
             <div class="row">
                 <div class="col-12 text-center">
-                     <form method="post">
+                     <form method="post" action="{% url 'profiles:game_setup' 'ice' %}">
                     {% csrf_token %}
-                    <input type="hidden" value="ice" name="ice"/>
                     <button type="submit" class="button medium-text m-2 m-lg-4">Select</button>
                 </form>
                 </div>
@@ -215,12 +213,11 @@
                     thunderstorm spell.
                 </p>
             </div>
-            <!-- select button -->
+            <!-- lightning select button -->
             <div class="row">
                 <div class="col-12 text-center">
-                    <form method="post">
+                    <form method="post" action="{% url 'profiles:game_setup' 'lightning' %}">
                         {% csrf_token %}
-                        <input type="hidden" value="thunder" name="thunder"/>
                         <button type="submit" class="button medium-text m-2 m-lg-4">Select</button>
                     </form>
                 </div>
