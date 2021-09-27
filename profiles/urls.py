@@ -5,5 +5,5 @@ app_name = "profiles"
 
 urlpatterns = [
     path('player_select/', views.player_select, name='player-select'),
-    path('game_setup/<value>', views.game_setup, name='game_setup'),
+    path('game_setup/<selected>', views.game_setup, name='game_setup'),
 ]

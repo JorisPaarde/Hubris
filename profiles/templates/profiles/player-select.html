@@ -83,9 +83,9 @@
             <!--fire select button -->
             <div class="row">
                 <div class="col-12 text-center">
-                    <form method="POST" action="{% url 'profiles:game_setup' 'fire' %}">
+                    <form method="POST" action="{% url 'profiles:game_setup' 'FR' %}">
                     {% csrf_token %}
-                    <button type="submit" name="player-select" value="firebutton" class="button medium-text m-2 m-lg-4">Select</button>
+                    <button type="submit" name="player-select" class="button medium-text m-2 m-lg-4">Select</button>
                     </form>
                 </div>  
             </div>
@@ -149,9 +149,9 @@
             <!-- ice select button -->
             <div class="row">
                 <div class="col-12 text-center">
-                     <form method="POST" action="{% url 'profiles:game_setup' 'ice' %}">
+                     <form method="POST" action="{% url 'profiles:game_setup' 'IC' %}">
                     {% csrf_token %}
-                    <button type="submit" name="player-select" value="icebutton" class="button medium-text m-2 m-lg-4">Select</button>
+                    <button type="submit" name="player-select" class="button medium-text m-2 m-lg-4">Select</button>
                 </form>
                 </div>
             </div>
@@ -216,9 +216,9 @@
             <!-- lightning select button -->
             <div class="row">
                 <div class="col-12 text-center">
-                    <form method="POST" action="{% url 'profiles:game_setup' 'lightning' %}">
+                    <form method="POST" action="{% url 'profiles:game_setup' 'LN' %}">
                         {% csrf_token %}
-                        <button type="submit" name="player-select" value="lightningbutton" class="button medium-text m-2 m-lg-4">Select</button>
+                        <button type="submit" name="player-select" class="button medium-text m-2 m-lg-4">Select</button>
                     </form>
                 </div>
             </div>
