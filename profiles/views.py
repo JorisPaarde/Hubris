@@ -16,13 +16,10 @@ def player_select(request):
     return render(request, 'profiles/player-select.html', context)
 
 
-def game_setup(request, selected):
+def game_setup(request, value):
 
     if request.method == 'POST':
-        print(selected)
+        print(value)
+        print(request.POST['player-select'])
     
-    context = {
-        'selected': selected
-    }
-
-    return render(request, '../battle/battle.html', context)
+    return render(request, 'battle/battle.html')
