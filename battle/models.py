@@ -7,7 +7,7 @@ from django.conf import settings
 
 class Enemy(models.Model):
 
-    in_fullversion = models.BooleanField(default=True)
+    in_freeversion = models.BooleanField(default=True)
     name = models.CharField(max_length=254)
     image_idle = models.ImageField(null=True, blank=True)
     image_idle_url = models.URLField(null=True, blank=True)

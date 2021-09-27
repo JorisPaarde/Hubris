@@ -19,7 +19,7 @@ class Player_type(models.Model):
 
 class Card(models.Model):
 
-    in_fullversion = models.BooleanField(default=True)
+    in_freeversion = models.BooleanField(default=True)
     title = models.CharField(max_length=254, null=True, blank=True)
     description = models.TextField(max_length=1024, null=True, blank=True)
     image = models.ImageField(null=True, blank=True)
@@ -33,15 +33,6 @@ class Card(models.Model):
 
     def __str__(self):
         return self.title
-
-
-class Hand_card(models.Model):
-
-    date_time_created = models.DateTimeField(auto_now=True)
-    card = models.ForeignKey(Card, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return str(self.id)
 
 
 class Player(models.Model):
@@ -70,7 +61,7 @@ class Player(models.Model):
     xp = models.IntegerField(default=0)
     health_current = models.IntegerField(default=0)
     health_max = models.IntegerField(default=0)
-    hand = models.ManyToManyField(Hand_card)
+    hand = models.ManyToManyField(Card)
 
     def __str__(self):
         return str(self.id)
