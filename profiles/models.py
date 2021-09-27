@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import User
 # Create your models here.
 
 
@@ -38,22 +39,23 @@ class Card(models.Model):
 class Player(models.Model):
 
     date_time_created = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     type = models.ForeignKey(Player_type, on_delete=models.CASCADE)
     fire_defense = models.IntegerField(default=0)
     ice_defense = models.IntegerField(default=0)
     drain_defense = models.IntegerField(default=0)
-    thunder_defense = models.IntegerField(default=0)
+    lightning_defense = models.IntegerField(default=0)
     physical_defense = models.IntegerField(default=0)
     fire_attack_power = models.IntegerField(default=0)
-    fire_attack_cost = models.IntegerField(default=0)
+    fire_attack_cost = models.IntegerField(default=4)
     ice_attack_power = models.IntegerField(default=0)
-    ice_attack_cost = models.IntegerField(default=0)
+    ice_attack_cost = models.IntegerField(default=2)
     drain_attack_power = models.IntegerField(default=0)
-    drain_attack_cost = models.IntegerField(default=0)
-    thunder_attack_power = models.IntegerField(default=0)
-    thunder_attack_cost = models.IntegerField(default=0)
+    drain_attack_cost = models.IntegerField(default=1)
+    lightning_attack_power = models.IntegerField(default=0)
+    lightning_attack_cost = models.IntegerField(default=2)
     golem_attack_power = models.IntegerField(default=0)
-    golem_attack_cost = models.IntegerField(default=0)
+    golem_attack_cost = models.IntegerField(default=2)
     healing_power = models.IntegerField(default=0)
     healing_attack_cost = models.IntegerField(default=0)
     mana_current = models.IntegerField(default=0)
