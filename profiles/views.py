@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from .models import Player_type, Player, Card
-
+from .models import Player_type, Player, Card, Hand_card
+from django.conf import settings
+import random
 # Create your views here.
 
 
@@ -24,10 +25,21 @@ def game_setup(request, selected):
         current_user = request.user
         selected_type = Player_type.objects.get(selected=selected)
 
+        player = Player(user=current_user, type=selected_type)
+        player.save()
+
+        current_player_id = player.pk
+
+        hand = Player.hand
+        # add 8 cards for a new hand for this player
+        draw_n_cards = 8
+        draw_cards(draw_n_cards, hand, current_player_id)
+
         if str(selected_type):
             # values set for fire wizard
             if str(selected_type) == 'FR':
-                player = Player(type=selected_type,
+                player = Player(pk=current_player_id,
+                                type=selected_type,
                                 user=current_user,
                                 fire_attack_power=3,
                                 fire_defense=3,
@@ -37,7 +49,8 @@ def game_setup(request, selected):
                 player.save()
             # values set for lightning wizard
             elif str(selected_type) == 'LN':
-                player = Player(type=selected_type,
+                player = Player(pk=current_player_id,
+                                type=selected_type,
                                 user=current_user,
                                 lightning_attack_power=3,
                                 lightning_defense=3,
@@ -47,7 +60,8 @@ def game_setup(request, selected):
                 player.save()
             # values set for ice wizard
             elif str(selected_type) == 'IC':
-                player = Player(type=selected_type,
+                player = Player(pk=current_player_id,
+                                type=selected_type,
                                 user=current_user,
                                 ice_attack_power=3,
                                 ice_defense=3,
@@ -56,9 +70,23 @@ def game_setup(request, selected):
                                 )
                 player.save()
 
-        # get a list of cards available to this player
-        # available_cards = Card.objects.filter(in_freeversion=True)
-        # add 8 cards to hand
-        # for card in range(8) add to hand
-
     return render(request, 'battle/battle.html')
+
+
+# function to draw new cards for a hand
+def draw_cards(n, hand, current_player_id):
+
+    current_player = Player.objects.get(pk=current_player_id)
+    print('players current hand:')
+    print(current_player)
+
+    if hand:
+        for card in range(n):
+            # get a list of cards available to this player
+            available_cards = Card.objects.filter(in_freeversion=True)
+            # select a random card and add it to the hand
+            card = random.choice(available_cards)
+            hand = Hand_card(card=card)
+            hand.save()
+    print('players new hand:')
+    print(current_player)

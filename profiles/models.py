@@ -26,14 +26,24 @@ class Card(models.Model):
     image = models.ImageField(null=True, blank=True)
     image_url = models.URLField(null=True, blank=True)
     effect_text = models.CharField(max_length=254, null=True, blank=True)
-    allowed_in_phase = models.CharField(max_length=4, choices=settings.ALLOWED_PHASES)
+    allowed_in_phase = models.CharField(max_length=4,
+                                        choices=settings.ALLOWED_PHASES)
     attack_all = models.BooleanField(default=False)
     skill_style = models.CharField(max_length=2, choices=settings.SKILL_STYLES)
+    attack_modifier = models.IntegerField(default=0)
+    healing_modifier = models.IntegerField(default=0)
+    defence_modifier = models.IntegerField(default=0)
     mana_cost = models.IntegerField(default=2)
     cards_discard_cost = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
+
+
+class Hand_card(models.Model):
+
+    date_time_created = models.DateTimeField(auto_now=True)
+    card = models.ForeignKey(Card, on_delete=models.CASCADE, null=True)
 
 
 class Player(models.Model):
@@ -63,7 +73,7 @@ class Player(models.Model):
     xp = models.IntegerField(default=0)
     health_current = models.IntegerField(default=0)
     health_max = models.IntegerField(default=0)
-    hand = models.ManyToManyField(Card)
+    hand = models.ForeignKey(Hand_card, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.user)

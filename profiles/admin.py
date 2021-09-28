@@ -4,4 +4,5 @@ from .models import *
 
 admin.site.register(Player)
 admin.site.register(Card)
+admin.site.register(Hand_card)
 admin.site.register(Player_type)
