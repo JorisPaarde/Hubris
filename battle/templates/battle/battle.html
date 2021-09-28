@@ -102,9 +102,7 @@
             <div class="row h-100">
                 <!-- player -->
                 <div class="col-4 h-75 d-flex justify-content-end align-items-end">
-                    {% for player_type in player_type %}
-                    <img src="{{MEDIA_URL}}{{ player_type.image_idle.name }}" class="player-image" alt="player">
-                    {% endfor %}
+                    <img src="{{MEDIA_URL}}{{ player.type.image_idle.name }}" class="player-image" alt="player">
                 </div>
                 <!-- enemies -->
                 <div class="col-8"></div>

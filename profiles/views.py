@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Player_type, Player, Card, Hand_card
-from django.conf import settings
+
 import random
 # Create your views here.
 
@@ -79,7 +79,7 @@ def game_setup(request, selected):
             print('startgame')
             # start this users game with this player
 
-    return render(request, 'battle/battle.html')
+    return redirect('battle:battle-screen')
 
 
 # function to draw new cards for a hand

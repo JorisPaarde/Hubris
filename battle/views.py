@@ -1,16 +1,16 @@
 from django.shortcuts import render
-from .models import *
-from profiles.models import *
+from .models import Player
 
 # Create your views here.
 
 
 def battle_screen(request):
     """view to return battle_screen page"""
-    player_type = Player_type.objects.all()
+    current_user = request.user
+    player = Player.objects.get(user=current_user)
 
     context = {
-        'player_type': player_type,
+        'player': player,
     }
 
     return render(request, 'battle/battle.html', context)
