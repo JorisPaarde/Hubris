@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Player
+from .models import Player, Game, Current_game_floor, Enemy, Game_floor_enemy
 
 # Create your views here.
 

@@ -25,15 +25,15 @@ def game_setup(request, selected):
         current_user = request.user
         current_player = Player.objects.filter(user=current_user)
 
+        # if not, create a new player and set the initial values for that player
         if not current_player:
-            # create a new player and set the initial values for that player
             # get the selected player type
             selected_type = Player_type.objects.get(selected=selected)
-            # connect this player to the current user
+            # create a player for the current user
             player = Player(user=current_user, type=selected_type)
             player.save()
 
-            current_player = player
+            current_player = Player.objects.get(user=current_user)
             # create an empty hand for this player
             hand = Player.hand
             # add 8 cards this hand
@@ -49,7 +49,9 @@ def game_setup(request, selected):
                                     fire_attack_power=3,
                                     fire_defense=3,
                                     mana_max=4,
-                                    health_max=10
+                                    mana_current=4,
+                                    health_max=10,
+                                    health_current=10
                                     )
                     player.save()
                 # values set for lightning wizard
@@ -60,7 +62,9 @@ def game_setup(request, selected):
                                     lightning_attack_power=3,
                                     lightning_defense=3,
                                     mana_max=4,
-                                    health_max=10
+                                    mana_current=4,
+                                    health_max=10,
+                                    health_current=10
                                     )
                     player.save()
                 # values set for ice wizard
@@ -71,12 +75,15 @@ def game_setup(request, selected):
                                     ice_attack_power=3,
                                     ice_defense=3,
                                     mana_max=4,
-                                    health_max=2
+                                    mana_current=4,
+                                    health_max=2,
+                                    health_current=10
                                     )
                     player.save()
         else:
-            print(current_player)
             print('startgame')
+            print(current_player)
+            # print(current_player.hand)
             # start this users game with this player
 
     return redirect('battle:battle-screen')
@@ -96,4 +103,4 @@ def draw_cards(n, hand, current_player):
             hand = Hand_card(card=card)
             hand.save()
     print('players new hand:')
-    print(current_player)
+    # print(current_player.hand)

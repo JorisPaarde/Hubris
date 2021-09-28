@@ -70,7 +70,6 @@ class Player(models.Model):
     healing_attack_cost = models.IntegerField(default=0)
     mana_current = models.IntegerField(default=0)
     mana_max = models.IntegerField(default=0)
-    xp = models.IntegerField(default=0)
     health_current = models.IntegerField(default=0)
     health_max = models.IntegerField(default=0)
     hand = models.ForeignKey(Hand_card, on_delete=models.CASCADE, null=True)
