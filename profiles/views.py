@@ -20,64 +20,71 @@ def player_select(request):
 def game_setup(request, selected):
 
     if request.method == 'POST':
-        # create a new player and set the initial values for that player
-        # connect this player to the current user
+
+        # check if this user already has a player (with an unfinished game)
         current_user = request.user
-        selected_type = Player_type.objects.get(selected=selected)
+        current_player = Player.objects.filter(user=current_user)
 
-        player = Player(user=current_user, type=selected_type)
-        player.save()
+        if not current_player:
+            # create a new player and set the initial values for that player
+            # get the selected player type
+            selected_type = Player_type.objects.get(selected=selected)
+            # connect this player to the current user
+            player = Player(user=current_user, type=selected_type)
+            player.save()
 
-        current_player_id = player.pk
+            current_player = player
+            # create an empty hand for this player
+            hand = Player.hand
+            # add 8 cards this hand
+            draw_n_cards = 8
+            draw_cards(draw_n_cards, hand, current_player)
 
-        hand = Player.hand
-        # add 8 cards for a new hand for this player
-        draw_n_cards = 8
-        draw_cards(draw_n_cards, hand, current_player_id)
-
-        if str(selected_type):
-            # values set for fire wizard
-            if str(selected_type) == 'FR':
-                player = Player(pk=current_player_id,
-                                type=selected_type,
-                                user=current_user,
-                                fire_attack_power=3,
-                                fire_defense=3,
-                                mana_max=4,
-                                health_max=10
-                                )
-                player.save()
-            # values set for lightning wizard
-            elif str(selected_type) == 'LN':
-                player = Player(pk=current_player_id,
-                                type=selected_type,
-                                user=current_user,
-                                lightning_attack_power=3,
-                                lightning_defense=3,
-                                mana_max=4,
-                                health_max=10
-                                )
-                player.save()
-            # values set for ice wizard
-            elif str(selected_type) == 'IC':
-                player = Player(pk=current_player_id,
-                                type=selected_type,
-                                user=current_user,
-                                ice_attack_power=3,
-                                ice_defense=3,
-                                mana_max=4,
-                                health_max=2
-                                )
-                player.save()
+            if str(selected_type):
+                # values set for fire wizard
+                if str(selected_type) == 'FR':
+                    player = Player(pk=current_player.id,
+                                    type=selected_type,
+                                    user=current_user,
+                                    fire_attack_power=3,
+                                    fire_defense=3,
+                                    mana_max=4,
+                                    health_max=10
+                                    )
+                    player.save()
+                # values set for lightning wizard
+                elif str(selected_type) == 'LN':
+                    player = Player(pk=current_player.id,
+                                    type=selected_type,
+                                    user=current_user,
+                                    lightning_attack_power=3,
+                                    lightning_defense=3,
+                                    mana_max=4,
+                                    health_max=10
+                                    )
+                    player.save()
+                # values set for ice wizard
+                elif str(selected_type) == 'IC':
+                    player = Player(pk=current_player.id,
+                                    type=selected_type,
+                                    user=current_user,
+                                    ice_attack_power=3,
+                                    ice_defense=3,
+                                    mana_max=4,
+                                    health_max=2
+                                    )
+                    player.save()
+        else:
+            print(current_player)
+            print('startgame')
+            # start this users game with this player
 
     return render(request, 'battle/battle.html')
 
 
 # function to draw new cards for a hand
-def draw_cards(n, hand, current_player_id):
+def draw_cards(n, hand, current_player):
 
-    current_player = Player.objects.get(pk=current_player_id)
-    print('players current hand:')
     print(current_player)
 
     if hand:
