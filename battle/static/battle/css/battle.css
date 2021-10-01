@@ -91,19 +91,18 @@
 /* cards screen */
 
 .skill-card{
-    border-radius: 5px;
+    border-radius: 8px;
     font-family: 'Stylish', sans-serif;
     background-color: var(--offwhite);
     border: black solid 0.8px;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    height: 45vh;
 }
 
 .card-effect{
-    border-radius: 5px;
-    font-family: 'Stylish', sans-serif;
+    border-radius: 2px;
     background-color: var(--offwhite);
     border: black solid 0.8px;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .card-image{
@@ -111,16 +110,32 @@
     object-fit: contain;
 }
 
+.card-effect-text{
+    font-size: calc(3px + 1vw);
+    font-weight: 600;
+}
+
+.card-title{
+    font-size: calc(4px + 1vw);
+    font-weight: 600;
+}
+
+.card-description-text{
+    font-size: calc(3px + 1vw);
+    font-weight: 500;
+    line-height: 100%;
+}
+
 /* screen layers and screen sizes */
 
 .battle-screen,
 .card-screen {
     position: fixed;
-    top: 10%;
+    top: 20px;
 }
 
 .floor {
-    width: 98%;
+    width: 100%;
 }
 
 .z0 {
@@ -135,8 +150,9 @@
 .z1000 {
     position: fixed;
     z-index: 1000;
+    left: 0px;
 }
 
 .z2000 {
-    z-index: 1000;
+    z-index: 2000;
 }

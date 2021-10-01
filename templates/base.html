@@ -40,9 +40,9 @@
     {% block header %}
     {% endblock %}
     {% if messages %}
-    <div class="container">
-        <div class="row">
-            <div class="col-10 offset-1 col-md-6 offset-md-3 col-lg-4 offset-lg-4 text-center menu-banner messages">
+    <div class="container-fluid messages-container">
+        <div class="row display-flex justify-content-center">
+            <div class="col-10 col-md-6 col-lg-4 text-center menu-banner messages">
                 {% for message in messages %}
                 <span{% if message.tags %} class="{{ message.tags }} align-middle" {% endif %}>{{ message }}</span>
                     {% endfor %}
