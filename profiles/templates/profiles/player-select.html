@@ -53,7 +53,7 @@
                 <div class="col-8 d-flex align-items-center">
                     {% for player_type in player_type %}
                     {% if player_type.selected == 'FR' %}
-                    <img src="{{ MEDIA_URL }}{{player_type.image_idle}}" width="100%" alt="fire wizard">
+                    <img class="wizard-select-image" src="{{ MEDIA_URL }}{{player_type.image_idle}}" width="100%" alt="fire wizard">
                     {% endif %}
                     {% endfor %}
                 </div>
@@ -76,18 +76,20 @@
                 </div>
             </div>
             <!-- description -->
-            <div class="row h-25">
-                <p class="text-center small-text">The fire wizard starts with 3 fire defence and the dragonsbreath
-                    spell.</p>
+            <div class="row h-25 d-flex align-items-end">
+                <span>
+                    <p class="text-center small-text">The fire wizard starts with 3 fire defence and the dragonsbreath
+                        spell.</p>
+                </span>
             </div>
             <!--fire select button -->
             <div class="row">
                 <div class="col-12 text-center">
                     <form method="POST" action="{% url 'profiles:game_setup' 'FR' %}">
-                    {% csrf_token %}
-                    <button type="submit" name="player-select" class="button medium-text m-2 m-lg-4">Select</button>
+                        {% csrf_token %}
+                        <button type="submit" name="player-select" class="button medium-text mb-2">Select</button>
                     </form>
-                </div>  
+                </div>
             </div>
         </div>
         <!-- ice wizard -->
@@ -119,7 +121,7 @@
                 <div class="col-8 d-flex align-items-center">
                     {% for player_type in player_type %}
                     {% if player_type.selected == 'IC' %}
-                    <img src="{{ MEDIA_URL }}{{player_type.image_idle}}" width="100%" alt="ice wizard">
+                    <img class="wizard-select-image" src="{{ MEDIA_URL }}{{player_type.image_idle}}" width="100%" alt="ice wizard">
                     {% endif %}
                     {% endfor %}
                 </div>
@@ -131,8 +133,8 @@
                                 <i class="fas fa-stack-1x fa-snowflake"></i>
                             </span>
                         </li>
-                         <!-- mana icon -->
-                         <li class="mt-lg-2 mana stroke">
+                        <!-- mana icon -->
+                        <li class="mt-lg-2 mana stroke">
                             <span class="fa-stack stat-icon fa-fw">
                                 <i class="fas fa-stack-1x fa-flask"></i>
                                 <span class="fa-stack-1x fa-inverse stat-number">4</span>
@@ -142,17 +144,20 @@
                 </div>
             </div>
             <!-- description -->
-            <div class="row h-25">
-                <p class="text-center small-text">The Ice wizard starts with 4 frost defence and the frost storm spell.
-                </p>
+            <div class="row h-25  d-flex align-items-end">
+                <span>
+                    <p class="text-center small-text">The Ice wizard starts with 4 frost defence and the frost storm
+                        spell.
+                    </p>
+                </span>
             </div>
             <!-- ice select button -->
             <div class="row">
                 <div class="col-12 text-center">
-                     <form method="POST" action="{% url 'profiles:game_setup' 'IC' %}">
-                    {% csrf_token %}
-                    <button type="submit" name="player-select" class="button medium-text m-2 m-lg-4">Select</button>
-                </form>
+                    <form method="POST" action="{% url 'profiles:game_setup' 'IC' %}">
+                        {% csrf_token %}
+                        <button type="submit" name="player-select" class="button medium-text mb-2">Select</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -185,7 +190,7 @@
                 <div class="col-8 d-flex align-items-center">
                     {% for player_type in player_type %}
                     {% if player_type.selected == 'LN' %}
-                    <img src="{{ MEDIA_URL }}{{player_type.image_idle}}" width="100%" alt="thunder wizard">
+                    <img class="wizard-select-image" src="{{ MEDIA_URL }}{{player_type.image_idle}}" width="100%" alt="thunder wizard">
                     {% endif %}
                     {% endfor %}
                 </div>
@@ -197,8 +202,8 @@
                                 <i class="fas fa-stack-1x fa-bolt"></i>
                             </span>
                         </li>
-                         <!-- mana icon -->
-                         <li class="mt-lg-2 mana stroke">
+                        <!-- mana icon -->
+                        <li class="mt-lg-2 mana stroke">
                             <span class="fa-stack stat-icon fa-fw">
                                 <i class="fas fa-stack-1x fa-flask"></i>
                                 <span class="fa-stack-1x fa-inverse stat-number">4</span>
@@ -208,17 +213,19 @@
                 </div>
             </div>
             <!-- description -->
-            <div class="row h-25">
-                <p class="text-center small-text">The thunder wizard starts with 2 lightning defence and the
-                    thunderstorm spell.
-                </p>
+            <div class="row h-25 d-flex align-items-end">
+                <span>
+                    <p class="text-center small-text">The thunder wizard starts with 2 lightning defence and the
+                        thunderstorm spell.
+                    </p>
+                </span>
             </div>
             <!-- lightning select button -->
             <div class="row">
                 <div class="col-12 text-center">
                     <form method="POST" action="{% url 'profiles:game_setup' 'LN' %}">
                         {% csrf_token %}
-                        <button type="submit" name="player-select" class="button medium-text m-2 m-lg-4">Select</button>
+                        <button type="submit" name="player-select" class="button medium-text mb-2">Select</button>
                     </form>
                 </div>
             </div>

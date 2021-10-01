@@ -3,5 +3,10 @@
 }
 
 .wizard-card{
-    max-height: 450px;
+    max-height: 500px;
+}
+
+.wizard-select-image{
+    width: 100%;
+    object-fit: contain;
 }
