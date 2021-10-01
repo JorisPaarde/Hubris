@@ -118,6 +118,9 @@ artwork
 
 Google login resulted in : "Error 400: redirect_uri_mismatch"
 Menu button was not clickable in game screen. Fixed by making sure no div was blocking it with a higher z-index value.
+Player selection layout broke on wider screens. pushed text to the bottom of the container.
+hand-cards where added but not associated with player hand. Changed model to many to many field and corrected card draw function.
+When comparing players hand card to the cards in the database the values seemed the same, but did not trigger an if equal statement.
 
 # technologies used:
 

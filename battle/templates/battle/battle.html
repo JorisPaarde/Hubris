@@ -34,9 +34,9 @@
         </div>
     </div>
     <!-- main game screen -->
-    <div class="row g-2">
+    <div class="row">
         <!-- stats column left -->
-        <div class="col-1 mt-2 m-lg-4 z500 stats-bar">
+        <div class="col-1 m-2 m-lg-4 z500 stats-bar">
             <!-- stats icons -->
             <ul class="list-unstyled mt-2 mb-2 medium-large-text stroke text-center">
                 <!-- health icon -->
@@ -102,12 +102,82 @@
             </div>
         </div>
         <!-- Card screen -->
-        <div class="col-12 d-none z2000 card-screen">
-            cards
+        <div class="col-12 h-100 z2000 card-screen">
+            <div class="row h-100 display-flex justify-content-between">
+                {% for player_card in player.hand.all %}
+                <div class="col-3 h-50 skill-card">
+                    {% for card in cards %}
+                    {% if player_card|lower == card.title|lower %}
+                    <div class="row">
+                        <!--  phase -->
+                        <div class="col-3">
+                            <p class="text-center small-text">{{ card.allowed_in_phase }}</p>
+                        </div>
+                        <!-- title -->
+                        <div class="col-6">
+                            <h2 class="text-center small-text">{{ card.title }}</h2>
+                        </div>
+                        <!-- skill style -->
+                        <div class="col-3">
+                            <p class="text-center small-text">{{ card.skill_style }}</p>
+                        </div>
+                    </div>
+                    <!-- card image -->
+                    <div class="row h-25">
+                        <img class="card-image" src="{{MEDIA_URL}}{{ card.image.name }}" alt="{{card}} image">
+                    </div>
+                    <!-- card effect text -->
+                    <div class="row">
+                        <div class="col-8 offset-2 card-effect">
+                            <h3 class="text-center small-text">{{ card.effect_text }}</h3>
+                        </div>
+                    </div>
+                    <!-- card description -->
+                    <div class="row">
+                        <p class="text-center small-text">{{ card.description }}</p>
+                    </div>
+                    <div class="row">
+                        <!-- card effect -->
+                        <div class="col-3">
+                            <!-- attack modifier -->
+                            {% if card.attack_modifier  %}
+                            <p>{{ card.attack_modifier }}</p>
+                            {% endif %}
+                            <!-- heal modifier -->
+                            {% if card.healing_modifier  %}
+                            <p>{{ card.healing_modifier }}</p>
+                            {% endif %}
+                            <!-- defence modifier -->
+                            {% if card.defence_modifier  %}
+                            <p>{{ card.defence_modifier }}</p>
+                            {% endif %}
+                            <!-- attack all -->
+                            {% if card.attack_all  %}
+                            <p>{{ card.attack_all }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-6"></div>
+                        <!-- card cost -->
+                        <div class="col-3">
+                            {% if card.mana_cost %}
+                            <p>
+                                {{ card.mana_cost }}
+                            </p>
+                            {% endif %}
+                            {% if card.cards_discard_cost %}
+                            <p>{{ card.cards_discard_cost }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
         </div>
         <!-- action selection bar -->
         <div class="col-12">
-            <div class="row z500 d-flex fixed-bottom justify-content-center"> 
+            <div class="row z500 d-flex fixed-bottom justify-content-center">
                 <div class="col-12">
                     <div class="row">
                         <div class="col-12 title text-center">
@@ -124,7 +194,8 @@
                             </div>
                             <div class="row action-stats">
                                 <div class="col p-1 position-relative">
-                                    <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_lightning.svg" alt="lightning attack"></span>
+                                    <span><img class="position-absolute action-effect"
+                                            src="{{MEDIA_URL}}sword_lightning.svg" alt="lightning attack"></span>
                                     <span class="position-absolute fa-inverse stat-number stroke">2</span>
                                 </div>
                                 <div class="col p-1 position-relative">
@@ -140,7 +211,8 @@
                             </div>
                             <div class="row action-stats">
                                 <div class="col p-1 position-relative">
-                                    <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_fire.svg" alt="fire attack"></span>
+                                    <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_fire.svg"
+                                            alt="fire attack"></span>
                                     <span class="position-absolute fa-inverse stat-number stroke">0</span>
                                 </div>
                                 <div class="col p-1 position-relative">
@@ -157,7 +229,8 @@
                             <div class="row action-stats">
                                 <div class="col p-1 position-relative">
                                     <i class="position-absolute fas fa-infinity fa-inverse mt-2 fs-6 stroke"></i>
-                                    <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_ice.svg" alt="ice attack"></span>
+                                    <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_ice.svg"
+                                            alt="ice attack"></span>
                                     <span class="position-absolute fa-inverse stat-number stroke">0</span>
                                 </div>
                                 <div class="col p-1 position-relative">
@@ -190,7 +263,8 @@
                             <div class="row action-stats">
                                 <div class="col p-1 position-relative">
                                     <span><i class="position-absolute fas fa-heart fire stroke fs-3"></i></span>
-                                    <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_drain.svg" alt="drain attack"></span>
+                                    <span><img class="position-absolute action-effect"
+                                            src="{{MEDIA_URL}}sword_drain.svg" alt="drain attack"></span>
                                     <span class="position-absolute fa-inverse stat-number stroke">0</span>
                                 </div>
                                 <div class="col p-1 position-relative">
@@ -206,7 +280,8 @@
                             </div>
                             <div class="row action-stats">
                                 <div class="col p-1 position-relative">
-                                    <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_golem.svg" alt="golem attack"></span>
+                                    <span><img class="position-absolute action-effect"
+                                            src="{{MEDIA_URL}}sword_golem.svg" alt="golem attack"></span>
                                     <span class="position-absolute fa-inverse stat-number stroke">0</span>
                                 </div>
                                 <div class="col p-1 position-relative">

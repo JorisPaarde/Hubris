@@ -45,6 +45,9 @@ class Hand_card(models.Model):
     date_time_created = models.DateTimeField(auto_now=True)
     card = models.ForeignKey(Card, on_delete=models.CASCADE, null=True)
 
+    def __str__(self):
+        return str(self.card)
+
 
 class Player(models.Model):
 
@@ -72,7 +75,7 @@ class Player(models.Model):
     mana_max = models.IntegerField(default=0)
     health_current = models.IntegerField(default=0)
     health_max = models.IntegerField(default=0)
-    hand = models.ForeignKey(Hand_card, on_delete=models.CASCADE, null=True)
+    hand = models.ManyToManyField(Hand_card)
 
     def __str__(self):
         return str(self.user)
