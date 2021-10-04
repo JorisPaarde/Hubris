@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Player_type, Player, Card, Hand_card
-from battle.models import Game
+from battle.models import Game, Current_game_floor
 from django.contrib import messages
 
 
@@ -22,13 +22,17 @@ def player_select(request):
 
     # check if this user already has a player (with an unfinished game)
     if current_player:
-        current_player = Player.objects.get(user=current_user)
-        current_game = Game.objects.get(player=current_player)
+        current_player = get_object_or_404(Player, user=current_user)
+        current_game = Game.objects.filter(player=current_player)
         # if there is an unfinished game send it to the template
-        if not current_game.completed:
-            context.update({'current_game': current_game.pk})
-            messages.info(
-                request, f"{current_user} do you want to continue your current game?")
+        if current_game:
+
+            current_game = get_object_or_404(Game, player=current_player)
+
+            if not current_game.completed:
+                context.update({'game': current_game})
+                messages.info(
+                    request, f"{current_user} do you want to continue your current game?")
 
     return render(request, 'profiles/player-select.html', context)
 
@@ -37,24 +41,23 @@ def continue_game(request, continue_game):
     """view to return player to current game or start a new game"""
 
     current_user = request.user
-    current_player = Player.objects.filter(user=current_user)
+    current_player = Player.objects.get(user=current_user)
 
     if continue_game == 'y':
-        print('continue to the current game')
-        # hier gaat iets fout..
-        current_game = Game.objects.get(player=current_player)
 
+        game = Game.objects.get(player=current_player)
         context = {
-            'current_game': current_game,
+            'game': game,
         }
 
         return redirect('battle:battle-screen', context)
 
     else:
-        print('finish current game and return to select.')
+        # set current game to completed and return to selection screen.
         current_game = Game.objects.get(player=current_player)
         current_game.completed = True
         current_game.save()
+        current_player.delete()
 
         return redirect('profiles:player_select')
 
@@ -63,6 +66,7 @@ def game_setup(request, selected):
 
     if request.method == 'POST':
 
+        context = {}
         # check if this user already has a player
         current_user = request.user
         current_player = Player.objects.filter(user=current_user)
@@ -81,6 +85,13 @@ def game_setup(request, selected):
             # add 8 cards this hand
             draw_n_cards = 8
             draw_cards(draw_n_cards, hand, current_player)
+
+            # create a new game for this player and a first game floor
+            game_floor = Current_game_floor()
+            game_floor.save()
+            game = Game(player=current_player, current_game_floor=game_floor)
+            game.save()
+            context.update({'game': game})
 
             if str(selected_type):
                 # values set for fire wizard
@@ -124,7 +135,7 @@ def game_setup(request, selected):
                     player.save()
         # start this users game with this player
 
-    return redirect('battle:battle-screen')
+    return redirect('battle:battle-screen', context)
 
 
 # function to draw new cards for a hand

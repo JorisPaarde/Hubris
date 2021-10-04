@@ -6,14 +6,16 @@ from django.contrib import messages
 # Create your views here.
 
 
-def battle_screen(request):
+def battle_screen(request, game):
     """view to return battle_screen page"""
     current_user = request.user
     player = Player.objects.get(user=current_user)
     cards = Card.objects.all()
     messages.info(request, "Please select a card to play.")
+    print(game)
 
     context = {
+        "game": game,
         "player": player,
         "cards": cards,
     }

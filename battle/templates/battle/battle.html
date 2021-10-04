@@ -18,8 +18,8 @@
         <div class="col-12">
             <div class="row">
                 <div class="col-12 title text-center">
-                    <h1 class="medium-large-text mb-0">Floor 15</h1>
-                    <h2 class="fs-2">Phase 1</h2>
+                    <h1 class="medium-large-text mb-0">Floor 15 {{ player }}</h1>
+                    <h2 class="fs-2">Phase 1 {{ game }}</h2>
                 </div>
                 <!-- main menu button -->
                 <div class="col-2 offset-9 mt-md-4 z500">
@@ -102,7 +102,7 @@
             </div>
         </div>
         <!-- Card screen -->
-        <div class="col-12 h-100 z2000 card-screen">
+        <div class="col-12 d-none h-100 z2000 card-screen">
             <div class="row display-flex justify-content-center">
                 <!-- cards -->
                 {% for player_card in player.hand.all %}
