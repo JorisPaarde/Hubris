@@ -40,6 +40,7 @@ def player_select(request):
 def continue_game(request, continue_game):
     """view to return player to current game or start a new game"""
 
+    # get current player
     current_user = request.user
     current_player = Player.objects.get(user=current_user)
 
@@ -57,6 +58,8 @@ def continue_game(request, continue_game):
         current_game = Game.objects.get(player=current_player)
         current_game.completed = True
         current_game.save()
+        current_game_floor = Current_game_floor.objects.get(pk=current_game.current_game_floor.pk)
+        current_game_floor.delete()
         current_player.delete()
 
         return redirect('profiles:player_select')

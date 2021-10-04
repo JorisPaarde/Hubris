@@ -36,7 +36,7 @@ class Game_floor_enemy(models.Model):
 class Current_game_floor(models.Model):
 
     date_time_created = models.DateTimeField(auto_now=True)
-    current_phase = models.CharField(max_length=1, choices=settings.ATTACK_PHASES)
+    current_phase = models.CharField(max_length=1, choices=settings.ATTACK_PHASES, default=settings.ATTACK_PHASES[0][0])
     Enemy = models.ForeignKey(Game_floor_enemy,on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
