@@ -43,58 +43,58 @@
                 <li class="mt-lg-2 fire stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-heart"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.health_current }}</span>
+                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.health_current }}{% if not player.health_current %}0{% endif %}</span>
                     </span>
                 </li>
                 <!-- lightning defence -->
                 <li class="mt-lg-2 lightning stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-shield-alt"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.lightning_defence }}</span>
+                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.lightning_defence }}{% if not player.lightning_defence %}0{% endif %}</span>
                     </span>
                 </li>
                 <!-- fire defence -->
                 <li class="mt-lg-2 fire stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-shield-alt"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.fire_defence }}</span>
+                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.fire_defence }}{% if not player.fire_defence %}0{% endif %}</span>
                     </span>
                 </li>
                 <!-- ice defence -->
                 <li class="mt-lg-2 ice stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-shield-alt"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.ice_defence }}</span>
+                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.ice_defence }}{% if not player.ice_defence %}0{% endif %}</span>
                     </span>
                 </li>
                 <!-- drain defence -->
                 <li class="mt-lg-2 drain stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-shield-alt"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.drain_defence }}</span>
+                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.drain_defence }}{% if not player.drain_defence %}0{% endif %}</span>
                     </span>
                 </li>
                 <!-- golem defence -->
                 <li class="mt-lg-2 golem stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-shield-alt"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.golem_defence }}</span>
+                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.golem_defence }}{% if not player.golem_defence %}0{% endif %}</span>
                     </span>
                 </li>
                 <!-- mana -->
                 <li class="mt-lg-2 mana stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-flask"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.mana_current }}</span>
+                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.mana_current }}{% if not player.mana_current %}0{% endif %}</span>
                     </span>
                 </li>
             </ul>
         </div>
         <!-- main battle screen -->
-        <div class="col-12 z0 battle-screen">
+        <div class="col-12 z0 h-75 battle-screen">
             <div class="row h-100">
                 <!-- player -->
-                <div class="col-4 h-75 d-flex justify-content-end align-items-end">
+                <div class="col-5 h-100 d-flex justify-content-end align-items-center">
                     <img src="{{MEDIA_URL}}{{ player.type.image_idle.name }}" class="player-image" alt="player">
                 </div>
                 <!-- enemies -->
@@ -233,103 +233,103 @@
                         <!-- lightning action icon -->
                         <div class="col px-2 m-lg-2">
                             <div class="row">
-                                <i class="fas m-2 action-icon fa-bolt lightning stroke"></i>
+                                <i class="fas m-2 action-icon fa-bolt lightning {% if not player.lightning_attack_power %}text-muted  {% endif %} stroke"></i>
                             </div>
                             <div class="row action-stats">
                                 <div class="col p-1 position-relative">
                                     <span><img class="position-absolute action-effect"
                                             src="{{MEDIA_URL}}sword_lightning.svg" alt="lightning attack"></span>
-                                    <span class="position-absolute fa-inverse stat-number stroke">2</span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.lightning_attack_power }}</span>
                                 </div>
                                 <div class="col p-1 position-relative">
                                     <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
-                                    <span class="position-absolute fa-inverse stat-number stroke">2</span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.lightning_attack_cost }}</span>
                                 </div>
                             </div>
                         </div>
                         <!-- fire action icon -->
                         <div class="col px-2 m-lg-2">
                             <div class="row">
-                                <i class="fas m-2 action-icon fa-fire-alt fire text-muted stroke"></i>
+                                <i class="fas m-2 action-icon fa-fire-alt fire {% if not player.fire_attack_power %}text-muted{% endif %} stroke"></i>
                             </div>
                             <div class="row action-stats">
                                 <div class="col p-1 position-relative">
                                     <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_fire.svg"
                                             alt="fire attack"></span>
-                                    <span class="position-absolute fa-inverse stat-number stroke">0</span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.fire_attack_power }}</span>
                                 </div>
                                 <div class="col p-1 position-relative">
                                     <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
-                                    <span class="position-absolute fa-inverse stat-number stroke">4</span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.fire_attack_cost }}</span>
                                 </div>
                             </div>
                         </div>
                         <!-- ice action icon -->
                         <div class="col px-2 m-lg-2">
                             <div class="row">
-                                <i class="fas m-2 action-icon fa-snowflake text-muted ice stroke"></i>
+                                <i class="fas m-2 action-icon fa-snowflake ice {% if not player.ice_attack_power %}text-muted{% endif %} stroke"></i>
                             </div>
                             <div class="row action-stats">
                                 <div class="col p-1 position-relative">
                                     <i class="position-absolute fas fa-infinity fa-inverse mt-2 fs-6 stroke"></i>
                                     <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_ice.svg"
                                             alt="ice attack"></span>
-                                    <span class="position-absolute fa-inverse stat-number stroke">0</span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.ice_attack_power }}</span>
                                 </div>
                                 <div class="col p-1 position-relative">
                                     <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
-                                    <span class="position-absolute fa-inverse stat-number stroke">2</span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.ice_attack_cost }}</span>
                                 </div>
                             </div>
                         </div>
                         <!-- heal action icon -->
                         <div class="col px-2 m-lg-2">
                             <div class="row">
-                                <i class="fas m-2 action-icon fa-heart healing stroke"></i>
+                                <i class="fas m-2 action-icon fa-heart healing {% if not player.healing_power %}text-muted{% endif %} stroke"></i>
                             </div>
                             <div class="row action-stats">
                                 <div class="col p-1 position-relative">
                                     <span><i class="position-absolute fas fa-heart fire stroke fs-3"></i></span>
-                                    <span class="position-absolute fa-inverse stat-number stroke">0</span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.healing_power }}</span>
                                 </div>
                                 <div class="col p-1 position-relative">
                                     <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
-                                    <span class="position-absolute fa-inverse stat-number stroke">2</span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.healing_cost }}</span>
                                 </div>
                             </div>
                         </div>
                         <!-- drain action icon -->
                         <div class="col px-2 m-lg-2">
                             <div class="row">
-                                <i class="fas m-2 action-icon fa-skull drain stroke"></i>
+                                <i class="fas m-2 action-icon fa-skull drain {% if not player.drain_attack_power %}text-muted{% endif %} stroke"></i>
                             </div>
                             <div class="row action-stats">
                                 <div class="col p-1 position-relative">
                                     <span><i class="position-absolute fas fa-heart fire stroke fs-3"></i></span>
                                     <span><img class="position-absolute action-effect"
                                             src="{{MEDIA_URL}}sword_drain.svg" alt="drain attack"></span>
-                                    <span class="position-absolute fa-inverse stat-number stroke">0</span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.drain_attack_power }}</span>
                                 </div>
                                 <div class="col p-1 position-relative">
                                     <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
-                                    <span class="position-absolute fa-inverse stat-number stroke">1</span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.drain_attack_cost }}</span>
                                 </div>
                             </div>
                         </div>
                         <!-- golem action icon -->
                         <div class="col px-2 m-lg-2">
                             <div class="row">
-                                <i class="fas m-2 action-icon fa-robot golem text-muted stroke"></i>
+                                <i class="fas m-2 action-icon fa-robot golem {% if not player.golem_attack_power %}text-muted{% endif %} stroke"></i>
                             </div>
                             <div class="row action-stats">
                                 <div class="col p-1 position-relative">
                                     <span><img class="position-absolute action-effect"
                                             src="{{MEDIA_URL}}sword_golem.svg" alt="golem attack"></span>
-                                    <span class="position-absolute fa-inverse stat-number stroke">0</span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.golem_attack_power }}</span>
                                 </div>
                                 <div class="col p-1 position-relative">
                                     <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
-                                    <span class="position-absolute fa-inverse stat-number stroke">2</span>
+                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.golem_attack_cost }}</span>
                                 </div>
                             </div>
                         </div>
