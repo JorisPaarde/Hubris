@@ -190,6 +190,7 @@ SKILL_STYLES = (
     ('GL', 'Golem'),
     ('DR', 'Drain'),
     ('IC', 'Ice'),
+    ('HL', 'Heal'),
 )
 
 PLAYER_STYLES = (

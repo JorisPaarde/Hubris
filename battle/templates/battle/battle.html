@@ -108,64 +108,102 @@
                 <div class="col-2 m-1 p-1 skill-card">
                     {% for card in cards %}
                     {% if player_card|lower == card.title|lower %}
-                    <div class="row">
+                    <div class="row m-0 align-items-center">
                         <!--  phase -->
-                        <div class="col-3">
-                            <h3 class="text-center card-title">{{ card.allowed_in_phase }}</h3>
+                        <div class="col-2 p-0">
+                            <h3 class="text-center m-0 align-middle card-title">{{ card.get_allowed_in_phase_display }}
+                            </h3>
                         </div>
                         <!-- title -->
-                        <div class="col-6 p-0">
-                            <h2 class="text-center card-title">{{ card.title }}</h2>
+                        <div class="col-8 p-0">
+                            <h2 class="text-center align-middle m-0 card-title">{{ card.title }}</h2>
                         </div>
                         <!-- skill style -->
-                        <div class="col-3">
-                            <p class="text-center small-text">{{ card.skill_style }}</p>
+                        <div class="col-2 p-0">
+                            {% if card.skill_style|lower == "fr" %}
+                            <span><i
+                                    class="card-style-icon fas fa-fire-alt fire align-middle text-center stroke"></i></span>
+                            {% endif %}
+                            {% if card.skill_style|lower == "ic" %}
+                            <span><i
+                                    class="card-style-icon fas fa-snowflake ice align-middle text-center stroke"></i></span>
+                            {% endif %}
+                            {% if card.skill_style|lower == "ln" %}
+                            <span><i
+                                    class="card-style-icon fas fa-fire-alt lightning align-middle text-center stroke"></i></span>
+                            {% endif %}
+                            {% if card.skill_style|lower == "dr" %}
+                            <span><i
+                                    class="card-style-icon fas fa-skull drain align-middle text-center stroke"></i></span>
+                            {% endif %}
+                            {% if card.skill_style|lower == "gl" %}
+                            <span><i
+                                    class="card-style-icon fas fa-robot golem align-middle text-center stroke"></i></span>
+                            {% endif %}
+                            {% if card.skill_style|lower == "hl" %}
+                            <span><i
+                                    class="card-style-icon fas fa-heart heal align-middle text-center stroke"></i></span>
+                            {% endif %}
                         </div>
                     </div>
                     <!-- card image -->
-                    <div class="row h-25">
+                    <div class="row m-0 h-25">
                         <img class="card-image" src="{{MEDIA_URL}}{{ card.image.name }}" alt="{{card}} image">
                     </div>
                     <!-- card effect text -->
-                    <div class="row">
-                        <div class="col-10 p-1 mb-0 offset-1 card-effect">
-                            <h3 class="text-center mb-0 card-effect-text">{{ card.effect_text }}</h3>
+                    <div class="row m-0">
+                        <div class="col-12 mb-1 card-effect">
+                            <h3 class="text-center card-effect-text">{{ card.effect_text }}</h3>
                         </div>
                     </div>
                     <!-- card description -->
-                    <div class="row">
+                    <div class="row m-0">
                         <p class="text-center mb-1 card-description-text">{{ card.description }}</p>
                     </div>
-                    <div class="row">
+                    <div class="row m-0">
                         <!-- card effect -->
-                        <div class="col-3">
+                        <div class="col-3 p-0">
                             <!-- attack modifier -->
                             {% if card.attack_modifier  %}
-                            <p>{{ card.attack_modifier }}</p>
+                            <!-- attack all -->
+                            {% if card.attack_all  %}
+                            <i class="position-absolute fas mt-2 fa-infinity fa-inverse card_attack_all stroke"></i>
                             {% endif %}
-                            <!-- heal modifier -->
-                            {% if card.healing_modifier  %}
-                            <p>{{ card.healing_modifier }}</p>
+                            <span><img class="position-absolute card_action_effect"
+                                    src="{{MEDIA_URL}}sword_{{ card.get_skill_style_display|lower }}.svg"
+                                    alt="{{ card.get_skill_style_display|lower }} attack"></span>
+                            <p
+                                class="position-absolute px-1 fa-inverse text-center stat-number stroke">+{{ card.attack_modifier }}</p>
                             {% endif %}
                             <!-- defence modifier -->
                             {% if card.defence_modifier  %}
-                            <p>{{ card.defence_modifier }}</p>
-                            {% endif %}
-                            <!-- attack all -->
-                            {% if card.attack_all  %}
-                            <p>{{ card.attack_all }}</p>
+                            <span>{{ card.defence_modifier }}</span>
                             {% endif %}
                         </div>
-                        <div class="col-6"></div>
+                        <div class="col-6 p-0">
+                            <div class="row">
+                                <div class="col-6 p-0">
+                                    <!-- heal modifier -->
+                                    {% if card.healing_modifier  %}
+                                    <span class="fa-stack fire stroke card-heal-icon fa-fw">
+                                        <i class="fas fa-stack-1x fa-heart"></i>
+                                        <span class="fa-stack-1x fa-inverse stat-number">+{{ card.healing_modifier }}</span>
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                <div class="col-6"></div>
+                            </div>
+                        </div>
                         <!-- card cost -->
-                        <div class="col-3">
+                        <div class="col-3 p-0">
                             {% if card.mana_cost %}
-                            <p>
-                                {{ card.mana_cost }}
-                            </p>
+                            <span class="fa-stack card-cost-icon mana stroke fa-fw">
+                                <i class="fas fa-stack-1x fa-flask"></i>
+                                <span class="fa-stack-1x fa-inverse stat-number">{{ card.mana_cost }}</span>
+                            </span>
                             {% endif %}
                             {% if card.cards_discard_cost %}
-                            <p>{{ card.cards_discard_cost }}</p>
+                            <span>{{ card.cards_discard_cost }}</span>
                             {% endif %}
                         </div>
                     </div>
@@ -173,8 +211,8 @@
                     {% endfor %}
                 </div>
                 {% if forloop.counter|divisibleby:"4" %}
-                </div>
-                <div class="row display-flex justify-content-center">
+            </div>
+            <div class="row display-flex justify-content-center">
                 {% endif %}
                 {% endfor %}
             </div>
