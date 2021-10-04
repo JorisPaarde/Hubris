@@ -122,6 +122,9 @@
 }
 
 .card-description-text{
+    padding-top: 0.5rem;
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
     font-size: calc(3px + 0.8vw);
     font-weight: 500;
     line-height: 100%;
@@ -141,12 +144,31 @@
     top: -2px;
 }
 
+.attack-stat-number{
+    font-size: calc(7px + 1vw);
+}
+
 .card_action_effect{
     width: calc(10px + 1vw);
 }
 
 .card_attack_all{
     font-size: calc(6px + 1vw);
+}
+.card-title-row{
+    height: 10%;
+}
+.card-image-row{
+    height: 40%;
+}
+.card-effect-row{
+    height: 10%;
+}
+.card-description-row{
+    height: 24%;
+}
+.card-effect-row{
+    height: 10%;
 }
 
 /* screen layers and screen sizes */

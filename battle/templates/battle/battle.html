@@ -43,49 +43,49 @@
                 <li class="mt-lg-2 fire stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-heart"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">10</span>
+                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.health_current }}</span>
                     </span>
                 </li>
                 <!-- lightning defence -->
                 <li class="mt-lg-2 lightning stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-shield-alt"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">2</span>
+                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.lightning_defence }}</span>
                     </span>
                 </li>
                 <!-- fire defence -->
                 <li class="mt-lg-2 fire stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-shield-alt"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">0</span>
+                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.fire_defence }}</span>
                     </span>
                 </li>
                 <!-- ice defence -->
                 <li class="mt-lg-2 ice stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-shield-alt"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">0</span>
+                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.ice_defence }}</span>
                     </span>
                 </li>
                 <!-- drain defence -->
                 <li class="mt-lg-2 drain stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-shield-alt"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">0</span>
+                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.drain_defence }}</span>
                     </span>
                 </li>
                 <!-- golem defence -->
                 <li class="mt-lg-2 golem stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-shield-alt"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">0</span>
+                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.golem_defence }}</span>
                     </span>
                 </li>
                 <!-- mana -->
                 <li class="mt-lg-2 mana stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-flask"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">4</span>
+                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.mana_current }}</span>
                     </span>
                 </li>
             </ul>
@@ -108,7 +108,7 @@
                 <div class="col-2 m-1 p-1 skill-card">
                     {% for card in cards %}
                     {% if player_card|lower == card.title|lower %}
-                    <div class="row m-0 align-items-center">
+                    <div class="row card-title-row m-0 align-items-center">
                         <!--  phase -->
                         <div class="col-2 p-0">
                             <h3 class="text-center m-0 align-middle card-title">{{ card.get_allowed_in_phase_display }}
@@ -147,37 +147,38 @@
                         </div>
                     </div>
                     <!-- card image -->
-                    <div class="row m-0 h-25">
+                    <div class="row m-0 card-image-row">
                         <img class="card-image" src="{{MEDIA_URL}}{{ card.image.name }}" alt="{{card}} image">
                     </div>
                     <!-- card effect text -->
-                    <div class="row m-0">
+                    <div class="row m-0 card-effect-row">
                         <div class="col-12 mb-1 card-effect">
                             <h3 class="text-center card-effect-text">{{ card.effect_text }}</h3>
                         </div>
                     </div>
                     <!-- card description -->
-                    <div class="row m-0">
-                        <p class="text-center mb-1 card-description-text">{{ card.description }}</p>
+                    <div class="row m-0 card-description-row">
+                        <p class="text-center card-description-text">{{ card.description }}</p>
                     </div>
-                    <div class="row m-0">
+                    <!-- card effect -->
+                    <div class="row card-effect-row m-0">
                         <!-- card effect -->
                         <div class="col-3 p-0">
                             <!-- attack modifier -->
                             {% if card.attack_modifier  %}
-                            <!-- attack all -->
-                            {% if card.attack_all  %}
-                            <i class="position-absolute fas mt-2 fa-infinity fa-inverse card_attack_all stroke"></i>
-                            {% endif %}
-                            <span><img class="position-absolute card_action_effect"
-                                    src="{{MEDIA_URL}}sword_{{ card.get_skill_style_display|lower }}.svg"
-                                    alt="{{ card.get_skill_style_display|lower }} attack"></span>
-                            <p
-                                class="position-absolute px-1 fa-inverse text-center stat-number stroke">+{{ card.attack_modifier }}</p>
+                                    <!-- attack all -->
+                                    {% if card.attack_all  %}
+                                    <i class="position-absolute fas mt-2 fa-infinity fa-inverse card_attack_all stroke"></i>
+                                    {% endif %}
+                                <span><img class="position-absolute {% if not card.attack_all %}mt-1 {% endif %}card_action_effect"
+                                        src="{{MEDIA_URL}}sword_{{ card.get_skill_style_display|lower }}.svg"
+                                        alt="{{ card.get_skill_style_display|lower }} attack"></span>
+                                <span
+                                    class="position-absolute px-1 {% if not card.attack_all %}mt-1 {% endif %}fa-inverse text-center attack-stat-number stroke">+{{ card.attack_modifier }}</span>
                             {% endif %}
                             <!-- defence modifier -->
                             {% if card.defence_modifier  %}
-                            <span>{{ card.defence_modifier }}</span>
+                                <span>{{ card.defence_modifier }}</span>
                             {% endif %}
                         </div>
                         <div class="col-6 p-0">
