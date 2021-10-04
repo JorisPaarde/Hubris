@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import Player_type, Player, Card, Hand_card
+from battle.models import Game
+from django.contrib import messages
+
 
 import random
 # Create your views here.
@@ -8,30 +11,61 @@ import random
 def player_select(request):
     """view to return player selection page"""
 
-    player_type = Player_type.objects.all()
+    current_user = request.user
+    current_player = Player.objects.filter(user=current_user)
 
+    # collect all player types
+    player_type = Player_type.objects.all()
     context = {
         'player_type': player_type,
     }
 
+    # check if this user already has a player (with an unfinished game)
+    if current_player:
+        current_player = Player.objects.get(user=current_user)
+        current_game = Game.objects.get(player=current_player)
+        # if there is an unfinished game send it to the template
+        if not current_game.completed:
+            context.update({'current_game': current_game.pk})
+            messages.info(
+                request, f"{current_user} do you want to continue your current game?")
+
     return render(request, 'profiles/player-select.html', context)
+
+
+def continue_game(request, continue_game):
+    """view to return player to current game or start a new game"""
+
+    current_user = request.user
+    current_player = Player.objects.filter(user=current_user)
+
+    if continue_game == 'y':
+        print('continue to the current game')
+        # hier gaat iets fout..
+        current_game = Game.objects.get(player=current_player)
+
+        context = {
+            'current_game': current_game,
+        }
+
+        return redirect('battle:battle-screen', context)
+
+    else:
+        print('finish current game and return to select.')
+        current_game = Game.objects.get(player=current_player)
+        current_game.completed = True
+        current_game.save()
+
+        return redirect('profiles:player_select')
 
 
 def game_setup(request, selected):
 
     if request.method == 'POST':
 
-        # check if this user already has a player (with an unfinished game)
+        # check if this user already has a player
         current_user = request.user
         current_player = Player.objects.filter(user=current_user)
-
-        if current_player:
-            current_player = Player.objects.get(user=current_user)
-            print('startgame')
-            # hand = current_player.hand.all()
-            # print(hand)
-            # for card in hand.iterator():
-            #     print(card.card)
 
         # if not, create a new player and set the initial values for that player
         if not current_player:
@@ -106,5 +140,3 @@ def draw_cards(n, hand, current_player):
             card.save()
             current_player.hand.add(card)
             current_player.save()
-    print('players new hand:')
-    print(current_player.hand.all())

@@ -15,7 +15,7 @@
     <div class="row menu d-flex align-items-center">
         <div class="d-grid gap-2 col-6 offset-3 col-lg-4 offset-lg-4">
             {% if user.is_authenticated %}
-                <a class="medium-text button text-center" href="{% url 'profiles:player-select' %}">Play</a>
+                <a class="medium-text button text-center" href="{% url 'profiles:player_select' %}">Play</a>
                 <a class="medium-text button text-center" href="{% url 'home:logout' %}">Logout</a> 
             {% else %}
                 <a class="medium-text button text-center" href="{% url 'home:login' %}">Login</a>

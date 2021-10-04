@@ -18,9 +18,6 @@
     <div class="row">
         <div class="col">
             <h1 class="text-center title mb-1 medium-large-text">select your hero</h1>
-            {% if selected %}
-            <h2>selected: {{ selected }}</h2>
-            {% endif %}
         </div>
     </div>
     <div class="row menu d-flex justify-content-around align-items-center">
@@ -53,7 +50,8 @@
                 <div class="col-8 d-flex align-items-center">
                     {% for player_type in player_type %}
                     {% if player_type.selected == 'FR' %}
-                    <img class="wizard-select-image" src="{{ MEDIA_URL }}{{player_type.image_idle}}" width="100%" alt="fire wizard">
+                    <img class="wizard-select-image" src="{{ MEDIA_URL }}{{player_type.image_idle}}" width="100%"
+                        alt="fire wizard">
                     {% endif %}
                     {% endfor %}
                 </div>
@@ -121,7 +119,8 @@
                 <div class="col-8 d-flex align-items-center">
                     {% for player_type in player_type %}
                     {% if player_type.selected == 'IC' %}
-                    <img class="wizard-select-image" src="{{ MEDIA_URL }}{{player_type.image_idle}}" width="100%" alt="ice wizard">
+                    <img class="wizard-select-image" src="{{ MEDIA_URL }}{{player_type.image_idle}}" width="100%"
+                        alt="ice wizard">
                     {% endif %}
                     {% endfor %}
                 </div>
@@ -190,7 +189,8 @@
                 <div class="col-8 d-flex align-items-center">
                     {% for player_type in player_type %}
                     {% if player_type.selected == 'LN' %}
-                    <img class="wizard-select-image" src="{{ MEDIA_URL }}{{player_type.image_idle}}" width="100%" alt="thunder wizard">
+                    <img class="wizard-select-image" src="{{ MEDIA_URL }}{{player_type.image_idle}}" width="100%"
+                        alt="thunder wizard">
                     {% endif %}
                     {% endfor %}
                 </div>
@@ -231,5 +231,32 @@
             </div>
         </div>
     </div>
+    <!-- current game selection menu -->
+    {% if current_game %}
+    <div class="row h-100 w-100 z2000 current-game-menu position-absolute">
+        <div class="col-12 align-self-center justify-self-center">
+            <div class="row">
+                <div class="col-6 offset-3 menu-banner p-3">
+                    <div class="row">
+                        <div class="col-6 text-center">
+                            <form method="POST" action="{% url 'profiles:continue_game' 'y' %}">
+                                {% csrf_token %}
+                                <button type="submit" name="continue_game"
+                                    class="button medium-text mb-2">Continue</button>
+                            </form>
+                        </div>
+                        <div class="col-6 text-center">
+                            <form method="POST" action="{% url 'profiles:continue_game' 'n' %}">
+                                {% csrf_token %}
+                                <button type="submit" name="continue_game"
+                                    class="button medium-text mb-2">New game</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
