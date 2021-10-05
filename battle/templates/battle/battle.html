@@ -213,9 +213,8 @@
                         <!-- card select button -->
                         <div class="row">
                             <div class="col-12 text-center">
-                                <form method="POST" action="{% url 'battle:card-select' card.title %}">
+                                <form method="POST" action="{% url 'battle:card-select' card.id %}">
                                 {% csrf_token %}
-                                <input type="text" class="d-none" name="card-select" value="{{ card.title }}">
                                 <button type="submit" name="card-select" class="button small-text px-3">play</button>
                                 </form>
                             </div>
