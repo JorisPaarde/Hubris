@@ -15,11 +15,6 @@ class Enemy(models.Model):
     image_attack_url = models.URLField(null=True, blank=True)
     image_die = models.ImageField(null=True, blank=True)
     image_die_url = models.URLField(null=True, blank=True)
-    max_health = models.IntegerField(default=0)
-    health_current = models.IntegerField(null=True)
-    attack_power = models.IntegerField(default=0)
-    skill_style = models.CharField(max_length=2, choices=settings.SKILL_STYLES)
-    attack_phase = models.CharField(max_length=1, choices=settings.ATTACK_PHASES)
 
     def __str__(self):
         return self.name
@@ -28,6 +23,11 @@ class Enemy(models.Model):
 class Game_floor_enemy(models.Model):
 
     enemy = models.ForeignKey(Enemy, on_delete=models.CASCADE, null=True, blank=True)
+    max_health = models.IntegerField(default=0)
+    health_current = models.IntegerField(null=True)
+    attack_power = models.IntegerField(default=0)
+    skill_style = models.CharField(max_length=2, choices=settings.SKILL_STYLES, default=settings.SKILL_STYLES[0][0])
+    attack_phase = models.CharField(max_length=1, choices=settings.ATTACK_PHASES, default=settings.ATTACK_PHASES[0][0])
 
     def __str__(self):
         return str(self.id)

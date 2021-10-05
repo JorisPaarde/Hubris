@@ -70,7 +70,7 @@ class Player(models.Model):
     physical_defense = models.IntegerField(default=0)
     golem_attack_cost = models.IntegerField(default=2)
     healing_power = models.IntegerField(default=0)
-    healing_cost = models.IntegerField(default=0)
+    healing_cost = models.IntegerField(default=2)
     mana_current = models.IntegerField(default=0)
     mana_max = models.IntegerField(default=0)
     health_current = models.IntegerField(default=0)

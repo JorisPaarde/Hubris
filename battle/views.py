@@ -4,6 +4,7 @@ from profiles.models import Card
 from django.contrib import messages
 from django.conf import settings
 
+import random
 
 # Create your views here.
 
@@ -23,6 +24,8 @@ def battle_screen(request, game):
 
     # monster battle phase
     if game.game_step == '2':
+        # select monster(s) from database
+        pickmonsters(request, game)
         messages.info(request, "Select an available spell")
 
     context = {
@@ -113,3 +116,26 @@ def monster_battle(request, action):
             current_game_floor.save()
 
     return redirect('battle:battle-screen', game)
+
+
+def pickmonsters(request, game):
+
+    current_user = request.user
+    player = Player.objects.get(user=current_user)
+    game = Game.objects.get(player=player)
+    current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
+
+    # determine the amount of enemies
+    n = 3
+
+    if current_game_floor:
+        for game_floor_enemy in range(n):
+            # get a list of enemies available to this player
+            available_enemies = Enemy.objects.filter(in_freeversion=True)
+            # select a random enemy and add it to the game_floor
+            random_enemy = random.choice(available_enemies)
+            game_floor_enemy = Game_floor_enemy(enemy=random_enemy)
+            game_floor_enemy.save()
+            print(current_game_floor)
+            current_game_floor.save()
+
