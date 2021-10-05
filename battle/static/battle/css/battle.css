@@ -95,8 +95,12 @@
     font-family: 'Stylish', sans-serif;
     background-color: var(--offwhite);
     border: black solid 0.5px;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.25);
     height: 45vh;
+}
+
+.skill-card:hover{
+    transform: scale(105%,105%);
 }
 
 .card-effect{
@@ -176,7 +180,7 @@
 .battle-screen,
 .card-screen {
     position: fixed;
-    top: 20px;
+    top: 10px;
 }
 
 .floor {
