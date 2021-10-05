@@ -97,11 +97,19 @@
         <div class="col-12 z0 h-75 battle-screen">
             <div class="row h-100">
                 <!-- player -->
-                <div class="col-5 h-100 d-flex justify-content-end align-items-center">
+                <div class="col-4 h-100 d-flex justify-content-end align-items-center">
                     <img src="{{MEDIA_URL}}{{ player.type.image_idle.name }}" class="player-image" alt="player">
                 </div>
                 <!-- enemies -->
-                <div class="col-8"></div>
+                <div class="col-8 h-100 d-flex align-items-center">
+                    {% for gamefloor_enemy in current_game_floor.enemy.all %}
+                        {% for enemy in enemies %}
+                            {% if enemy|lower == gamefloor_enemy.enemy|lower %}
+                            <img class="enemy-image" width="33%" src="{{MEDIA_URL}}{{ enemy.image_idle }}" alt="{{enemy}} image">
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
         <!-- Card screen -->

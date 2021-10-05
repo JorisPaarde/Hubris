@@ -17,6 +17,7 @@ def battle_screen(request, game):
     cards = Card.objects.all()
     game = Game.objects.get(player=player)
     current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
+    enemies = Enemy.objects.all()
 
     # card playing phase
     if game.game_step == '1':
@@ -33,6 +34,7 @@ def battle_screen(request, game):
         "current_game_floor": current_game_floor,
         "player": player,
         "cards": cards,
+        "enemies": enemies,
     }
 
     return render(request, 'battle/battle.html', context)
@@ -136,6 +138,5 @@ def pickmonsters(request, game):
             random_enemy = random.choice(available_enemies)
             game_floor_enemy = Game_floor_enemy(enemy=random_enemy)
             game_floor_enemy.save()
-            print(current_game_floor)
+            current_game_floor.enemy.add(game_floor_enemy)
             current_game_floor.save()
-

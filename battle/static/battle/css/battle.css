@@ -4,6 +4,11 @@
     height: 35vh;
 }
 
+.enemy-image{
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
 /* status an action bar */
 .stats-bar,
 .action-bar {
