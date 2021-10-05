@@ -77,6 +77,10 @@
     width:calc(20px + 0.8vw);
 }
 
+.action-icon-button{
+    all: unset;
+}
+
 /* background */
 
 .battle-bg {

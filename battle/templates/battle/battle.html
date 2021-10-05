@@ -19,7 +19,8 @@
             <div class="row">
                 <div class="col-12 title text-center">
                     <h1 class="medium-large-text mb-0">Score: {{ game.score }} Floor 15</h1>
-                    <h2 class="fs-2">Phase {{ current_game_floor.get_current_phase_display }} game step: {{ game.game_step }}</h2>
+                    <h2 class="fs-2">Phase {{ current_game_floor.get_current_phase_display }} game step:
+                        {{ game.game_step }}</h2>
                 </div>
                 <!-- main menu button -->
                 <div class="col-2 offset-9 mt-md-4 z500">
@@ -43,7 +44,8 @@
                 <li class="mt-lg-2 fire stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-heart"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.health_current }}{% if not player.health_current %}0{% endif %}</span>
+                        <span
+                            class="fa-stack-1x fa-inverse stat-number">{{ player.health_current }}{% if not player.health_current %}0{% endif %}</span>
                     </span>
                 </li>
                 <!-- lightning defence -->
@@ -85,7 +87,8 @@
                 <li class="mt-lg-2 mana stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-flask"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.mana_current }}{% if not player.mana_current %}0{% endif %}</span>
+                        <span
+                            class="fa-stack-1x fa-inverse stat-number">{{ player.mana_current }}{% if not player.mana_current %}0{% endif %}</span>
                     </span>
                 </li>
             </ul>
@@ -106,122 +109,124 @@
             <div class="row display-flex justify-content-center">
                 <!-- cards -->
                 {% for player_card in player.hand.all %}
-                    <div class="col-2 m-1 p-1 skill-card">
-                        {% for card in cards %}
-                        {% if player_card|lower == card.title|lower %}
-                        <div class="row card-title-row m-0">
-                            <!--  phase -->
-                            <div class="col-2 p-0">
-                                <h3 class="text-center m-0 align-middle card-title">{{ card.get_allowed_in_phase_display }}
-                                </h3>
-                            </div>
-                            <!-- title -->
-                            <div class="col-8 p-0">
-                                <h2 class="text-center align-middle m-0 card-title">{{ card.title }}</h2>
-                            </div>
-                            <!-- skill style -->
-                            <div class="col-2 p-0">
-                                {% if card.skill_style|lower == "fr" %}
-                                <span><i
-                                        class="card-style-icon fas fa-fire-alt fire align-middle text-center stroke"></i></span>
-                                {% endif %}
-                                {% if card.skill_style|lower == "ic" %}
-                                <span><i
-                                        class="card-style-icon fas fa-snowflake ice align-middle text-center stroke"></i></span>
-                                {% endif %}
-                                {% if card.skill_style|lower == "ln" %}
-                                <span><i
-                                        class="card-style-icon fas fa-fire-alt lightning align-middle text-center stroke"></i></span>
-                                {% endif %}
-                                {% if card.skill_style|lower == "dr" %}
-                                <span><i
-                                        class="card-style-icon fas fa-skull drain align-middle text-center stroke"></i></span>
-                                {% endif %}
-                                {% if card.skill_style|lower == "gl" %}
-                                <span><i
-                                        class="card-style-icon fas fa-robot golem align-middle text-center stroke"></i></span>
-                                {% endif %}
-                                {% if card.skill_style|lower == "hl" %}
-                                <span><i
-                                        class="card-style-icon fas fa-heart heal align-middle text-center stroke"></i></span>
-                                {% endif %}
-                            </div>
+                <div class="col-2 m-1 p-1 skill-card">
+                    {% for card in cards %}
+                    {% if player_card|lower == card.title|lower %}
+                    <div class="row card-title-row m-0">
+                        <!--  phase -->
+                        <div class="col-2 p-0">
+                            <h3 class="text-center m-0 align-middle card-title">{{ card.get_allowed_in_phase_display }}
+                            </h3>
                         </div>
-                        <!-- card image -->
-                        <div class="row m-0 card-image-row">
-                            <img class="card-image" src="{{MEDIA_URL}}{{ card.image.name }}" alt="{{card}} image">
+                        <!-- title -->
+                        <div class="col-8 p-0">
+                            <h2 class="text-center align-middle m-0 card-title">{{ card.title }}</h2>
                         </div>
-                        <!-- card effect text -->
-                        <div class="row m-0 card-effect-row">
-                            <div class="col-12 px-1 mb-1 card-effect">
-                                <h3 class="text-center card-effect-text">{{ card.effect_text }}</h3>
-                            </div>
+                        <!-- skill style -->
+                        <div class="col-2 p-0">
+                            {% if card.skill_style|lower == "fr" %}
+                            <span><i
+                                    class="card-style-icon fas fa-fire-alt fire align-middle text-center stroke"></i></span>
+                            {% endif %}
+                            {% if card.skill_style|lower == "ic" %}
+                            <span><i
+                                    class="card-style-icon fas fa-snowflake ice align-middle text-center stroke"></i></span>
+                            {% endif %}
+                            {% if card.skill_style|lower == "ln" %}
+                            <span><i
+                                    class="card-style-icon fas fa-fire-alt lightning align-middle text-center stroke"></i></span>
+                            {% endif %}
+                            {% if card.skill_style|lower == "dr" %}
+                            <span><i
+                                    class="card-style-icon fas fa-skull drain align-middle text-center stroke"></i></span>
+                            {% endif %}
+                            {% if card.skill_style|lower == "gl" %}
+                            <span><i
+                                    class="card-style-icon fas fa-robot golem align-middle text-center stroke"></i></span>
+                            {% endif %}
+                            {% if card.skill_style|lower == "hl" %}
+                            <span><i
+                                    class="card-style-icon fas fa-heart heal align-middle text-center stroke"></i></span>
+                            {% endif %}
                         </div>
-                        <!-- card description -->
-                        <div class="row m-0 card-description-row">
-                            <p class="text-center card-description-text">{{ card.description }}</p>
+                    </div>
+                    <!-- card image -->
+                    <div class="row m-0 card-image-row">
+                        <img class="card-image" src="{{MEDIA_URL}}{{ card.image.name }}" alt="{{card}} image">
+                    </div>
+                    <!-- card effect text -->
+                    <div class="row m-0 card-effect-row">
+                        <div class="col-12 px-1 mb-1 card-effect">
+                            <h3 class="text-center card-effect-text">{{ card.effect_text }}</h3>
                         </div>
+                    </div>
+                    <!-- card description -->
+                    <div class="row m-0 card-description-row">
+                        <p class="text-center card-description-text">{{ card.description }}</p>
+                    </div>
+                    <!-- card effect -->
+                    <div class="row card-effect-row m-0">
                         <!-- card effect -->
-                        <div class="row card-effect-row m-0">
-                            <!-- card effect -->
-                            <div class="col-3 p-0">
-                                <!-- attack modifier -->
-                                {% if card.attack_modifier  %}
-                                        <!-- attack all -->
-                                        {% if card.attack_all  %}
-                                        <i class="position-absolute fas mt-2 fa-infinity fa-inverse card_attack_all stroke"></i>
-                                        {% endif %}
-                                    <span><img class="position-absolute {% if not card.attack_all %}mt-1 {% endif %}card_action_effect"
-                                            src="{{MEDIA_URL}}sword_{{ card.get_skill_style_display|lower }}.svg"
-                                            alt="{{ card.get_skill_style_display|lower }} attack"></span>
-                                    <span
-                                        class="position-absolute px-1 {% if not card.attack_all %}mt-1 {% endif %}fa-inverse text-center attack-stat-number stroke">+{{ card.attack_modifier }}</span>
-                                {% endif %}
-                                <!-- defence modifier -->
-                                {% if card.defence_modifier  %}
-                                    <span>{{ card.defence_modifier }}</span>
-                                {% endif %}
-                            </div>
-                            <div class="col-6 p-0">
-                                <div class="row">
-                                    <div class="col-6 p-0">
-                                        <!-- heal modifier -->
-                                        {% if card.healing_modifier  %}
-                                        <span class="fa-stack fire stroke card-heal-icon fa-fw">
-                                            <i class="fas fa-stack-1x fa-heart"></i>
-                                            <span class="fa-stack-1x fa-inverse stat-number">+{{ card.healing_modifier }}</span>
-                                        </span>
-                                        {% endif %}
-                                    </div>
-                                    <div class="col-6">
-                                    </div>
+                        <div class="col-3 p-0">
+                            <!-- attack modifier -->
+                            {% if card.attack_modifier  %}
+                            <!-- attack all -->
+                            {% if card.attack_all  %}
+                            <i class="position-absolute fas mt-2 fa-infinity fa-inverse card_attack_all stroke"></i>
+                            {% endif %}
+                            <span><img
+                                    class="position-absolute {% if not card.attack_all %}mt-1 {% endif %}card_action_effect"
+                                    src="{{MEDIA_URL}}sword_{{ card.get_skill_style_display|lower }}.svg"
+                                    alt="{{ card.get_skill_style_display|lower }} attack"></span>
+                            <span
+                                class="position-absolute px-1 {% if not card.attack_all %}mt-1 {% endif %}fa-inverse text-center attack-stat-number stroke">+{{ card.attack_modifier }}</span>
+                            {% endif %}
+                            <!-- defence modifier -->
+                            {% if card.defence_modifier  %}
+                            <span>{{ card.defence_modifier }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="col-6 p-0">
+                            <div class="row">
+                                <div class="col-6 p-0">
+                                    <!-- heal modifier -->
+                                    {% if card.healing_modifier  %}
+                                    <span class="fa-stack fire stroke card-heal-icon fa-fw">
+                                        <i class="fas fa-stack-1x fa-heart"></i>
+                                        <span
+                                            class="fa-stack-1x fa-inverse stat-number">+{{ card.healing_modifier }}</span>
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                <div class="col-6">
                                 </div>
                             </div>
-                            <!-- card cost -->
-                            <div class="col-3 p-0">
-                                {% if card.mana_cost %}
-                                <span class="fa-stack card-cost-icon mana stroke fa-fw">
-                                    <i class="fas fa-stack-1x fa-flask"></i>
-                                    <span class="fa-stack-1x fa-inverse stat-number">{{ card.mana_cost }}</span>
-                                </span>
-                                {% endif %}
-                                {% if card.cards_discard_cost %}
-                                <span>{{ card.cards_discard_cost }}</span>
-                                {% endif %}
-                            </div>
                         </div>
-                        <!-- card select button -->
-                        <div class="row">
-                            <div class="col-12 text-center">
-                                <form method="POST" action="{% url 'battle:card-select' card.id %}">
+                        <!-- card cost -->
+                        <div class="col-3 p-0">
+                            {% if card.mana_cost %}
+                            <span class="fa-stack card-cost-icon mana stroke fa-fw">
+                                <i class="fas fa-stack-1x fa-flask"></i>
+                                <span class="fa-stack-1x fa-inverse stat-number">{{ card.mana_cost }}</span>
+                            </span>
+                            {% endif %}
+                            {% if card.cards_discard_cost %}
+                            <span>{{ card.cards_discard_cost }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- card select button -->
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <form method="POST" action="{% url 'battle:card-select' card.id %}">
                                 {% csrf_token %}
                                 <button type="submit" name="card-select" class="button small-text px-3">play</button>
-                                </form>
-                            </div>
+                            </form>
                         </div>
-                        {% endif %}
-                        {% endfor %}
                     </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
                 {% if forloop.counter|divisibleby:"4" %}
             </div>
             <div class="row display-flex justify-content-center">
@@ -242,119 +247,188 @@
                 <div class="col-12 ml-4 mb-2 action-bar">
                     <div class="row d-flex justify-content-between">
                         <!-- lightning action icon -->
-                        <div class="col px-2 m-lg-2">
-                            <div class="row">
-                                <i class="fas m-2 action-icon fa-bolt lightning {% if not player.lightning_attack_power %}text-muted  {% endif %} stroke"></i>
-                            </div>
-                            <div class="row action-stats">
-                                <div class="col p-1 position-relative">
-                                    <span><img class="position-absolute action-effect"
-                                            src="{{MEDIA_URL}}sword_lightning.svg" alt="lightning attack"></span>
-                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.lightning_attack_power }}</span>
+                        <form class="action-icon-button" action="{% url 'battle:monster-battle' 'lightning' %}"
+                            method="POST">
+                            {% csrf_token %}
+                            <button class="action-icon-button" type="submit">
+                                <div class="col px-2 m-lg-2">
+                                    <div class="row">
+                                        <i
+                                            class="fas m-2 action-icon fa-bolt lightning {% if not player.lightning_attack_power %}text-muted  {% endif %} stroke"></i>
+                                    </div>
+                                    <div class="row action-stats">
+                                        <div class="col p-1 position-relative">
+                                            <span><img class="position-absolute action-effect"
+                                                    src="{{MEDIA_URL}}sword_lightning.svg"
+                                                    alt="lightning attack"></span>
+                                            <span
+                                                class="position-absolute fa-inverse stat-number stroke">{{ player.lightning_attack_power }}</span>
+                                        </div>
+                                        <div class="col p-1 position-relative">
+                                            <i
+                                                class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
+                                            <span
+                                                class="position-absolute fa-inverse stat-number stroke">{{ player.lightning_attack_cost }}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col p-1 position-relative">
-                                    <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
-                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.lightning_attack_cost }}</span>
-                                </div>
-                            </div>
-                        </div>
+                            </button>
+                        </form>
                         <!-- fire action icon -->
-                        <div class="col px-2 m-lg-2">
-                            <div class="row">
-                                <i class="fas m-2 action-icon fa-fire-alt fire {% if not player.fire_attack_power %}text-muted{% endif %} stroke"></i>
-                            </div>
-                            <div class="row action-stats">
-                                <div class="col p-1 position-relative">
-                                    <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_fire.svg"
-                                            alt="fire attack"></span>
-                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.fire_attack_power }}</span>
+                        <form class="action-icon-button" action="{% url 'battle:monster-battle' 'fire' %}"
+                            method="POST">
+                            {% csrf_token %}
+                            <button class="action-icon-button" type="submit">
+                                <div class="col px-2 m-lg-2">
+                                    <div class="row">
+                                        <i
+                                            class="fas m-2 action-icon fa-fire-alt fire {% if not player.fire_attack_power %}text-muted{% endif %} stroke"></i>
+                                    </div>
+                                    <div class="row action-stats">
+                                        <div class="col p-1 position-relative">
+                                            <span><img class="position-absolute action-effect"
+                                                    src="{{MEDIA_URL}}sword_fire.svg" alt="fire attack"></span>
+                                            <span
+                                                class="position-absolute fa-inverse stat-number stroke">{{ player.fire_attack_power }}</span>
+                                        </div>
+                                        <div class="col p-1 position-relative">
+                                            <i
+                                                class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
+                                            <span
+                                                class="position-absolute fa-inverse stat-number stroke">{{ player.fire_attack_cost }}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col p-1 position-relative">
-                                    <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
-                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.fire_attack_cost }}</span>
-                                </div>
-                            </div>
-                        </div>
+                            </button>
+                        </form>
                         <!-- ice action icon -->
-                        <div class="col px-2 m-lg-2">
-                            <div class="row">
-                                <i class="fas m-2 action-icon fa-snowflake ice {% if not player.ice_attack_power %}text-muted{% endif %} stroke"></i>
-                            </div>
-                            <div class="row action-stats">
-                                <div class="col p-1 position-relative">
-                                    <i class="position-absolute fas fa-infinity fa-inverse mt-2 fs-6 stroke"></i>
-                                    <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_ice.svg"
-                                            alt="ice attack"></span>
-                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.ice_attack_power }}</span>
+                        <form class="action-icon-button" action="{% url 'battle:monster-battle' 'ice' %}"
+                            method="POST">
+                            {% csrf_token %}
+                            <button class="action-icon-button" type="submit">
+                                <div class="col px-2 m-lg-2">
+                                    <div class="row">
+                                        <i
+                                            class="fas m-2 action-icon fa-snowflake ice {% if not player.ice_attack_power %}text-muted{% endif %} stroke"></i>
+                                    </div>
+                                    <div class="row action-stats">
+                                        <div class="col p-1 position-relative">
+                                            <i
+                                                class="position-absolute fas fa-infinity fa-inverse mt-2 fs-6 stroke"></i>
+                                            <span><img class="position-absolute action-effect"
+                                                    src="{{MEDIA_URL}}sword_ice.svg" alt="ice attack"></span>
+                                            <span
+                                                class="position-absolute fa-inverse stat-number stroke">{{ player.ice_attack_power }}</span>
+                                        </div>
+                                        <div class="col p-1 position-relative">
+                                            <i
+                                                class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
+                                            <span
+                                                class="position-absolute fa-inverse stat-number stroke">{{ player.ice_attack_cost }}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col p-1 position-relative">
-                                    <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
-                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.ice_attack_cost }}</span>
-                                </div>
-                            </div>
-                        </div>
+                            </button>
+                        </form>
                         <!-- heal action icon -->
-                        <div class="col px-2 m-lg-2">
-                            <div class="row">
-                                <i class="fas m-2 action-icon fa-heart healing {% if not player.healing_power %}text-muted{% endif %} stroke"></i>
-                            </div>
-                            <div class="row action-stats">
-                                <div class="col p-1 position-relative">
-                                    <span><i class="position-absolute fas fa-heart fire stroke fs-3"></i></span>
-                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.healing_power }}</span>
+                        <form class="action-icon-button" action="{% url 'battle:monster-battle' 'heal' %}"
+                            method="POST">
+                            {% csrf_token %}
+                            <button class="action-icon-button" type="submit">
+                                <div class="col px-2 m-lg-2">
+                                    <div class="row">
+                                        <i
+                                            class="fas m-2 action-icon fa-heart healing {% if not player.healing_power %}text-muted{% endif %} stroke"></i>
+                                    </div>
+                                    <div class="row action-stats">
+                                        <div class="col p-1 position-relative">
+                                            <span><i class="position-absolute fas fa-heart fire stroke fs-3"></i></span>
+                                            <span
+                                                class="position-absolute fa-inverse stat-number stroke">{{ player.healing_power }}</span>
+                                        </div>
+                                        <div class="col p-1 position-relative">
+                                            <i
+                                                class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
+                                            <span
+                                                class="position-absolute fa-inverse stat-number stroke">{{ player.healing_cost }}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col p-1 position-relative">
-                                    <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
-                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.healing_cost }}</span>
-                                </div>
-                            </div>
-                        </div>
+                            </button>
+                        </form>
                         <!-- drain action icon -->
-                        <div class="col px-2 m-lg-2">
-                            <div class="row">
-                                <i class="fas m-2 action-icon fa-skull drain {% if not player.drain_attack_power %}text-muted{% endif %} stroke"></i>
-                            </div>
-                            <div class="row action-stats">
-                                <div class="col p-1 position-relative">
-                                    <span><i class="position-absolute fas fa-heart fire stroke fs-3"></i></span>
-                                    <span><img class="position-absolute action-effect"
-                                            src="{{MEDIA_URL}}sword_drain.svg" alt="drain attack"></span>
-                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.drain_attack_power }}</span>
+                        <form class="action-icon-button" action="{% url 'battle:monster-battle' 'drain' %}"
+                            method="POST">
+                            {% csrf_token %}
+                            <button class="action-icon-button" type="submit">
+                                <div class="col px-2 m-lg-2">
+                                    <div class="row">
+                                        <i
+                                            class="fas m-2 action-icon fa-skull drain {% if not player.drain_attack_power %}text-muted{% endif %} stroke"></i>
+                                    </div>
+                                    <div class="row action-stats">
+                                        <div class="col p-1 position-relative">
+                                            <span><i class="position-absolute fas fa-heart fire stroke fs-3"></i></span>
+                                            <span><img class="position-absolute action-effect"
+                                                    src="{{MEDIA_URL}}sword_drain.svg" alt="drain attack"></span>
+                                            <span
+                                                class="position-absolute fa-inverse stat-number stroke">{{ player.drain_attack_power }}</span>
+                                        </div>
+                                        <div class="col p-1 position-relative">
+                                            <i
+                                                class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
+                                            <span
+                                                class="position-absolute fa-inverse stat-number stroke">{{ player.drain_attack_cost }}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col p-1 position-relative">
-                                    <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
-                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.drain_attack_cost }}</span>
-                                </div>
-                            </div>
-                        </div>
+                            </button>
+                        </form>
                         <!-- golem action icon -->
-                        <div class="col px-2 m-lg-2">
-                            <div class="row">
-                                <i class="fas m-2 action-icon fa-robot golem {% if not player.golem_attack_power %}text-muted{% endif %} stroke"></i>
-                            </div>
-                            <div class="row action-stats">
-                                <div class="col p-1 position-relative">
-                                    <span><img class="position-absolute action-effect"
-                                            src="{{MEDIA_URL}}sword_golem.svg" alt="golem attack"></span>
-                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.golem_attack_power }}</span>
+                        <form class="action-icon-button" action="{% url 'battle:monster-battle' 'golem' %}"
+                            method="POST">
+                            {% csrf_token %}
+                            <button class="action-icon-button" type="submit">
+                                <div class="col px-2 m-lg-2">
+                                    <div class="row">
+                                        <i
+                                            class="fas m-2 action-icon fa-robot golem {% if not player.golem_attack_power %}text-muted{% endif %} stroke"></i>
+                                    </div>
+                                    <div class="row action-stats">
+                                        <div class="col p-1 position-relative">
+                                            <span><img class="position-absolute action-effect"
+                                                    src="{{MEDIA_URL}}sword_golem.svg" alt="golem attack"></span>
+                                            <span
+                                                class="position-absolute fa-inverse stat-number stroke">{{ player.golem_attack_power }}</span>
+                                        </div>
+                                        <div class="col p-1 position-relative">
+                                            <i
+                                                class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
+                                            <span
+                                                class="position-absolute fa-inverse stat-number stroke">{{ player.golem_attack_cost }}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col p-1 position-relative">
-                                    <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
-                                    <span class="position-absolute fa-inverse stat-number stroke">{{ player.golem_attack_cost }}</span>
-                                </div>
-                            </div>
-                        </div>
+                            </button>
+                        </form>
                         <!-- skip action -->
-                        <div class="col m-lg-2">
-                            <div class="row">
-                                <i class="fas m-2 action-icon fa-forward lightning text-primary stroke"></i>
-                            </div>
-                            <div class="row action-stats">
-                                <div class="col p1 position-relative">
-                                    <span class="position-absolute medium-text fa-inverse stat-skip stroke">Skip</span>
+                        <form class="action-icon-button" action="{% url 'battle:monster-battle' 'skip' %}"
+                            method="POST">
+                            {% csrf_token %}
+                            <button class="action-icon-button" type="submit">
+                                <div class="col m-lg-2">
+                                    <div class="row">
+                                        <i class="fas m-2 action-icon fa-forward lightning text-primary stroke"></i>
+                                    </div>
+                                    <div class="row action-stats">
+                                        <div class="col p1 position-relative">
+                                            <span
+                                                class="position-absolute medium-text fa-inverse stat-skip stroke">Skip</span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

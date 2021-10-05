@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import Player, Game, Current_game_floor, Enemy, Game_floor_enemy
 from profiles.models import Card
 from django.contrib import messages
+from django.conf import settings
+
 
 # Create your views here.
 
@@ -18,6 +20,10 @@ def battle_screen(request, game):
     # card playing phase
     if game.game_step == '1':
         messages.info(request, "Please select a card to play.")
+
+    # monster battle phase
+    if game.game_step == '2':
+        messages.info(request, "Select an available spell")
 
     context = {
         "game": game,
@@ -72,5 +78,38 @@ def card_select(request, card):
     # set game step to 2
     game.game_step = '2'
     game.save()
+
+    return redirect('battle:battle-screen', game)
+
+
+def monster_battle(request, action):
+
+    current_user = request.user
+    player = Player.objects.get(user=current_user)
+    game = Game.objects.get(player=player)
+    current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
+
+    print(action)
+
+    if not action == 'skip' or 'heal':
+
+        messages.info(request, "Select a target")
+
+    if action == 'heal':
+        player.health_current = player.health_current + player.healing_power
+        if player.health_current > player.health_max:
+            player.health_current = player.health_max
+        player.save()
+
+    if action == 'skip':
+        # skip to the next phase as long as there is a next one
+        n = int(current_game_floor.current_phase)
+        if n >= len(settings.ATTACK_PHASES):
+            pass
+        else:
+            n +=1
+            str(n)
+            current_game_floor.current_phase = n
+            current_game_floor.save()
 
     return redirect('battle:battle-screen', game)
