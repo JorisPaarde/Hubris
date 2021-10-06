@@ -29,7 +29,6 @@ def battle_screen(request, game):
         # select monster(s) from database if there are none
         if len(Game_floor_enemy.objects.all()) == 0:
             pickmonsters(request, game)
-    messages.info(request, "Select an available spell")
 
     context = {
         "game": game,
@@ -49,42 +48,47 @@ def card_select(request, card):
     player = Player.objects.get(user=current_user)
     game = Game.objects.get(player=player)
 
-    if request.method == 'POST':
-        # get the card and update the players stats
-        card = Card.objects.get(pk=card)
+    if game.game_step == '1':
 
-        attack_modifier = card.attack_modifier
-        healing_modifier = card.healing_modifier
-        defence_modifier = card.defence_modifier
-        skill = card.get_skill_style_display().lower()
+        if request.method == 'POST':
+            # get the card and update the players stats
+            card = Card.objects.get(pk=card)
 
-        if skill == 'lightning':
-            player.lightning_attack_power = player.lightning_attack_power + attack_modifier
-            player.lightning_defense = player.lightning_defense + defence_modifier
-            player.save()
-        if skill == 'fire':
-            player.fire_attack_power = player.fire_attack_power + attack_modifier
-            player.fire_defense = player.fire_defense + defence_modifier
-            player.save()
-        if skill == 'golem':
-            player.golem_attack_power = player.golem_attack_power + attack_modifier
-            player.physical_defense = player.physical_defense + defence_modifier
-            player.save()
-        if skill == 'ice':
-            player.ice_attack_power = player.ice_attack_power + attack_modifier
-            player.ice_defense = player.ice_defense + defence_modifier
-            player.save()
-        if skill == 'drain':
-            player.drain_attack_power = player.drain_attack_power + attack_modifier
-            player.drain_defense = player.drain_defense + defence_modifier
-            player.save()
-        if skill == 'healing':
-            player.healing_power = player.healing_power + healing_modifier
-            player.save()
+            attack_modifier = card.attack_modifier
+            healing_modifier = card.healing_modifier
+            defence_modifier = card.defence_modifier
+            skill = card.get_skill_style_display().lower()
 
-    # set game step to 2
-    game.game_step = '2'
-    game.save()
+            if skill == 'lightning':
+                player.lightning_attack_power = player.lightning_attack_power + attack_modifier
+                player.lightning_defense = player.lightning_defense + defence_modifier
+                player.save()
+            if skill == 'fire':
+                player.fire_attack_power = player.fire_attack_power + attack_modifier
+                player.fire_defense = player.fire_defense + defence_modifier
+                player.save()
+            if skill == 'golem':
+                player.golem_attack_power = player.golem_attack_power + attack_modifier
+                player.physical_defense = player.physical_defense + defence_modifier
+                player.save()
+            if skill == 'ice':
+                player.ice_attack_power = player.ice_attack_power + attack_modifier
+                player.ice_defense = player.ice_defense + defence_modifier
+                player.save()
+            if skill == 'drain':
+                player.drain_attack_power = player.drain_attack_power + attack_modifier
+                player.drain_defense = player.drain_defense + defence_modifier
+                player.save()
+            if skill == 'healing':
+                player.healing_power = player.healing_power + healing_modifier
+                player.save()
+
+            # set game step to 2
+            game.game_step = '2'
+            game.save()
+
+    else:
+        messages.info(request, "u already selected a spell")   
 
     return redirect('battle:battle-screen', game)
 

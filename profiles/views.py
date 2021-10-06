@@ -86,7 +86,7 @@ def game_setup(request, selected):
             # create an empty hand for this player
             hand = current_player.hand
             # add cards to this hand to 
-            draw_n_cards = len(current_player.hand) - 8
+            draw_n_cards = 8
             draw_cards(draw_n_cards, hand, current_player)
 
             # create a new game for this player and a first game floor

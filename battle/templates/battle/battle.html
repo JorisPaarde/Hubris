@@ -106,19 +106,67 @@
                         {% for gamefloor_enemy in current_game_floor.enemy.all %}
                             {% if forloop.counter|divisibleby:"2" %}
                                 {% for enemy in enemies %}
-                                        {% if enemy|lower == gamefloor_enemy.enemy|lower %}
-                                            <div class="col-4 align-items-end justify-content-center">
-                                                <img class="enemy-image" src="{{MEDIA_URL}}{{ enemy.image_idle }}" alt="{{enemy}} image">
-                                            </div>
-                                        {% endif %}
-                                {% endfor %}
-                            {% else %}
-                                {% for enemy in enemies %}
-                                        {% if enemy|lower == gamefloor_enemy.enemy|lower %}
-                                        <div class="col-4 align-items-end justify-content-center">
-                                            <img class="enemy-image-upper" src="{{MEDIA_URL}}{{ enemy.image_idle }}" alt="{{enemy}} image">
+                                    {% if enemy|lower == gamefloor_enemy.enemy|lower %}
+                                    <div class="col-4 align-items-end justify-content-center">
+                                        <div class="row position-absolute enemy-image-upper">
+                                            <div class="col-12 position-relative">
+                                                <div class="row">
+                                                     <img class="position-relative enemy-image" src="{{MEDIA_URL}}{{ enemy.image_idle }}"
+                                                    alt="{{enemy}} image">
+                                                    <!-- health icon -->
+                                                    <span class="position-relative fa-stack fire text-center stroke enemy-health-icon fa-fw">
+                                                        <i class="fas fa-stack-1x fa-heart"></i>
+                                                        <span
+                                                            class="fa-stack-1x fa-inverse stat-number">{{ gamefloor_enemy.health_current }}</span>
+                                                    </span>
+                                                    <!-- attack icon -->
+                                                    <div class="position-relative enemy-action-effect">
+                                                        <span><img class="position-relative"
+                                                            src="{{MEDIA_URL}}sword_lightning.svg"
+                                                            alt="lightning attack"></span>
+                                                        <span
+                                                            class="position-relative fa-inverse enemy-attack-stat-number stroke">{{ gamefloor_enemy.health_current }}</span>
+                                                    </div>
+                                                </div>
+                                            </div> 
                                         </div>
-                                        {% endif %}
+                                    </div>
+                                    {% endif %}
+                                {% endfor %}
+                                {% else %}
+                                {% for enemy in enemies %}
+                                    {% if enemy|lower == gamefloor_enemy.enemy|lower %}
+                                    <div class="col-4 align-items-end justify-content-center">
+                                        <div class="row position-absolute enemy-image-lower">
+                                            <div class="col-12 position-relative">
+                                                <div class="row">
+                                                     <img class="position-relative enemy-image" src="{{MEDIA_URL}}{{ enemy.image_idle }}"
+                                                    alt="{{enemy}} image">
+                                                </div>
+                                                <div class="row display-flex">
+                                                    <div class="col-12">
+                                                         <!-- health icon -->
+                                                    <span class="position-relative fa-stack fire text-center stroke enemy-health-icon fa-fw">
+                                                        <i class="fas fa-stack-1x fa-heart"></i>
+                                                        <span
+                                                            class="fa-stack-1x fa-inverse stat-number">{{ gamefloor_enemy.health_current }}</span>
+                                                    </span>
+                                                    <!-- attack icon -->
+                                                    <div class="position-relative enemy-action-effect">
+                                                        <span><img class="position-relative"
+                                                            src="{{MEDIA_URL}}sword_lightning.svg"
+                                                            alt="lightning attack"></span>
+                                                        <span
+                                                            class="position-relative fa-inverse enemy-attack-stat-number stroke">{{ gamefloor_enemy.health_current }}</span>
+                                                    </div>
+                                                    <!-- attack phase indicator-->
+                                                    <span class="position-relative fa-inverse stroke">{{ gamefloor_enemy.get_attack_phase_display }}</span>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                    {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
@@ -324,8 +372,7 @@
                             </button>
                         </form>
                         <!-- ice action icon -->
-                        <form class="action-icon-button" action="{% url 'battle:monster-battle' 'ice' %}"
-                            method="POST">
+                        <form class="action-icon-button" action="{% url 'battle:monster-battle' 'ice' %}" method="POST">
                             {% csrf_token %}
                             <button class="action-icon-button" type="submit">
                                 <div class="col px-2 m-lg-2">

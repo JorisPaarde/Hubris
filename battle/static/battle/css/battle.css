@@ -7,43 +7,51 @@
 .enemy-image{
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
-    object-fit: cover;
-    position: relative;
-    top: 25vh;
-    height: 46vh;
+    object-fit: contain;
 }
 
 .enemy-image-upper{
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-    object-fit: cover;
-    position: relative;
-    top: 5vh;
-    z-index: -1;
+    top: 10%;
+}
+
+.enemy-image-upper .enemy-image{
+    height: 35vh;
+}
+
+.enemy-image-lower{
+    top: 40%;
+    z-index: 1;
+}
+
+.enemy-image-lower .enemy-image{
     height: 40vh;
 }
 
-@media screen and (max-aspect-ratio: 16/9) {
 
-.enemy-image{
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-    object-fit: cover;
-    position: relative;
-    top: 25vh;
-    height: 44vh;
+@media screen and (min-aspect-ratio: 16/9) {
+
+    .enemy-image-lower{
+        top: 30%;
+    }
+
+    .enemy-image-upper{
+        top: 15%;
+    }
 }
 
-.enemy-image-upper{
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-    object-fit: cover;
-    position: relative;
-    left: -5vw;
-    top: 5vh;
-    z-index: -1;
-    height: 38vh;
+
+/* enemy icons */
+
+.enemy-health-icon{
+    width: max-content;
 }
+
+.enemy-action-effect{
+    width: max-content;
+}
+
+.enemy-attack-stat-number{
+    right: 50%;
 }
 
 /* status an action bar */
