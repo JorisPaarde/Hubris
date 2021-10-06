@@ -85,8 +85,8 @@ def game_setup(request, selected):
             current_player = Player.objects.get(user=current_user)
             # create an empty hand for this player
             hand = current_player.hand
-            # add 8 cards this hand
-            draw_n_cards = 8
+            # add cards to this hand to 
+            draw_n_cards = len(current_player.hand) - 8
             draw_cards(draw_n_cards, hand, current_player)
 
             # create a new game for this player and a first game floor
@@ -150,6 +150,7 @@ def draw_cards(n, hand, current_player):
             available_cards = Card.objects.filter(in_freeversion=True)
             # select a random card and add it to the hand
             card = random.choice(available_cards)
+            # make it so that it only creates a new hand card if it's not there and not selected.(needs 8 times all cards max)
             card = Hand_card(card=card)
             card.save()
             current_player.hand.add(card)

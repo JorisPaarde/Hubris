@@ -80,7 +80,7 @@
                 <li class="mt-lg-2 golem stroke">
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-shield-alt"></i>
-                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.golem_defense }}</span>
+                        <span class="fa-stack-1x fa-inverse stat-number">{{ player.physical_defense }}</span>
                     </span>
                 </li>
                 <!-- mana -->
@@ -102,13 +102,27 @@
                 </div>
                 <!-- enemies -->
                 <div class="col-8 h-100 d-flex align-items-center">
-                    {% for gamefloor_enemy in current_game_floor.enemy.all %}
-                        {% for enemy in enemies %}
-                            {% if enemy|lower == gamefloor_enemy.enemy|lower %}
-                            <img class="enemy-image" width="33%" src="{{MEDIA_URL}}{{ enemy.image_idle }}" alt="{{enemy}} image">
+                    <div class="row w-100 h-100">
+                        {% for gamefloor_enemy in current_game_floor.enemy.all %}
+                            {% if forloop.counter|divisibleby:"2" %}
+                                {% for enemy in enemies %}
+                                        {% if enemy|lower == gamefloor_enemy.enemy|lower %}
+                                            <div class="col-4 align-items-end justify-content-center">
+                                                <img class="enemy-image" src="{{MEDIA_URL}}{{ enemy.image_idle }}" alt="{{enemy}} image">
+                                            </div>
+                                        {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                {% for enemy in enemies %}
+                                        {% if enemy|lower == gamefloor_enemy.enemy|lower %}
+                                        <div class="col-4 align-items-end justify-content-center">
+                                            <img class="enemy-image-upper" src="{{MEDIA_URL}}{{ enemy.image_idle }}" alt="{{enemy}} image">
+                                        </div>
+                                        {% endif %}
+                                {% endfor %}
                             {% endif %}
                         {% endfor %}
-                    {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>

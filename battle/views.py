@@ -25,9 +25,11 @@ def battle_screen(request, game):
 
     # monster battle phase
     if game.game_step == '2':
-        # select monster(s) from database
-        pickmonsters(request, game)
-        messages.info(request, "Select an available spell")
+
+        # select monster(s) from database if there are none
+        if len(Game_floor_enemy.objects.all()) == 0:
+            pickmonsters(request, game)
+    messages.info(request, "Select an available spell")
 
     context = {
         "game": game,
