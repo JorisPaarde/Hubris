@@ -1,56 +1,37 @@
 /* images */
 
 .player-image{
-    height: 35vh;
+    height: 20vw;
 }
 
 .enemy-image{
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
+    -webkit-transform: scale(-1.5,1.5);
+    transform: scale(-1.5,1.5);
     object-fit: contain;
 }
 
 .enemy-image-upper{
-    top: 10%;
+    z-index: -1;
 }
-
-.enemy-image-upper .enemy-image{
-    height: 35vh;
-}
-
-.enemy-image-lower{
-    top: 40%;
-    z-index: 1;
-}
-
-.enemy-image-lower .enemy-image{
-    height: 40vh;
-}
-
-
-@media screen and (min-aspect-ratio: 16/9) {
-
-    .enemy-image-lower{
-        top: 30%;
-    }
-
-    .enemy-image-upper{
-        top: 15%;
-    }
-}
-
 
 /* enemy icons */
-
-.enemy-health-icon{
-    width: max-content;
+.enemy-stats, .enemy-attack-phase-icon{
+    font-weight: 600;
+    font-size: calc(10px + 1vw);
 }
 
-.enemy-action-effect{
+.enemy-action-effect, .enemy-attack-phase-icon, .enemy-health-icon{
     width: max-content;
+    line-height: inherit;
+}
+
+.enemy-action-image{
+    width: calc(20px + 0.8vw);
 }
 
 .enemy-attack-stat-number{
+    font-size: calc(10px + 1vw);
+    font-weight: 600;
     right: 50%;
 }
 

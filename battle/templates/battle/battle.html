@@ -18,7 +18,8 @@
         <div class="col-12">
             <div class="row">
                 <div class="col-12 title text-center">
-                    <h1 class="medium-large-text mb-0">Score: {{ game.score }} Floor {{ game.completed_game_floors }}</h1>
+                    <h1 class="medium-large-text mb-0">Score: {{ game.score }} Floor {{ game.completed_game_floors }}
+                    </h1>
                     <h2 class="fs-2">Phase {{ current_game_floor.get_current_phase_display }} game step:
                         {{ game.game_step }}</h2>
                 </div>
@@ -101,74 +102,86 @@
                     <img src="{{MEDIA_URL}}{{ player.type.image_idle.name }}" class="player-image" alt="player">
                 </div>
                 <!-- enemies -->
-                <div class="col-8 h-100 d-flex align-items-center">
-                    <div class="row w-100 h-100">
+                <div class="col-8 h-100 d-flex">
+                    <div class="row">
                         {% for gamefloor_enemy in current_game_floor.enemy.all %}
-                            {% if forloop.counter|divisibleby:"2" %}
+                        {% if forloop.counter|divisibleby:"2" %}
+                        <div class="col-4 mb-4 align-self-center">
+                            <div class="row">
                                 {% for enemy in enemies %}
-                                    {% if enemy|lower == gamefloor_enemy.enemy|lower %}
-                                    <div class="col-4 align-items-end justify-content-center">
-                                        <div class="row position-absolute enemy-image-upper">
-                                            <div class="col-12 position-relative">
-                                                <div class="row">
-                                                     <img class="position-relative enemy-image" src="{{MEDIA_URL}}{{ enemy.image_idle }}"
-                                                    alt="{{enemy}} image">
-                                                    <!-- health icon -->
-                                                    <span class="position-relative fa-stack fire text-center stroke enemy-health-icon fa-fw">
-                                                        <i class="fas fa-stack-1x fa-heart"></i>
-                                                        <span
-                                                            class="fa-stack-1x fa-inverse stat-number">{{ gamefloor_enemy.health_current }}</span>
-                                                    </span>
-                                                    <!-- attack icon -->
-                                                    <div class="position-relative enemy-action-effect">
-                                                        <span><img class="position-relative"
-                                                            src="{{MEDIA_URL}}sword_lightning.svg"
-                                                            alt="lightning attack"></span>
-                                                        <span
-                                                            class="position-relative fa-inverse enemy-attack-stat-number stroke">{{ gamefloor_enemy.health_current }}</span>
-                                                    </div>
-                                                </div>
-                                            </div> 
+                                {% if enemy|lower == gamefloor_enemy.enemy|lower %}
+                                <img class="position-relative enemy-image-upper enemy-image"
+                                    src="{{MEDIA_URL}}{{ enemy.image_idle }}" alt="{{enemy}} image">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-2 offset-4 enemy-stats">
+                                            <!-- health icon -->
+                                            <span class="fa-stack fire text-center stroke enemy-health-icon fa-fw">
+                                                <i class="fas fa-stack-1x fa-heart"></i>
+                                                <span
+                                                    class="fa-stack-1x fa-inverse stat-number">{{ gamefloor_enemy.health_current }}</span>
+                                            </span>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- attack icon -->
+                                            <div class="enemy-action-effect">
+                                                <span><img class="position-relative enemy-action-image"
+                                                        src="{{MEDIA_URL}}sword_lightning.svg"
+                                                        alt="lightning attack"></span>
+                                                <span
+                                                    class="position-relative fa-inverse enemy-attack-stat-number stroke">{{ gamefloor_enemy.health_current }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-2 offset-1">
+                                            <!-- attack phase indicator-->
+                                            <span
+                                                class="enemy-attack-phase-icon fa-inverse stroke">{{ gamefloor_enemy.get_attack_phase_display }}</span>
                                         </div>
                                     </div>
-                                    {% endif %}
+                                </div>
+                                {% endif %}
                                 {% endfor %}
-                                {% else %}
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="col-4 align-self-end">
+                            <div class="row">
                                 {% for enemy in enemies %}
-                                    {% if enemy|lower == gamefloor_enemy.enemy|lower %}
-                                    <div class="col-4 align-items-end justify-content-center">
-                                        <div class="row position-absolute enemy-image-lower">
-                                            <div class="col-12 position-relative">
-                                                <div class="row">
-                                                     <img class="position-relative enemy-image" src="{{MEDIA_URL}}{{ enemy.image_idle }}"
-                                                    alt="{{enemy}} image">
-                                                </div>
-                                                <div class="row display-flex">
-                                                    <div class="col-12">
-                                                         <!-- health icon -->
-                                                    <span class="position-relative fa-stack fire text-center stroke enemy-health-icon fa-fw">
-                                                        <i class="fas fa-stack-1x fa-heart"></i>
-                                                        <span
-                                                            class="fa-stack-1x fa-inverse stat-number">{{ gamefloor_enemy.health_current }}</span>
-                                                    </span>
-                                                    <!-- attack icon -->
-                                                    <div class="position-relative enemy-action-effect">
-                                                        <span><img class="position-relative"
-                                                            src="{{MEDIA_URL}}sword_lightning.svg"
-                                                            alt="lightning attack"></span>
-                                                        <span
-                                                            class="position-relative fa-inverse enemy-attack-stat-number stroke">{{ gamefloor_enemy.health_current }}</span>
-                                                    </div>
-                                                    <!-- attack phase indicator-->
-                                                    <span class="position-relative fa-inverse stroke">{{ gamefloor_enemy.get_attack_phase_display }}</span>
-                                                    </div>
-                                                </div>
-                                            </div> 
+                                {% if enemy|lower == gamefloor_enemy.enemy|lower %}
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-2 offset-4 text-center enemy-stats">
+                                            <!-- health icon -->
+                                            <span class="fa-stack fire text-center stroke enemy-health-icon fa-fw">
+                                                <i class="fas fa-stack-1x fa-heart"></i>
+                                                <span
+                                                    class="fa-stack-1x fa-inverse stat-number">{{ gamefloor_enemy.health_current }}</span>
+                                            </span>
+                                        </div>
+                                        <div class="col-2 text-center">
+                                            <!-- attack icon -->
+                                            <div class="enemy-action-effect">
+                                                <span><img class="position-relative enemy-action-image"
+                                                        src="{{MEDIA_URL}}sword_lightning.svg"
+                                                        alt="lightning attack"></span>
+                                                <span
+                                                    class="position-relative fa-inverse enemy-attack-stat-number stroke">{{ gamefloor_enemy.health_current }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-2 offset-1">
+                                            <!-- attack phase indicator-->
+                                            <span
+                                                class="enemy-attack-phase-icon position-relative fa-inverse stroke">{{ gamefloor_enemy.get_attack_phase_display }}</span>
                                         </div>
                                     </div>
-                                    {% endif %}
+                                </div>
+                                <img class="position-relative enemy-image-lower pb-5 enemy-image"
+                                    src="{{MEDIA_URL}}{{ enemy.image_idle }}" alt="{{enemy}} image">
+                                {% endif %}
                                 {% endfor %}
-                            {% endif %}
+                            </div>
+                        </div>
+                        {% endif %}
                         {% endfor %}
                     </div>
                 </div>
