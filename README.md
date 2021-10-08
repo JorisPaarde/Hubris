@@ -121,6 +121,7 @@ Menu button was not clickable in game screen. Fixed by making sure no div was bl
 Player selection layout broke on wider screens. pushed text to the bottom of the container.
 hand-cards where added but not associated with player hand. Changed model to many to many field and corrected card draw function.
 When comparing players hand card to the cards in the database the values seemed the same, but did not trigger an if equal statement.
+back button press after playing a card made it possible to play infinite cards. Added a check for the gamestep to be '2' to prevent this.
 
 # technologies used:
 
