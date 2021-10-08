@@ -144,7 +144,7 @@
                             </div>
                         </div>
                         {% else %}
-                        <div class="col-4 align-self-end">
+                        <div class="col-4 {% if current_game_floor.enemy.all|length == 1 %} offset-4 align-self-center {% elif current_game_floor.enemy.all|length == 2 %} offset-2 align-self-end {% else %} align-self-end {% endif %}">
                             <div class="row">
                                 {% for enemy in enemies %}
                                 {% if enemy|lower == gamefloor_enemy.enemy|lower %}
