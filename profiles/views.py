@@ -59,7 +59,10 @@ def continue_game(request, continue_game):
         current_game.completed = True
         current_game.save()
         current_game_floor = Current_game_floor.objects.get(pk=current_game.current_game_floor.pk)
+        # delete all cards and enemies from this game
+        current_game_floor.enemy.all().delete()
         current_game_floor.delete()
+        current_player.hand.all().delete()
         current_player.delete()
 
         return redirect('profiles:player_select')
