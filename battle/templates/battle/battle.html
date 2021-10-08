@@ -112,7 +112,7 @@
                                 {% if enemy|lower == gamefloor_enemy.enemy|lower %}
                                 <img class="position-relative enemy-image-upper enemy-image"
                                     src="{{MEDIA_URL}}{{ enemy.image_idle }}" alt="{{enemy}} image">
-                                <div class="col-12">
+                                <div class="col-12 z10">
                                     <div class="row">
                                         <div class="col-2 offset-4 enemy-stats">
                                             <!-- health icon -->
@@ -148,7 +148,7 @@
                             <div class="row">
                                 {% for enemy in enemies %}
                                 {% if enemy|lower == gamefloor_enemy.enemy|lower %}
-                                <div class="col-12">
+                                <div class="col-12 z10">
                                     <div class="row">
                                         <div class="col-2 offset-4 text-center enemy-stats">
                                             <!-- health icon -->
