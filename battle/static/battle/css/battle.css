@@ -10,8 +10,23 @@
     object-fit: contain;
 }
 
-.enemy-image-upper{
-    z-index: -1;
+.enemy-select:hover{
+    filter: drop-shadow(5px 5px 5px rgba(255, 0, 0, 0.85));
+    cursor: pointer;
+}
+
+.enemy-select{
+    filter: drop-shadow(2px 2px 2px rgba(255, 0, 0, 0.85));
+}
+
+.enemy-select-button{
+    width: 200px;
+    height: 100px;
+    background-color: crimson;
+}
+
+.enemy-form{
+    width: 100%;
 }
 
 /* enemy icons */

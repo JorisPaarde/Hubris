@@ -3,6 +3,7 @@
 {% load static %}
 
 {% block extra_js %}
+<script src="{% static 'battle/js/actions.js' %}"></script>
 {% endblock %}
 
 {% block extra_css %}
@@ -106,45 +107,52 @@
                     <div class="row">
                         {% for gamefloor_enemy in current_game_floor.enemy.all %}
                         {% if forloop.counter|divisibleby:"2" %}
-                        <div class="col-4 mb-4 align-self-center">
+                        <!-- !! first classname needs to be the gamefloor_enemy for javascript to function -->
+                        <div class="{{ gamefloor_enemy }} col-4 game-floor-enemy mb-4 align-self-center">
                             <div class="row">
                                 {% for enemy in enemies %}
                                 {% if enemy|lower == gamefloor_enemy.enemy|lower %}
-                                <img class="position-relative enemy-image-upper enemy-image"
-                                    src="{{MEDIA_URL}}{{ enemy.image_idle }}" alt="{{enemy}} image">
-                                <div class="col-12 z10">
-                                    <div class="row">
-                                        <div class="col-2 offset-4 enemy-stats">
-                                            <!-- health icon -->
-                                            <span class="fa-stack fire text-center stroke enemy-health-icon fa-fw">
-                                                <i class="fas fa-stack-1x fa-heart"></i>
+                                <form class="enemy-form d-none"
+                                    action="{% url 'battle:action_processor' 'js-enemy select' %}" method="POST">
+                                    {% csrf_token %}
+                                    <button class="action-icon-button enemy-select-button" type="submit"></button>
+                                </form>
+                                    <img class="enemy-image enemy-select position-relative enemy-image-upper"
+                                        src="{{MEDIA_URL}}{{ enemy.image_idle }}" alt="{{enemy}} image"> 
+                                    <div class="col-12 z10">
+                                        <div class="row">
+                                            <div class="col-2 offset-4 enemy-stats">
+                                                <!-- health icon -->
+                                                <span class="fa-stack fire text-center stroke enemy-health-icon fa-fw">
+                                                    <i class="fas fa-stack-1x fa-heart"></i>
+                                                    <span
+                                                        class="fa-stack-1x fa-inverse stat-number">{{ gamefloor_enemy.health_current }}</span>
+                                                </span>
+                                            </div>
+                                            <div class="col-2">
+                                                <!-- attack icon -->
+                                                <div class="enemy-action-effect">
+                                                    <span><img class="position-relative enemy-action-image"
+                                                            src="{{MEDIA_URL}}sword_lightning.svg"
+                                                            alt="lightning attack"></span>
+                                                    <span
+                                                        class="position-relative fa-inverse enemy-attack-stat-number stroke">{{ gamefloor_enemy.health_current }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-2 offset-1">
+                                                <!-- attack phase indicator-->
                                                 <span
-                                                    class="fa-stack-1x fa-inverse stat-number">{{ gamefloor_enemy.health_current }}</span>
-                                            </span>
-                                        </div>
-                                        <div class="col-2">
-                                            <!-- attack icon -->
-                                            <div class="enemy-action-effect">
-                                                <span><img class="position-relative enemy-action-image"
-                                                        src="{{MEDIA_URL}}sword_lightning.svg"
-                                                        alt="lightning attack"></span>
-                                                <span
-                                                    class="position-relative fa-inverse enemy-attack-stat-number stroke">{{ gamefloor_enemy.health_current }}</span>
+                                                    class="enemy-attack-phase-icon fa-inverse stroke">{{ gamefloor_enemy.get_attack_phase_display }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-2 offset-1">
-                                            <!-- attack phase indicator-->
-                                            <span
-                                                class="enemy-attack-phase-icon fa-inverse stroke">{{ gamefloor_enemy.get_attack_phase_display }}</span>
-                                        </div>
                                     </div>
-                                </div>
                                 {% endif %}
                                 {% endfor %}
                             </div>
                         </div>
                         {% else %}
-                        <div class="col-4 {% if current_game_floor.enemy.all|length == 1 %} offset-4 align-self-center {% elif current_game_floor.enemy.all|length == 2 %} offset-2 align-self-end {% else %} align-self-end {% endif %}">
+                        <div
+                            class="col-4 {{ gamefloor_enemy }}{% if current_game_floor.enemy.all|length == 1 %} offset-4 align-self-center {% elif current_game_floor.enemy.all|length == 2 %} offset-2 align-self-end {% else %} align-self-end {% endif %}">
                             <div class="row">
                                 {% for enemy in enemies %}
                                 {% if enemy|lower == gamefloor_enemy.enemy|lower %}
@@ -175,7 +183,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <img class="position-relative enemy-image-lower pb-5 enemy-image"
+                                <img class="enemy-select position-relative enemy-image-lower pb-5 enemy-image"
                                     src="{{MEDIA_URL}}{{ enemy.image_idle }}" alt="{{enemy}} image">
                                 {% endif %}
                                 {% endfor %}
@@ -330,68 +338,62 @@
                 <div class="col-12 ml-4 mb-2 action-bar">
                     <div class="row d-flex justify-content-between">
                         <!-- lightning action icon -->
-                        <form class="action-icon-button" action="{% url 'battle:monster-battle' 'lightning' %}"
-                            method="POST">
-                            {% csrf_token %}
-                            <button class="action-icon-button" type="submit">
-                                <div class="col px-2 m-lg-2">
-                                    <div class="row">
-                                        <i
-                                            class="fas m-2 action-icon fa-bolt lightning {% if not player.lightning_attack_power %}text-muted  {% endif %} stroke"></i>
-                                    </div>
-                                    <div class="row action-stats">
-                                        <div class="col p-1 position-relative">
-                                            <span><img class="position-absolute action-effect"
-                                                    src="{{MEDIA_URL}}sword_lightning.svg"
-                                                    alt="lightning attack"></span>
-                                            <span
-                                                class="position-absolute fa-inverse stat-number stroke">{{ player.lightning_attack_power }}</span>
-                                        </div>
-                                        <div class="col p-1 position-relative">
-                                            <i
-                                                class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
-                                            <span
-                                                class="position-absolute fa-inverse stat-number stroke">{{ player.lightning_attack_cost }}</span>
-                                        </div>
-                                    </div>
+                        <div class="action-icon-button col px-2 m-lg-2">
+                            <div class="row">
+                                <!-- !! first classname needs to be the action name for javascript to function -->
+                                <i
+                                    class="lightning fas m-2 action-icon fa-bolt {% if not player.lightning_attack_power %}text-muted {% endif %}stroke"></i>
+                            </div>
+                            <div class="row action-stats">
+                                <div class="col p-1 position-relative">
+                                    <span><img class="position-absolute action-effect"
+                                            src="{{MEDIA_URL}}sword_lightning.svg" alt="lightning attack"></span>
+                                    <span
+                                        class="position-absolute fa-inverse stat-number stroke">{{ player.lightning_attack_power }}</span>
                                 </div>
-                            </button>
-                        </form>
+                                <div class="col p-1 position-relative">
+                                    <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
+                                    <span
+                                        class="position-absolute fa-inverse stat-number stroke">{{ player.lightning_attack_cost }}</span>
+                                </div>
+                            </div>
+                        </div>
                         <!-- fire action icon -->
-                        <form class="action-icon-button" action="{% url 'battle:monster-battle' 'fire' %}"
+                        <!-- <form class="action-icon-button" action="{% url 'battle:action_processor' 'fire' %}"
+                            method="POST">
+                            {% csrf_token %} -->
+                        <!-- <button class="action-icon-button" type="submit"> -->
+                        <div class="action-icon-button col px-2 m-lg-2">
+                            <div class="row">
+                                <!-- !! first classname needs to be the action name for javascript to function -->
+                                <i
+                                    class="fire fas m-2 action-icon fa-fire-alt {% if not player.fire_attack_power %}text-muted {% endif %}stroke"></i>
+                            </div>
+                            <div class="row action-stats">
+                                <div class="col p-1 position-relative">
+                                    <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_fire.svg"
+                                            alt="fire attack"></span>
+                                    <span
+                                        class="position-absolute fa-inverse stat-number stroke">{{ player.fire_attack_power }}</span>
+                                </div>
+                                <div class="col p-1 position-relative">
+                                    <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
+                                    <span
+                                        class="position-absolute fa-inverse stat-number stroke">{{ player.fire_attack_cost }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- </button> -->
+                        <!-- </form> -->
+                        <!-- ice action icon -->
+                        <form class="action-icon-button" action="{% url 'battle:action_processor' 'ice' %}"
                             method="POST">
                             {% csrf_token %}
                             <button class="action-icon-button" type="submit">
                                 <div class="col px-2 m-lg-2">
                                     <div class="row">
                                         <i
-                                            class="fas m-2 action-icon fa-fire-alt fire {% if not player.fire_attack_power %}text-muted{% endif %} stroke"></i>
-                                    </div>
-                                    <div class="row action-stats">
-                                        <div class="col p-1 position-relative">
-                                            <span><img class="position-absolute action-effect"
-                                                    src="{{MEDIA_URL}}sword_fire.svg" alt="fire attack"></span>
-                                            <span
-                                                class="position-absolute fa-inverse stat-number stroke">{{ player.fire_attack_power }}</span>
-                                        </div>
-                                        <div class="col p-1 position-relative">
-                                            <i
-                                                class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
-                                            <span
-                                                class="position-absolute fa-inverse stat-number stroke">{{ player.fire_attack_cost }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </button>
-                        </form>
-                        <!-- ice action icon -->
-                        <form class="action-icon-button" action="{% url 'battle:monster-battle' 'ice' %}" method="POST">
-                            {% csrf_token %}
-                            <button class="action-icon-button" type="submit">
-                                <div class="col px-2 m-lg-2">
-                                    <div class="row">
-                                        <i
-                                            class="fas m-2 action-icon fa-snowflake ice {% if not player.ice_attack_power %}text-muted{% endif %} stroke"></i>
+                                            class="ice fas m-2 action-icon fa-snowflake {% if not player.ice_attack_power %}text-muted {% endif %}stroke"></i>
                                     </div>
                                     <div class="row action-stats">
                                         <div class="col p-1 position-relative">
@@ -413,14 +415,14 @@
                             </button>
                         </form>
                         <!-- heal action icon -->
-                        <form class="action-icon-button" action="{% url 'battle:monster-battle' 'heal' %}"
+                        <form class="action-icon-button" action="{% url 'battle:action_processor' 'heal' %}"
                             method="POST">
                             {% csrf_token %}
                             <button class="action-icon-button" type="submit">
                                 <div class="col px-2 m-lg-2">
                                     <div class="row">
                                         <i
-                                            class="fas m-2 action-icon fa-heart healing {% if not player.healing_power %}text-muted{% endif %} stroke"></i>
+                                            class="healing fas m-2 action-icon fa-heart {% if not player.healing_power %}text-muted {% endif %}stroke"></i>
                                     </div>
                                     <div class="row action-stats">
                                         <div class="col p-1 position-relative">
@@ -439,62 +441,62 @@
                             </button>
                         </form>
                         <!-- drain action icon -->
-                        <form class="action-icon-button" action="{% url 'battle:monster-battle' 'drain' %}"
+                        <!-- <form class="action-icon-button" action="{% url 'battle:action_processor' 'drain' %}"
                             method="POST">
-                            {% csrf_token %}
-                            <button class="action-icon-button" type="submit">
-                                <div class="col px-2 m-lg-2">
-                                    <div class="row">
-                                        <i
-                                            class="fas m-2 action-icon fa-skull drain {% if not player.drain_attack_power %}text-muted{% endif %} stroke"></i>
-                                    </div>
-                                    <div class="row action-stats">
-                                        <div class="col p-1 position-relative">
-                                            <span><i class="position-absolute fas fa-heart fire stroke fs-3"></i></span>
-                                            <span><img class="position-absolute action-effect"
-                                                    src="{{MEDIA_URL}}sword_drain.svg" alt="drain attack"></span>
-                                            <span
-                                                class="position-absolute fa-inverse stat-number stroke">{{ player.drain_attack_power }}</span>
-                                        </div>
-                                        <div class="col p-1 position-relative">
-                                            <i
-                                                class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
-                                            <span
-                                                class="position-absolute fa-inverse stat-number stroke">{{ player.drain_attack_cost }}</span>
-                                        </div>
-                                    </div>
+                            {% csrf_token %} -->
+                        <!-- <button class="action-icon-button" type="submit"> -->
+                        <div class="action-icon-button col px-2 m-lg-2">
+                            <div class="row">
+                                <!-- !! first classname needs to be the action name for javascript to function -->
+                                <i
+                                    class="drain fas m-2 action-icon fa-skull {% if not player.drain_attack_power %}text-muted {% endif %}stroke"></i>
+                            </div>
+                            <div class="row action-stats">
+                                <div class="col p-1 position-relative">
+                                    <span><i class="position-absolute fas fa-heart fire stroke fs-3"></i></span>
+                                    <span><img class="position-absolute action-effect"
+                                            src="{{MEDIA_URL}}sword_drain.svg" alt="drain attack"></span>
+                                    <span
+                                        class="position-absolute fa-inverse stat-number stroke">{{ player.drain_attack_power }}</span>
                                 </div>
-                            </button>
-                        </form>
+                                <div class="col p-1 position-relative">
+                                    <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
+                                    <span
+                                        class="position-absolute fa-inverse stat-number stroke">{{ player.drain_attack_cost }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- </button> -->
+                        <!-- </form> -->
                         <!-- golem action icon -->
-                        <form class="action-icon-button" action="{% url 'battle:monster-battle' 'golem' %}"
+                        <!-- <form class="action-icon-button" action="{% url 'battle:action_processor' 'golem' %}"
                             method="POST">
-                            {% csrf_token %}
-                            <button class="action-icon-button" type="submit">
-                                <div class="col px-2 m-lg-2">
-                                    <div class="row">
-                                        <i
-                                            class="fas m-2 action-icon fa-robot golem {% if not player.golem_attack_power %}text-muted{% endif %} stroke"></i>
-                                    </div>
-                                    <div class="row action-stats">
-                                        <div class="col p-1 position-relative">
-                                            <span><img class="position-absolute action-effect"
-                                                    src="{{MEDIA_URL}}sword_golem.svg" alt="golem attack"></span>
-                                            <span
-                                                class="position-absolute fa-inverse stat-number stroke">{{ player.golem_attack_power }}</span>
-                                        </div>
-                                        <div class="col p-1 position-relative">
-                                            <i
-                                                class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
-                                            <span
-                                                class="position-absolute fa-inverse stat-number stroke">{{ player.golem_attack_cost }}</span>
-                                        </div>
-                                    </div>
+                            {% csrf_token %} -->
+                        <!-- <button class="action-icon-button" type="submit"> -->
+                        <div class="action-icon-button col px-2 m-lg-2">
+                            <div class="row">
+                                <!-- !! first classname needs to be the action name for javascript to function -->
+                                <i
+                                    class="golem fas m-2 action-icon fa-robot {% if not player.golem_attack_power %}text-muted {% endif %}stroke"></i>
+                            </div>
+                            <div class="row action-stats">
+                                <div class="col p-1 position-relative">
+                                    <span><img class="position-absolute action-effect"
+                                            src="{{MEDIA_URL}}sword_golem.svg" alt="golem attack"></span>
+                                    <span
+                                        class="position-absolute fa-inverse stat-number stroke">{{ player.golem_attack_power }}</span>
                                 </div>
-                            </button>
-                        </form>
+                                <div class="col p-1 position-relative">
+                                    <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
+                                    <span
+                                        class="position-absolute fa-inverse stat-number stroke">{{ player.golem_attack_cost }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- </button> -->
+                        <!-- </form> -->
                         <!-- skip action -->
-                        <form class="action-icon-button" action="{% url 'battle:monster-battle' 'skip' %}"
+                        <form class="action-icon-button" action="{% url 'battle:action_processor' 'skip' %}"
                             method="POST">
                             {% csrf_token %}
                             <button class="action-icon-button" type="submit">

@@ -93,7 +93,7 @@ def card_select(request, card):
     return redirect('battle:battle-screen', game)
 
 
-def monster_battle(request, action):
+def action_processor(request, action):
 
     current_user = request.user
     player = Player.objects.get(user=current_user)
@@ -123,7 +123,11 @@ def monster_battle(request, action):
             current_game_floor.current_phase = n
             current_game_floor.save()
 
-    return redirect('battle:battle-screen', game)
+    context={
+        "game": game,
+    }
+
+    return redirect('battle:battle-screen', context)
 
 
 def pickmonsters(request, game):
@@ -134,7 +138,8 @@ def pickmonsters(request, game):
     current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
 
     # determine the amount of enemies
-    n = 3
+    n = 2
+    print(game.completed_game_floors)
 
     if current_game_floor:
         for game_floor_enemy in range(n):
