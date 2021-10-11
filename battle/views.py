@@ -7,6 +7,7 @@ from django.http import HttpResponse, JsonResponse
 
 import json
 import random
+import time
 
 # Create your views here.
 
@@ -117,11 +118,6 @@ def action_processor(request):
         selected_enemy = action_selection['enemy']
         print(action)
 
-    if not action == 'skip' and action == 'healing' and action == 'ice':
-
-        print('select target')
-        messages.info(request, "Select a target")
-
     if action == 'healing':
         player.health_current = player.health_current + player.healing_power
         if player.health_current > player.health_max:
@@ -132,12 +128,6 @@ def action_processor(request):
         # skip to the next phase as long as there is a next one and reload the page
         skip_to_next_phase(current_game_floor)
 
-    data = {
-        'player.health_current': player.health_current
-    }
-
-    return JsonResponse(str(data))
-
 
 def pickmonsters(request, game):
 
@@ -147,8 +137,12 @@ def pickmonsters(request, game):
     current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
 
     # determine the amount of enemies
-    n = 2
-    print(game.completed_game_floors)
+    n = 1
+    floor_nr = game.completed_game_floors
+    if floor_nr % 2 == 0:
+        n = 2
+    if floor_nr % 3 == 0:
+        n = 3
 
     if current_game_floor:
         for game_floor_enemy in range(n):
@@ -156,7 +150,30 @@ def pickmonsters(request, game):
             available_enemies = Enemy.objects.filter(in_freeversion=True)
             # select a random enemy and add it to the game_floor
             random_enemy = random.choice(available_enemies)
-            game_floor_enemy = Game_floor_enemy(enemy=random_enemy)
+            # determine the stats for this enemy
+            random.seed(time.process_time())
+            rand_int_1 = random.randint(1, floor_nr * 5)
+            random.seed(time.process_time())
+            rand_int_2 = random.randint(1, floor_nr * 5)
+
+            max_health = rand_int_1 + 2
+            attack_power = rand_int_2 + 2
+
+            health_current = max_health
+            skill_style = random.choice(settings.SKILL_STYLES)[1]
+            # while loop to prevent enemy skill to be heal
+            while skill_style.lower() == 'heal':
+                skill_style = random.choice(settings.SKILL_STYLES)[1]
+            attack_phase = random.choice(settings.ATTACK_PHASES)[1]
+
+            game_floor_enemy = Game_floor_enemy(
+                                                enemy=random_enemy,
+                                                health_current=health_current,
+                                                attack_power=attack_power,
+                                                skill_style=skill_style,
+                                                attack_phase=attack_phase
+                                                )
+
             game_floor_enemy.save()
             current_game_floor.enemy.add(game_floor_enemy)
             current_game_floor.save()

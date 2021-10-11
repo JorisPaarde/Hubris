@@ -128,10 +128,10 @@
                                             <!-- attack icon -->
                                             <div class="enemy-action-effect">
                                                 <span><img class="position-relative enemy-action-image"
-                                                        src="{{MEDIA_URL}}sword_lightning.svg"
+                                                        src="{{MEDIA_URL}}sword_{{ gamefloor_enemy.get_skill_style_display }}.svg"
                                                         alt="lightning attack"></span>
                                                 <span
-                                                    class="position-relative fa-inverse enemy-attack-stat-number stroke">{{ gamefloor_enemy.health_current }}</span>
+                                                    class="position-relative fa-inverse enemy-attack-stat-number stroke">{{ gamefloor_enemy.attack_power }}</span>
                                             </div>
                                         </div>
                                         <div class="col-2 offset-1">
@@ -153,7 +153,7 @@
                                 {% if enemy|lower == gamefloor_enemy.enemy|lower %}
                                 <div class="col-12 z10">
                                     <div class="row">
-                                        <div class="col-2 offset-4 text-center enemy-stats">
+                                        <div class="col-2 offset-3 text-center enemy-stats">
                                             <!-- health icon -->
                                             <span class="fa-stack fire text-center stroke enemy-health-icon fa-fw">
                                                 <i class="fas fa-stack-1x fa-heart"></i>
@@ -165,13 +165,13 @@
                                             <!-- attack icon -->
                                             <div class="enemy-action-effect">
                                                 <span><img class="position-relative enemy-action-image"
-                                                        src="{{MEDIA_URL}}sword_lightning.svg"
+                                                        src="{{MEDIA_URL}}sword_{{ gamefloor_enemy.get_skill_style_display|lower }}.svg"
                                                         alt="lightning attack"></span>
                                                 <span
-                                                    class="position-relative fa-inverse enemy-attack-stat-number stroke">{{ gamefloor_enemy.health_current }}</span>
+                                                    class="position-relative fa-inverse enemy-attack-stat-number stroke">{{ gamefloor_enemy.attack_power }}</span>
                                             </div>
                                         </div>
-                                        <div class="col-2 offset-1">
+                                        <div class="col-2">
                                             <!-- attack phase indicator-->
                                             <span
                                                 class="enemy-attack-phase-icon position-relative fa-inverse stroke">{{ gamefloor_enemy.get_attack_phase_display }}</span>
