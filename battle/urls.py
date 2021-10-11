@@ -7,5 +7,5 @@ urlpatterns = [
     path('', views.battle_screen, name='battle-screen'),
     path('<game>', views.battle_screen, name='battle-screen'), 
     path('card_select/<card>', views.card_select, name='card-select'),
-    path('action_processor/<action>', views.action_processor, name='action_processor'),
+    path('action_processor', views.action_processor, name='action_processor'),
 ]

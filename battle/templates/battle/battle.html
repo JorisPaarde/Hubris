@@ -21,7 +21,7 @@
                 <div class="col-12 title text-center">
                     <h1 class="medium-large-text mb-0">Score: {{ game.score }} Floor {{ game.completed_game_floors }}
                     </h1>
-                    <h2 class="fs-2">Phase {{ current_game_floor.get_current_phase_display }} game step:
+                    <h2 class="medium-text">Phase {{ current_game_floor.get_current_phase_display }} game step:
                         {{ game.game_step }}</h2>
                 </div>
                 <!-- main menu button -->
@@ -108,51 +108,46 @@
                         {% for gamefloor_enemy in current_game_floor.enemy.all %}
                         {% if forloop.counter|divisibleby:"2" %}
                         <!-- !! first classname needs to be the gamefloor_enemy for javascript to function -->
-                        <div class="{{ gamefloor_enemy }} col-4 game-floor-enemy mb-4 align-self-center">
+                        <div class="{{ gamefloor_enemy }} col-4 game-floor-enemy mt-4 align-self-start">
                             <div class="row">
                                 {% for enemy in enemies %}
                                 {% if enemy|lower == gamefloor_enemy.enemy|lower %}
-                                <form class="enemy-form d-none"
-                                    action="{% url 'battle:action_processor' 'js-enemy select' %}" method="POST">
-                                    {% csrf_token %}
-                                    <button class="action-icon-button enemy-select-button" type="submit"></button>
-                                </form>
-                                    <img class="enemy-image enemy-select position-relative enemy-image-upper"
-                                        src="{{MEDIA_URL}}{{ enemy.image_idle }}" alt="{{enemy}} image"> 
-                                    <div class="col-12 z10">
-                                        <div class="row">
-                                            <div class="col-2 offset-4 enemy-stats">
-                                                <!-- health icon -->
-                                                <span class="fa-stack fire text-center stroke enemy-health-icon fa-fw">
-                                                    <i class="fas fa-stack-1x fa-heart"></i>
-                                                    <span
-                                                        class="fa-stack-1x fa-inverse stat-number">{{ gamefloor_enemy.health_current }}</span>
-                                                </span>
-                                            </div>
-                                            <div class="col-2">
-                                                <!-- attack icon -->
-                                                <div class="enemy-action-effect">
-                                                    <span><img class="position-relative enemy-action-image"
-                                                            src="{{MEDIA_URL}}sword_lightning.svg"
-                                                            alt="lightning attack"></span>
-                                                    <span
-                                                        class="position-relative fa-inverse enemy-attack-stat-number stroke">{{ gamefloor_enemy.health_current }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="col-2 offset-1">
-                                                <!-- attack phase indicator-->
+                                <img class="enemy-image position-relative enemy-image-upper"
+                                    src="{{MEDIA_URL}}{{ enemy.image_idle }}" alt="{{enemy}} image">
+                                <div class="col-12 z10">
+                                    <div class="row">
+                                        <div class="col-2 offset-4 enemy-stats">
+                                            <!-- health icon -->
+                                            <span class="fa-stack fire text-center stroke enemy-health-icon fa-fw">
+                                                <i class="fas fa-stack-1x fa-heart"></i>
                                                 <span
-                                                    class="enemy-attack-phase-icon fa-inverse stroke">{{ gamefloor_enemy.get_attack_phase_display }}</span>
+                                                    class="fa-stack-1x fa-inverse stat-number">{{ gamefloor_enemy.health_current }}</span>
+                                            </span>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- attack icon -->
+                                            <div class="enemy-action-effect">
+                                                <span><img class="position-relative enemy-action-image"
+                                                        src="{{MEDIA_URL}}sword_lightning.svg"
+                                                        alt="lightning attack"></span>
+                                                <span
+                                                    class="position-relative fa-inverse enemy-attack-stat-number stroke">{{ gamefloor_enemy.health_current }}</span>
                                             </div>
                                         </div>
+                                        <div class="col-2 offset-1">
+                                            <!-- attack phase indicator-->
+                                            <span
+                                                class="enemy-attack-phase-icon fa-inverse stroke">{{ gamefloor_enemy.get_attack_phase_display }}</span>
+                                        </div>
                                     </div>
+                                </div>
                                 {% endif %}
                                 {% endfor %}
                             </div>
                         </div>
                         {% else %}
                         <div
-                            class="col-4 {{ gamefloor_enemy }}{% if current_game_floor.enemy.all|length == 1 %} offset-4 align-self-center {% elif current_game_floor.enemy.all|length == 2 %} offset-2 align-self-end {% else %} align-self-end {% endif %}">
+                            class="{{ gamefloor_enemy }} col-4 game-floor-enemy{% if current_game_floor.enemy.all|length == 1 %} offset-4 align-self-center {% elif current_game_floor.enemy.all|length == 2 %} offset-2 align-self-end {% else %} align-self-end {% endif %}">
                             <div class="row">
                                 {% for enemy in enemies %}
                                 {% if enemy|lower == gamefloor_enemy.enemy|lower %}
@@ -183,7 +178,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <img class="enemy-select position-relative enemy-image-lower pb-5 enemy-image"
+                                <img class="position-relative enemy-image-lower pb-5 enemy-image"
                                     src="{{MEDIA_URL}}{{ enemy.image_idle }}" alt="{{enemy}} image">
                                 {% endif %}
                                 {% endfor %}
@@ -328,13 +323,6 @@
         <!-- action selection bar -->
         <div class="col-12">
             <div class="row z500 d-flex fixed-bottom justify-content-center">
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-12 title text-center">
-                            <h3 class="fs-5">action selection</h3>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-12 ml-4 mb-2 action-bar">
                     <div class="row d-flex justify-content-between">
                         <!-- lightning action icon -->
@@ -359,10 +347,6 @@
                             </div>
                         </div>
                         <!-- fire action icon -->
-                        <!-- <form class="action-icon-button" action="{% url 'battle:action_processor' 'fire' %}"
-                            method="POST">
-                            {% csrf_token %} -->
-                        <!-- <button class="action-icon-button" type="submit"> -->
                         <div class="action-icon-button col px-2 m-lg-2">
                             <div class="row">
                                 <!-- !! first classname needs to be the action name for javascript to function -->
@@ -383,15 +367,10 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- </button> -->
-                        <!-- </form> -->
                         <!-- ice action icon -->
-                        <form class="action-icon-button" action="{% url 'battle:action_processor' 'ice' %}"
-                            method="POST">
-                            {% csrf_token %}
-                            <button class="action-icon-button" type="submit">
-                                <div class="col px-2 m-lg-2">
+                                <div class="action-icon-button col px-2 m-lg-2">
                                     <div class="row">
+                                        <!-- !! first classname needs to be the action name for javascript to function -->
                                         <i
                                             class="ice fas m-2 action-icon fa-snowflake {% if not player.ice_attack_power %}text-muted {% endif %}stroke"></i>
                                     </div>
@@ -412,39 +391,27 @@
                                         </div>
                                     </div>
                                 </div>
-                            </button>
-                        </form>
                         <!-- heal action icon -->
-                        <form class="action-icon-button" action="{% url 'battle:action_processor' 'heal' %}"
-                            method="POST">
-                            {% csrf_token %}
-                            <button class="action-icon-button" type="submit">
-                                <div class="col px-2 m-lg-2">
-                                    <div class="row">
-                                        <i
-                                            class="healing fas m-2 action-icon fa-heart {% if not player.healing_power %}text-muted {% endif %}stroke"></i>
-                                    </div>
-                                    <div class="row action-stats">
-                                        <div class="col p-1 position-relative">
-                                            <span><i class="position-absolute fas fa-heart fire stroke fs-3"></i></span>
-                                            <span
-                                                class="position-absolute fa-inverse stat-number stroke">{{ player.healing_power }}</span>
-                                        </div>
-                                        <div class="col p-1 position-relative">
-                                            <i
-                                                class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
-                                            <span
-                                                class="position-absolute fa-inverse stat-number stroke">{{ player.healing_cost }}</span>
-                                        </div>
-                                    </div>
+                        <div class="action-icon-button col px-2 m-lg-2">
+                            <div class="row">
+                                <!-- !! first classname needs to be the action name for javascript to function -->
+                                <i
+                                    class="healing fas m-2 action-icon fa-heart {% if not player.healing_power %}text-muted {% endif %}stroke"></i>
+                            </div>
+                            <div class="row action-stats">
+                                <div class="col p-1 position-relative">
+                                    <span><i class="position-absolute fas fa-heart fire stroke fs-3"></i></span>
+                                    <span
+                                        class="position-absolute fa-inverse stat-number stroke">{{ player.healing_power }}</span>
                                 </div>
-                            </button>
-                        </form>
+                                <div class="col p-1 position-relative">
+                                    <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
+                                    <span
+                                        class="position-absolute fa-inverse stat-number stroke">{{ player.healing_cost }}</span>
+                                </div>
+                            </div>
+                        </div>
                         <!-- drain action icon -->
-                        <!-- <form class="action-icon-button" action="{% url 'battle:action_processor' 'drain' %}"
-                            method="POST">
-                            {% csrf_token %} -->
-                        <!-- <button class="action-icon-button" type="submit"> -->
                         <div class="action-icon-button col px-2 m-lg-2">
                             <div class="row">
                                 <!-- !! first classname needs to be the action name for javascript to function -->
@@ -466,13 +433,8 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- </button> -->
-                        <!-- </form> -->
+
                         <!-- golem action icon -->
-                        <!-- <form class="action-icon-button" action="{% url 'battle:action_processor' 'golem' %}"
-                            method="POST">
-                            {% csrf_token %} -->
-                        <!-- <button class="action-icon-button" type="submit"> -->
                         <div class="action-icon-button col px-2 m-lg-2">
                             <div class="row">
                                 <!-- !! first classname needs to be the action name for javascript to function -->
@@ -493,26 +455,19 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- </button> -->
-                        <!-- </form> -->
                         <!-- skip action -->
-                        <form class="action-icon-button" action="{% url 'battle:action_processor' 'skip' %}"
-                            method="POST">
-                            {% csrf_token %}
-                            <button class="action-icon-button" type="submit">
-                                <div class="col m-lg-2">
-                                    <div class="row">
-                                        <i class="fas m-2 action-icon fa-forward lightning text-primary stroke"></i>
-                                    </div>
-                                    <div class="row action-stats">
-                                        <div class="col p1 position-relative">
-                                            <span
-                                                class="position-absolute medium-text fa-inverse stat-skip stroke">Skip</span>
-                                        </div>
-                                    </div>
+                        <div class="action-icon-button col m-lg-2">
+                            <div class="row">
+                                <!-- !! first classname needs to be the action name for javascript to function -->
+                                <i class="skip fas m-2 action-icon fa-forward lightning text-primary stroke"></i>
+                            </div>
+                            <div class="row action-stats">
+                                <div class="col p1 position-relative">
+                                    <span class="position-absolute medium-text fa-inverse stat-skip stroke">Skip</span>
                                 </div>
-                            </button>
-                        </form>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

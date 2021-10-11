@@ -16,13 +16,7 @@
 }
 
 .enemy-select{
-    filter: drop-shadow(2px 2px 2px rgba(255, 0, 0, 0.85));
-}
-
-.enemy-select-button{
-    width: 200px;
-    height: 100px;
-    background-color: crimson;
+    filter: drop-shadow(1px 1px 1px rgba(255, 0, 0, 0.85));
 }
 
 .enemy-form{

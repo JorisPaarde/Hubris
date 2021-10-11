@@ -3,7 +3,9 @@ from .models import Player, Game, Current_game_floor, Enemy, Game_floor_enemy
 from profiles.models import Card
 from django.contrib import messages
 from django.conf import settings
+from django.http import HttpResponse, JsonResponse
 
+import json
 import random
 
 # Create your views here.
@@ -19,6 +21,8 @@ def battle_screen(request, game):
     current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
     enemies = Enemy.objects.all()
 
+    print("battle screen rendered")
+
     # card playing phase
     if game.game_step == '1':
         messages.info(request, "Please select a card to play.")
@@ -29,6 +33,11 @@ def battle_screen(request, game):
         # select monster(s) from database if there are none
         if len(Game_floor_enemy.objects.all()) == 0:
             pickmonsters(request, game)
+
+        # pass post requests from action.js to action processor function
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            action_processor(request)
+
 
     context = {
         "game": game,
@@ -93,41 +102,41 @@ def card_select(request, card):
     return redirect('battle:battle-screen', game)
 
 
-def action_processor(request, action):
+def action_processor(request):
 
     current_user = request.user
     player = Player.objects.get(user=current_user)
     game = Game.objects.get(player=player)
     current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
 
-    print(action)
+    # logic for getting the player action with corresponding enemy target and sending it to the action processor
 
-    if not action == 'skip' or 'heal':
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        action_selection = json.load(request)['post_data']
+        action = action_selection['action']
+        selected_enemy = action_selection['enemy']
+        print(action)
 
+    if not action == 'skip' and action == 'healing' and action == 'ice':
+
+        print('select target')
         messages.info(request, "Select a target")
 
-    if action == 'heal':
+    if action == 'healing':
         player.health_current = player.health_current + player.healing_power
         if player.health_current > player.health_max:
             player.health_current = player.health_max
         player.save()
 
     if action == 'skip':
-        # skip to the next phase as long as there is a next one
-        n = int(current_game_floor.current_phase)
-        if n >= len(settings.ATTACK_PHASES):
-            pass
-        else:
-            n +=1
-            str(n)
-            current_game_floor.current_phase = n
-            current_game_floor.save()
+        # skip to the next phase as long as there is a next one and reload the page
+        skip_to_next_phase(current_game_floor)
 
-    context={
-        "game": game,
+    data = {
+        'player.health_current': player.health_current
     }
 
-    return redirect('battle:battle-screen', context)
+    return JsonResponse(str(data))
 
 
 def pickmonsters(request, game):
@@ -151,3 +160,15 @@ def pickmonsters(request, game):
             game_floor_enemy.save()
             current_game_floor.enemy.add(game_floor_enemy)
             current_game_floor.save()
+
+
+def skip_to_next_phase(current_game_floor):
+    # skip to the next phase as long as there is a next one
+    n = int(current_game_floor.current_phase)
+    if n >= len(settings.ATTACK_PHASES):
+        pass
+    else:
+        n +=1
+        str(n)
+        current_game_floor.current_phase = n
+        current_game_floor.save()
