@@ -16,13 +16,12 @@ def battle_screen(request, game):
     """view to return battle_screen page"""
 
     current_user = request.user
+    print('gettin player')
     player = Player.objects.get(user=current_user)
     cards = Card.objects.all()
     game = Game.objects.get(player=player)
     current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
     enemies = Enemy.objects.all()
-
-    print("battle screen rendered")
 
     # card playing phase
     if game.game_step == '1':
@@ -38,7 +37,6 @@ def battle_screen(request, game):
         # pass post requests from action.js to action processor function
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             action_processor(request)
-
 
     context = {
         "game": game,
@@ -98,7 +96,7 @@ def card_select(request, card):
             game.save()
 
     else:
-        messages.info(request, "u already selected a spell")   
+        messages.info(request, "u already selected a spell")
 
     return redirect('battle:battle-screen', game)
 
@@ -176,18 +174,25 @@ def action_processor(request):
 
     if action == 'drain':
         # get damage amount and target
-        damage = player.golem_attack_power
+        damage = player.drain_attack_power
         target = current_game_floor.enemy.get(pk=selected_enemy)
+
+        # increase player health with a max of the current enemy's health
+        if target.health_current < damage :
+            player.health_current = player.health_current + max([damage, target.health_current])
+        else:
+            player.health_current = player.health_current + damage
+
+        if player.health_current > player.health_max:
+            player.health_current = player.health_max
+        player.save()
 
         target.health_current = target.health_current - damage
         # prevent negative health
         if target.health_current < 0:
             target.health_current = 0
         target.save()
-        # increase player health
-        player.health_current = player.health_current + damage
-        if player.health_current > player.health_max:
-            player.health_current = player.health_max
+
 
 def pickmonsters(request, game):
 

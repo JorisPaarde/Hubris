@@ -45,6 +45,7 @@ $( ".action-icon-button" ).click(function() {
                 body: JSON.stringify({'post_data':data}) //JavaScript object of data to POST
                 })
             .then(response => {
+                location.reload()
                 return response
             });
     }
@@ -78,6 +79,7 @@ $( ".enemy-image" ).click(function() {
                 body: JSON.stringify({'post_data':data}) //JavaScript object of data to POST
                 })
             .then(response => {
+                location.reload()
                 return response
             });
         };
