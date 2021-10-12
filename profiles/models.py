@@ -57,18 +57,28 @@ class Player(models.Model):
     fire_attack_power = models.IntegerField(default=0)
     fire_defense = models.IntegerField(default=0)
     fire_attack_cost = models.IntegerField(default=4)
+    fire_attack_phase = models.CharField(max_length=4,
+                                        choices=settings.ALLOWED_PHASES, default='2')
     ice_attack_power = models.IntegerField(default=0)
     ice_defense = models.IntegerField(default=0)
     ice_attack_cost = models.IntegerField(default=2)
+    ice_attack_phase = models.CharField(max_length=4,
+                                        choices=settings.ALLOWED_PHASES, default='3')
     drain_attack_power = models.IntegerField(default=0)
     drain_defense = models.IntegerField(default=0)
     drain_attack_cost = models.IntegerField(default=1)
+    drain_attack_phase = models.CharField(max_length=4,
+                                        choices=settings.ALLOWED_PHASES, default='ALL')
     lightning_attack_power = models.IntegerField(default=0)
     lightning_defense = models.IntegerField(default=0)
     lightning_attack_cost = models.IntegerField(default=2)
+    lightning_attack_phase = models.CharField(max_length=4,
+                                        choices=settings.ALLOWED_PHASES, default='1')
     golem_attack_power = models.IntegerField(default=0)
     physical_defense = models.IntegerField(default=0)
     golem_attack_cost = models.IntegerField(default=2)
+    golem_attack_phase = models.CharField(max_length=4,
+                                        choices=settings.ALLOWED_PHASES, default='4')
     healing_power = models.IntegerField(default=0)
     healing_cost = models.IntegerField(default=2)
     mana_current = models.IntegerField(default=0)

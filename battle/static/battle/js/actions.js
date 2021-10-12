@@ -27,6 +27,13 @@ $( ".action-icon-button" ).click(function() {
     // get the first classname this is also the action name.
     let classes = $(this).find(".action-icon").attr("class");
     action = classes.substr(0,classes.indexOf(' '));
+
+    // if the icon is muted it can not be used
+    isMuted = classes.includes("text-muted")
+    if (isMuted){
+        return
+    }
+
     // if the action does't need a target specified, send the data
     if ((action == "healing") || (action == "ice") || (action == "skip") ){
         data = {

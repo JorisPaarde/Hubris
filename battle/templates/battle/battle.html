@@ -329,8 +329,10 @@
                         <div class="action-icon-button col px-2 m-lg-2">
                             <div class="row">
                                 <!-- !! first classname needs to be the action name for javascript to function -->
-                                <i
-                                    class="lightning fas m-2 action-icon fa-bolt {% if not player.lightning_attack_power %}text-muted {% endif %}stroke"></i>
+                                <i class="lightning fas m-2 action-icon fa-bolt 
+                                    {% if current_game_floor.get_current_phase_display|lower != player.get_lightning_attack_phase_display|lower %}text-muted {% endif %}
+                                        {% if not player.lightning_attack_power %}text-muted {% endif %}
+                                    stroke"></i>
                             </div>
                             <div class="row action-stats">
                                 <div class="col p-1 position-relative">
@@ -350,8 +352,10 @@
                         <div class="action-icon-button col px-2 m-lg-2">
                             <div class="row">
                                 <!-- !! first classname needs to be the action name for javascript to function -->
-                                <i
-                                    class="fire fas m-2 action-icon fa-fire-alt {% if not player.fire_attack_power %}text-muted {% endif %}stroke"></i>
+                                <i class="fire fas m-2 action-icon fa-fire-alt
+                                    {% if current_game_floor.get_current_phase_display|lower != player.get_fire_attack_phase_display|lower %}text-muted {% endif %}
+                                    {% if not player.fire_attack_power %}text-muted {% endif %}
+                                    stroke"></i>
                             </div>
                             <div class="row action-stats">
                                 <div class="col p-1 position-relative">
@@ -368,29 +372,29 @@
                             </div>
                         </div>
                         <!-- ice action icon -->
-                                <div class="action-icon-button col px-2 m-lg-2">
-                                    <div class="row">
-                                        <!-- !! first classname needs to be the action name for javascript to function -->
-                                        <i
-                                            class="ice fas m-2 action-icon fa-snowflake {% if not player.ice_attack_power %}text-muted {% endif %}stroke"></i>
-                                    </div>
-                                    <div class="row action-stats">
-                                        <div class="col p-1 position-relative">
-                                            <i
-                                                class="position-absolute fas fa-infinity fa-inverse mt-2 fs-6 stroke"></i>
-                                            <span><img class="position-absolute action-effect"
-                                                    src="{{MEDIA_URL}}sword_ice.svg" alt="ice attack"></span>
-                                            <span
-                                                class="position-absolute fa-inverse stat-number stroke">{{ player.ice_attack_power }}</span>
-                                        </div>
-                                        <div class="col p-1 position-relative">
-                                            <i
-                                                class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
-                                            <span
-                                                class="position-absolute fa-inverse stat-number stroke">{{ player.ice_attack_cost }}</span>
-                                        </div>
-                                    </div>
+                        <div class="action-icon-button col px-2 m-lg-2">
+                            <div class="row">
+                                <!-- !! first classname needs to be the action name for javascript to function -->
+                                <i class="ice fas m-2 action-icon fa-snowflake 
+                                            {% if current_game_floor.get_current_phase_display|lower != player.get_ice_attack_phase_display|lower %}text-muted {% endif %}
+                                            {% if not player.ice_attack_power %}text-muted {% endif %}
+                                            stroke"></i>
+                            </div>
+                            <div class="row action-stats">
+                                <div class="col p-1 position-relative">
+                                    <i class="position-absolute fas fa-infinity fa-inverse mt-2 fs-6 stroke"></i>
+                                    <span><img class="position-absolute action-effect" src="{{MEDIA_URL}}sword_ice.svg"
+                                            alt="ice attack"></span>
+                                    <span
+                                        class="position-absolute fa-inverse stat-number stroke">{{ player.ice_attack_power }}</span>
                                 </div>
+                                <div class="col p-1 position-relative">
+                                    <i class="position-absolute fas action-cost mana medium-text fa-flask stroke"></i>
+                                    <span
+                                        class="position-absolute fa-inverse stat-number stroke">{{ player.ice_attack_cost }}</span>
+                                </div>
+                            </div>
+                        </div>
                         <!-- heal action icon -->
                         <div class="action-icon-button col px-2 m-lg-2">
                             <div class="row">
@@ -438,8 +442,10 @@
                         <div class="action-icon-button col px-2 m-lg-2">
                             <div class="row">
                                 <!-- !! first classname needs to be the action name for javascript to function -->
-                                <i
-                                    class="golem fas m-2 action-icon fa-robot {% if not player.golem_attack_power %}text-muted {% endif %}stroke"></i>
+                                <i class="golem fas m-2 action-icon fa-robot 
+                                    {% if current_game_floor.get_current_phase_display|lower != player.get_golem_attack_phase_display|lower %}text-muted {% endif %}
+                                    {% if not player.golem_attack_power %}text-muted {% endif %}
+                                    stroke"></i>
                             </div>
                             <div class="row action-stats">
                                 <div class="col p-1 position-relative">
