@@ -117,6 +117,7 @@ def action_processor(request):
         action = action_selection['action']
         selected_enemy = action_selection['enemy']
         print(action)
+        print(selected_enemy)
 
     if action == 'healing':
         player.health_current = player.health_current + player.healing_power
@@ -128,6 +129,65 @@ def action_processor(request):
         # skip to the next phase as long as there is a next one and reload the page
         skip_to_next_phase(current_game_floor)
 
+    if action == 'ice':
+        # get damage amount and target
+        damage = player.ice_attack_power
+        targets = current_game_floor.enemy.all()
+
+        for target in targets:
+            target.health_current = target.health_current - damage
+            # prevent negative health
+            if target.health_current < 0:
+                target.health_current = 0
+            target.save()
+
+    if action == 'golem':
+        # get damage amount and target
+        damage = player.golem_attack_power
+        target = current_game_floor.enemy.get(pk=selected_enemy)
+
+        target.health_current = target.health_current - damage
+        # prevent negative health
+        if target.health_current < 0:
+            target.health_current = 0
+        target.save()
+
+    if action == 'fire':
+        # get damage amount and target
+        damage = player.fire_attack_power
+        target = current_game_floor.enemy.get(pk=selected_enemy)
+
+        target.health_current = target.health_current - damage
+        # prevent negative health
+        if target.health_current < 0:
+            target.health_current = 0
+        target.save()
+
+    if action == 'lightning':
+        # get damage amount and target
+        damage = player.lightning_attack_power
+        target = current_game_floor.enemy.get(pk=selected_enemy)
+
+        target.health_current = target.health_current - damage
+        # prevent negative health
+        if target.health_current < 0:
+            target.health_current = 0
+        target.save()
+
+    if action == 'drain':
+        # get damage amount and target
+        damage = player.golem_attack_power
+        target = current_game_floor.enemy.get(pk=selected_enemy)
+
+        target.health_current = target.health_current - damage
+        # prevent negative health
+        if target.health_current < 0:
+            target.health_current = 0
+        target.save()
+        # increase player health
+        player.health_current = player.health_current + damage
+        if player.health_current > player.health_max:
+            player.health_current = player.health_max
 
 def pickmonsters(request, game):
 
@@ -152,9 +212,9 @@ def pickmonsters(request, game):
             random_enemy = random.choice(available_enemies)
             # determine the stats for this enemy
             random.seed(time.process_time())
-            rand_int_1 = random.randint(1, floor_nr * 5)
+            rand_int_1 = random.randint(1, floor_nr * 3)
             random.seed(time.process_time())
-            rand_int_2 = random.randint(1, floor_nr * 5)
+            rand_int_2 = random.randint(1, floor_nr * 3)
 
             max_health = rand_int_1 + 2
             attack_power = rand_int_2 + 2
@@ -189,3 +249,8 @@ def skip_to_next_phase(current_game_floor):
         str(n)
         current_game_floor.current_phase = n
         current_game_floor.save()
+
+
+def attack_enemy(player, action, game_floor_enemy):
+
+    attack_power = player
