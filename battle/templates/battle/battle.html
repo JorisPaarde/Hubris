@@ -123,7 +123,7 @@
                                 {% for enemy in enemies %}
                                 {% if enemy|lower == gamefloor_enemy.enemy|lower %}
                                 <img class="enemy-image position-relative enemy-image-upper"
-                                    src="{{MEDIA_URL}}{{ enemy.image_idle }}" alt="{{enemy}} image">
+                                    src="{{MEDIA_URL}}{% if gamefloor_enemy.health_current > 0 %}{{ enemy.image_idle }}{% else %}{{ enemy.image_die }}{% endif %}" alt="{{enemy}} image">
                                 <div class="col-12 z10">
                                     <div class="row">
                                         <div class="col-2 offset-4 enemy-stats">
@@ -189,7 +189,7 @@
                                     </div>
                                 </div>
                                 <img class="position-relative enemy-image-lower pb-5 enemy-image"
-                                    src="{{MEDIA_URL}}{{ enemy.image_idle }}" alt="{{enemy}} image">
+                                    src="{{MEDIA_URL}}{% if gamefloor_enemy.health_current > 0 %}{{ enemy.image_idle }}{% else %}{{ enemy.image_die }}{% endif %}" alt="{{enemy}} image">
                                 {% endif %}
                                 {% endfor %}
                             </div>

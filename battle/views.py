@@ -16,7 +16,6 @@ def battle_screen(request, game):
     """view to return battle_screen page"""
 
     current_user = request.user
-    print('gettin player')
     player = Player.objects.get(user=current_user)
     cards = Card.objects.all()
     game = Game.objects.get(player=player)
@@ -114,14 +113,13 @@ def action_processor(request):
         action_selection = json.load(request)['post_data']
         action = action_selection['action']
         selected_enemy = action_selection['enemy']
-        print(action)
-        print(selected_enemy)
 
     if action == 'healing':
         player.health_current = player.health_current + player.healing_power
         if player.health_current > player.health_max:
             player.health_current = player.health_max
         player.save()
+        skip_to_next_phase(current_game_floor)
 
     if action == 'skip':
         # skip to the next phase as long as there is a next one and reload the page
@@ -138,6 +136,8 @@ def action_processor(request):
             if target.health_current < 0:
                 target.health_current = 0
             target.save()
+        # this phase is completed, go on to the next one
+        skip_to_next_phase(current_game_floor)
 
     if action == 'golem':
         # get damage amount and target
@@ -149,6 +149,8 @@ def action_processor(request):
         if target.health_current < 0:
             target.health_current = 0
         target.save()
+        # this phase is completed, go on to the next one
+        skip_to_next_phase(current_game_floor)
 
     if action == 'fire':
         # get damage amount and target
@@ -160,6 +162,8 @@ def action_processor(request):
         if target.health_current < 0:
             target.health_current = 0
         target.save()
+        # this phase is completed, go on to the next one
+        skip_to_next_phase(current_game_floor)
 
     if action == 'lightning':
         # get damage amount and target
@@ -171,6 +175,8 @@ def action_processor(request):
         if target.health_current < 0:
             target.health_current = 0
         target.save()
+        # this phase is completed, go on to the next one
+        skip_to_next_phase(current_game_floor)
 
     if action == 'drain':
         # get damage amount and target
@@ -192,6 +198,19 @@ def action_processor(request):
         if target.health_current < 0:
             target.health_current = 0
         target.save()
+        # this phase is completed, go on to the next one
+        skip_to_next_phase(current_game_floor)
+
+    # if all enemies are dead now u win the round
+    killed = 0
+    for enemy in current_game_floor.enemy.all():
+
+        if enemy.health_current == 0:
+            killed += 1
+
+    if killed == len(current_game_floor.enemy.all()):
+        print('they all died')
+        messages.info(request, "They all died.")
 
 
 def pickmonsters(request, game):
