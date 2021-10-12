@@ -4,6 +4,11 @@
 <!-- block header %} -->
 {% block header %}
 {% include "../includes/header.html" %}
+
+{% block extra_js %}
+<script src="{% static 'js/force_landscape.js' %}"></script>
+{% endblock %}
+
 {% endblock %}
 
 {% block extra_css %}
@@ -14,6 +19,15 @@
 {% block body_background %}class="menu-bg"{% endblock %}
 
 {% block content %}
+<!-- landscape mode screen overlay -->
+<div class="container-fluid landscape-screen">
+    <div class="row h-100 display-flex justify-content-center align-items-center">
+        <div class="col-6 text-center menu-banner medium-text">
+            <h1>Please use landscape mode</h1>
+        </div>
+    </div>
+</div>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col">
