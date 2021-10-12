@@ -109,8 +109,8 @@ def game_setup(request, selected):
                                     fire_defense=3,
                                     mana_max=4,
                                     mana_current=4,
-                                    health_max=10,
-                                    health_current=10
+                                    health_max=6,
+                                    health_current=6
                                     )
                     player.save()
                 # values set for lightning wizard
@@ -118,12 +118,12 @@ def game_setup(request, selected):
                     player = Player(pk=current_player.id,
                                     type=selected_type,
                                     user=current_user,
-                                    lightning_attack_power=3,
+                                    lightning_attack_power=2,
                                     lightning_defense=3,
                                     mana_max=4,
                                     mana_current=4,
-                                    health_max=10,
-                                    health_current=10
+                                    health_max=6,
+                                    health_current=6
                                     )
                     player.save()
                 # values set for ice wizard
@@ -135,8 +135,8 @@ def game_setup(request, selected):
                                     ice_defense=3,
                                     mana_max=4,
                                     mana_current=4,
-                                    health_max=2,
-                                    health_current=10
+                                    health_max=6,
+                                    health_current=6
                                     )
                     player.save()
         # start this users game with this player
