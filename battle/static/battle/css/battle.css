@@ -5,8 +5,9 @@
 }
 
 .enemy-image{
-    -webkit-transform: scale(-1.5,1.5);
-    transform: scale(-1.5,1.5);
+    top: 4vh;
+    -webkit-transform: scale(-2.5,2.5);
+    transform: scale(-2.5,2.5);
     object-fit: contain;
 }
 
