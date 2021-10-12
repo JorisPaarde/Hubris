@@ -11,12 +11,30 @@
 }
 
 .enemy-select:hover{
-    filter: drop-shadow(5px 5px 5px rgba(255, 0, 0, 0.85));
+    filter: drop-shadow(4px 4px 4px rgba(255, 0, 0, 0.85));
     cursor: pointer;
+}
+
+@keyframes border-pulsate {
+    0%   { filter: drop-shadow(1px 1px 0.5vh rgba(255, 0, 0, 0.85)); }
+    50%  { filter: drop-shadow(1px 1px 0.2vh rgba(155, 0, 0, 0.85)); }
+    100% { filter: drop-shadow(1px 1px 0.5vh rgba(255, 0, 0, 0.85)); }
 }
 
 .enemy-select{
     filter: drop-shadow(1px 1px 1px rgba(255, 0, 0, 0.85));
+    animation: border-pulsate 1s infinite;
+}
+
+@keyframes border-expand {
+    0%   { filter: drop-shadow(1px 1px 0.8vh rgba(255, 0, 0, 1)); }
+    50%  { filter: drop-shadow(1px 1px 0.2vh rgba(255, 0, 0, 0.85)); }
+    100% { filter: drop-shadow(1px 1px 0.8vh rgba(255, 0, 0, 1)); }
+}
+
+.enemy-select:active{
+    filter: drop-shadow(1px 1px 1px rgba(255, 0, 0, 0.85));
+    animation: border-expand 2s;
 }
 
 .enemy-form{
@@ -119,6 +137,15 @@
 
 .action-icon-button{
     all: unset;
+}
+
+.action-icon-button:hover{
+    cursor: pointer;
+}
+
+.action-icon-button:active{
+    transform: translateY(5px);
+    transform: scale(0.9);
 }
 
 /* background */

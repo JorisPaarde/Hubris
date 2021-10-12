@@ -45,7 +45,7 @@ $( ".action-icon-button" ).click(function() {
                 body: JSON.stringify({'post_data':data}) //JavaScript object of data to POST
                 })
             .then(response => {
-                location.reload()
+                setTimeout(location.reload(), 2000)
                 return response
             });
     }
