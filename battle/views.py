@@ -1,13 +1,13 @@
+import json
+import random
+import time
+
 from django.shortcuts import render, redirect
 from .models import Player, Game, Current_game_floor, Enemy, Game_floor_enemy
 from profiles.models import Card
 from django.contrib import messages
 from django.conf import settings
-from django.http import HttpResponse, JsonResponse
-
-import json
-import random
-import time
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -49,7 +49,7 @@ def battle_screen(request, game):
 
 
 def card_select(request, card):
-    """view to handle card selection and return to the next game step"""
+    """function to handle card selection and return to the next game step"""
 
     current_user = request.user
     player = Player.objects.get(user=current_user)
@@ -101,13 +101,15 @@ def card_select(request, card):
 
 
 def action_processor(request):
+    """view to handle player actions"""
 
     current_user = request.user
     player = Player.objects.get(user=current_user)
     game = Game.objects.get(player=player)
     current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
 
-    # logic for getting the player action with corresponding enemy target and sending it to the action processor
+    # logic for getting the player action with corresponding enemy target,
+    # and sending it to the action processor
 
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         action_selection = json.load(request)['post_data']
@@ -133,8 +135,7 @@ def action_processor(request):
         for target in targets:
             target.health_current = target.health_current - damage
             # prevent negative health
-            if target.health_current < 0:
-                target.health_current = 0
+            target.health_current = max(0, target.health_current)
             target.save()
         # this phase is completed, go on to the next one
         skip_to_next_phase(current_game_floor)
@@ -146,8 +147,7 @@ def action_processor(request):
 
         target.health_current = target.health_current - damage
         # prevent negative health
-        if target.health_current < 0:
-            target.health_current = 0
+        target.health_current = max(0, target.health_current)
         target.save()
         # this phase is completed, go on to the next one
         skip_to_next_phase(current_game_floor)
@@ -159,8 +159,7 @@ def action_processor(request):
 
         target.health_current = target.health_current - damage
         # prevent negative health
-        if target.health_current < 0:
-            target.health_current = 0
+        target.health_current = max(0, target.health_current)
         target.save()
         # this phase is completed, go on to the next one
         skip_to_next_phase(current_game_floor)
@@ -172,8 +171,7 @@ def action_processor(request):
 
         target.health_current = target.health_current - damage
         # prevent negative health
-        if target.health_current < 0:
-            target.health_current = 0
+        target.health_current = max(0, target.health_current)
         target.save()
         # this phase is completed, go on to the next one
         skip_to_next_phase(current_game_floor)
@@ -195,8 +193,7 @@ def action_processor(request):
 
         target.health_current = target.health_current - damage
         # prevent negative health
-        if target.health_current < 0:
-            target.health_current = 0
+        target.health_current = max(0, target.health_current)
         target.save()
         # this phase is completed, go on to the next one
         skip_to_next_phase(current_game_floor)
@@ -214,7 +211,7 @@ def action_processor(request):
 
 
 def pickmonsters(request, game):
-
+    """function to ramndomly select monsters from the database"""
     current_user = request.user
     player = Player.objects.get(user=current_user)
     game = Game.objects.get(player=player)
@@ -236,12 +233,12 @@ def pickmonsters(request, game):
             random_enemy = random.choice(available_enemies)
             # determine the stats for this enemy
             random.seed(time.process_time())
-            rand_int_1 = random.randint(1, floor_nr * 3)
+            rand_int_1 = random.randint(3, floor_nr * 3)
             random.seed(time.process_time())
-            rand_int_2 = random.randint(1, floor_nr * 3)
+            rand_int_2 = max(4, random.randint(1, rand_int_1))
 
-            max_health = rand_int_1 + 2
-            attack_power = rand_int_2 + 2
+            max_health = max(rand_int_1, rand_int_2)/n
+            attack_power = min(rand_int_1, rand_int_2)/n
 
             health_current = max_health
             skill_style = random.choice(settings.SKILL_STYLES)[1]
@@ -264,7 +261,7 @@ def pickmonsters(request, game):
 
 
 def skip_to_next_phase(current_game_floor):
-    # skip to the next phase as long as there is a next one
+    """function to skip to the next phase as long as there is a next one"""
     n = int(current_game_floor.current_phase)
     if n >= len(settings.ATTACK_PHASES):
         pass
