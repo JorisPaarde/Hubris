@@ -93,17 +93,18 @@ $( ".enemy-image" ).click(function() {
     });
 
 function checkEnemyHealth() {
-    let gameStepNr = parseInt($(" .game-step-nr ").html())
+    let gameStepNr = parseInt($(" .game-step-nr ").data("step"))
     var totalHealth = 0
     if ($( ".game-floor-enemy" ).length > 0){
         // adds up all enemies health
         $( ".enemy-health-current" ).each(function () {
             totalHealth = totalHealth + parseInt($(this).html())
             });
-        console.log(totalHealth)
         // if the total is 0 confirmation is send to the backend that they are all dead
+        console.log(totalHealth)
+        console.log(gameStepNr)
         if ((totalHealth == 0)&&(gameStepNr == 2)){
-            confirmAllDead(totalHealth);
+        confirmAllDead();
         };
     };
    
@@ -111,7 +112,8 @@ function checkEnemyHealth() {
 
 checkEnemyHealth();
 
-function confirmAllDead(totalHealth) {
+function confirmAllDead() {
+    console.log('DIKKE MEMMEN');
     data = {
         'all_enemies_dead': true,
     };

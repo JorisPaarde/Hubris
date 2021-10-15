@@ -32,7 +32,7 @@
                     <h1 class="medium-large-text mb-0">Score: {{ game.score }} Floor {{ game.completed_game_floors }}
                     </h1>
                     <h2 class="medium-text">Phase {{ current_game_floor.get_current_phase_display }}</h2>
-                    <h2 class="medium-small-text game-step-nr"> game step: {{ game.game_step }}</h2>
+                    <h2 class="medium-small-text game-step-nr" data-step="{{ game.game_step }}"> game step: {{ game.game_step }}</h2>
                 </div>
                 <!-- main menu button -->
                 <div class="col-2 offset-9 mt-md-4 z500">

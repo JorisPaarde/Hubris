@@ -50,7 +50,7 @@ class Game(models.Model):
     completed = models.BooleanField(default=False)
     score = models.BigIntegerField(default=0)
     game_step = models.CharField(max_length=1, choices=settings.GAME_STEPS, default=1)
-    current_game_floor = models.ForeignKey(Current_game_floor, on_delete=models.SET_DEFAULT, default=1)
+    current_game_floor = models.ForeignKey(Current_game_floor, on_delete=models.SET_NULL, default=1, null=True)
     completed_game_floors = models.IntegerField(default=1)
 
 

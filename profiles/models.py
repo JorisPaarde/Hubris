@@ -53,7 +53,7 @@ class Player(models.Model):
 
     date_time_created = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    type = models.ForeignKey(Player_type, on_delete=models.CASCADE)
+    type = models.ForeignKey(Player_type, on_delete=models.CASCADE, null=True)
     fire_attack_power = models.IntegerField(default=0)
     fire_defense = models.IntegerField(default=0)
     fire_attack_cost = models.IntegerField(default=4)
