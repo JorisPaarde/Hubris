@@ -131,14 +131,14 @@
                                             <span class="fa-stack fire text-center stroke enemy-health-icon fa-fw">
                                                 <i class="fas fa-stack-1x fa-heart"></i>
                                                 <span
-                                                    class="fa-stack-1x fa-inverse stat-number">{{ gamefloor_enemy.health_current }}</span>
+                                                    class="fa-stack-1x fa-inverse enemy-health-current stat-number">{{ gamefloor_enemy.health_current }}</span>
                                             </span>
                                         </div>
                                         <div class="col-2">
                                             <!-- attack icon -->
                                             <div class="enemy-action-effect">
                                                 <span><img class="position-relative enemy-action-image"
-                                                        src="{{MEDIA_URL}}sword_{{ gamefloor_enemy.get_skill_style_display }}.svg"
+                                                        src="{{MEDIA_URL}}sword_{{ gamefloor_enemy.get_skill_style_display|lower }}.svg"
                                                         alt="lightning attack"></span>
                                                 <span
                                                     class="position-relative fa-inverse enemy-attack-stat-number stroke">{{ gamefloor_enemy.attack_power }}</span>
@@ -168,7 +168,7 @@
                                             <span class="fa-stack fire text-center stroke enemy-health-icon fa-fw">
                                                 <i class="fas fa-stack-1x fa-heart"></i>
                                                 <span
-                                                    class="fa-stack-1x fa-inverse stat-number">{{ gamefloor_enemy.health_current }}</span>
+                                                    class="fa-stack-1x fa-inverse enemy-health-current stat-number">{{ gamefloor_enemy.health_current }}</span>
                                             </span>
                                         </div>
                                         <div class="col-2 text-center">

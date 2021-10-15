@@ -35,8 +35,13 @@ def battle_screen(request, game):
 
         # pass post requests from action.js to action processor function
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            action_processor(request)
-
+            request_data = json.load(request)['post_data']
+            print(request_data)
+            if 'action' in request_data:
+                action_processor(request, request_data)
+            if 'all_enemies_dead' in request_data:
+                check_dead_monsters(request)
+                print("do shite because the're dead")
     context = {
         "game": game,
         "current_game_floor": current_game_floor,
@@ -123,7 +128,7 @@ def spend_mana(player, amount):
     player.save()
 
 
-def action_processor(request):
+def action_processor(request, request_data):
     """view to handle player actions"""
 
     current_user = request.user
@@ -134,59 +139,49 @@ def action_processor(request):
     # logic for getting the player action with corresponding enemy target,
     # and sending it to the action processor
 
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        action_selection = json.load(request)['post_data']
-        action = action_selection['action']
+    action_selection = request_data
+    action = action_selection['action']
 
-        if action_selection['enemy'] != 'notspecified':
-            selected_enemy = action_selection['enemy']
-            target = current_game_floor.enemy.filter(pk=selected_enemy)
+    if action_selection['enemy'] != 'notspecified':
+        selected_enemy = action_selection['enemy']
+        target = current_game_floor.enemy.filter(pk=selected_enemy)
 
-        targets = current_game_floor.enemy.all()
+    targets = current_game_floor.enemy.all()
+    if action == 'skip':
+        pass
 
-        if action == 'healing':
-            heal_player(player, player.healing_power)
-            spend_mana(player, player.healing_cost)
+    if action == 'healing':
+        heal_player(player, player.healing_power)
+        spend_mana(player, player.healing_cost)
 
-        if action == 'ice':
-            attack_target(targets, player.ice_attack_power)
-            spend_mana(player, player.ice_attack_cost)
+    if action == 'ice':
+        attack_target(targets, player.ice_attack_power)
+        spend_mana(player, player.ice_attack_cost)
 
-        if action == 'golem':
-            attack_target(target, player.golem_attack_power)
-            spend_mana(player, player.golem_attack_cost)
+    if action == 'golem':
+        attack_target(target, player.golem_attack_power)
+        spend_mana(player, player.golem_attack_cost)
 
-        if action == 'fire':
-            attack_target(target, player.fire_attack_power)
-            spend_mana(player, player.fire_attack_cost)
+    if action == 'fire':
+        attack_target(target, player.fire_attack_power)
+        spend_mana(player, player.fire_attack_cost)
 
-        if action == 'lightning':
-            attack_target(target, player.lightning_attack_power)
-            spend_mana(player, player.lightning_attack_cost)
+    if action == 'lightning':
+        attack_target(target, player.lightning_attack_power)
+        spend_mana(player, player.lightning_attack_cost)
 
-        if action == 'drain':
-            enemy = current_game_floor.enemy.get(pk=selected_enemy)
-            # player can only heal to the amount of damge done
-            if player.drain_attack_power > enemy.health_current:
-                amount = enemy.health_current
-            else:
-                amount = player.drain_attack_power
-            heal_player(player, amount)
-            attack_target(target, player.drain_attack_power)
-            spend_mana(player, player.drain_attack_cost)
+    if action == 'drain':
+        enemy = current_game_floor.enemy.get(pk=selected_enemy)
+        # player can only heal to the amount of damge done
+        if player.drain_attack_power > enemy.health_current:
+            amount = enemy.health_current
+        else:
+            amount = player.drain_attack_power
+        heal_player(player, amount)
+        attack_target(target, player.drain_attack_power)
+        spend_mana(player, player.drain_attack_cost)
 
-        skip_to_next_phase(current_game_floor)
-
-    # if all enemies are dead now u win the round
-    killed = 0
-    for enemy in current_game_floor.enemy.all():
-
-        if enemy.health_current == 0:
-            killed += 1
-
-    if killed == len(current_game_floor.enemy.all()):
-        print('they all died')
-        messages.info(request, "They all died.")
+    skip_to_next_phase(current_game_floor)
 
 
 def pickmonsters(request, game):
@@ -197,15 +192,15 @@ def pickmonsters(request, game):
     current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
 
     # determine the amount of enemies
-    n = 1
+    number_of_enemies = 2
     floor_nr = game.completed_game_floors
-    if floor_nr % 2 == 0:
-        n = 2
-    if floor_nr % 3 == 0:
-        n = 3
+    # if floor_nr % 2 == 0:
+    #     number_of_enemies = 2
+    # if floor_nr % 3 == 0:
+    #     number_of_enemies = 3
 
     if current_game_floor:
-        for game_floor_enemy in range(n):
+        for game_floor_enemy in range(number_of_enemies):
             # get a list of enemies available to this player
             available_enemies = Enemy.objects.filter(in_freeversion=True)
             # select a random enemy and add it to the game_floor
@@ -216,8 +211,8 @@ def pickmonsters(request, game):
             random.seed(time.process_time())
             rand_int_2 = max(4, random.randint(1, rand_int_1))
 
-            max_health = max(rand_int_1, rand_int_2)/n
-            attack_power = min(rand_int_1, rand_int_2)/n
+            max_health = max(rand_int_1, rand_int_2)/number_of_enemies
+            attack_power = min(rand_int_1, rand_int_2)/number_of_enemies
 
             health_current = max_health
             skill_style = random.choice(settings.SKILL_STYLES)[1]
@@ -229,6 +224,7 @@ def pickmonsters(request, game):
             game_floor_enemy = Game_floor_enemy(
                                                 enemy=random_enemy,
                                                 health_current=health_current,
+                                                max_health=max_health,
                                                 attack_power=attack_power,
                                                 skill_style=skill_style,
                                                 attack_phase=attack_phase
@@ -245,7 +241,26 @@ def skip_to_next_phase(current_game_floor):
     if n >= len(settings.ATTACK_PHASES):
         pass
     else:
-        n +=1
+        n += 1
         str(n)
         current_game_floor.current_phase = n
         current_game_floor.save()
+
+
+def check_dead_monsters(request):
+
+    current_user = request.user
+    player = Player.objects.get(user=current_user)
+    game = Game.objects.get(player=player)
+    current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
+
+    # if all enemies are dead now u win the round
+    killed = 0
+    for enemy in current_game_floor.enemy.all():
+
+        if enemy.health_current == 0:
+            killed += 1
+
+    if killed == len(current_game_floor.enemy.all()):
+        print("yup it's true")
+        messages.info(request, "They all died.")
