@@ -100,6 +100,25 @@ def card_select(request, card):
     return redirect('battle:battle-screen', game)
 
 
+def attack_target(targets, damage):
+
+    print (targets)
+
+    for target in targets:
+        target.health_current = target.health_current - damage
+        # prevent negative health
+        target.health_current = max(0, target.health_current)
+        target.save()
+
+
+def heal_player(player, amount):
+
+    player.health_current = player.health_current + amount
+    if player.health_current > player.health_max:
+        player.health_current = player.health_max
+    player.save()
+
+
 def action_processor(request):
     """view to handle player actions"""
 
@@ -114,89 +133,43 @@ def action_processor(request):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         action_selection = json.load(request)['post_data']
         action = action_selection['action']
-        selected_enemy = action_selection['enemy']
+
+        if action_selection['enemy'] != 'notspecified':
+            selected_enemy = action_selection['enemy']
+            target = current_game_floor.enemy.filter(pk=selected_enemy)
+
+        targets = current_game_floor.enemy.all()
 
     if action == 'healing':
-        player.health_current = player.health_current + player.healing_power
-        if player.health_current > player.health_max:
-            player.health_current = player.health_max
-        player.save()
-        skip_to_next_phase(current_game_floor)
+        heal_player(player, player.healing_power)
 
     if action == 'skip':
-        # skip to the next phase as long as there is a next one and reload the page
+        print('skip')
+        # skip to the next phase as long as there is a next one
         skip_to_next_phase(current_game_floor)
 
     if action == 'ice':
-        # get damage amount and target
-        damage = player.ice_attack_power
-        targets = current_game_floor.enemy.all()
-
-        for target in targets:
-            target.health_current = target.health_current - damage
-            # prevent negative health
-            target.health_current = max(0, target.health_current)
-            target.save()
-        # this phase is completed, go on to the next one
+        attack_target(targets, player.ice_attack_power)
         skip_to_next_phase(current_game_floor)
 
     if action == 'golem':
-        # get damage amount and target
-        damage = player.golem_attack_power
-        target = current_game_floor.enemy.get(pk=selected_enemy)
-
-        target.health_current = target.health_current - damage
-        # prevent negative health
-        target.health_current = max(0, target.health_current)
-        target.save()
-        # this phase is completed, go on to the next one
+        attack_target(target, player.golem_attack_power)
         skip_to_next_phase(current_game_floor)
 
     if action == 'fire':
-        # get damage amount and target
-        damage = player.fire_attack_power
-        target = current_game_floor.enemy.get(pk=selected_enemy)
-
-        target.health_current = target.health_current - damage
-        # prevent negative health
-        target.health_current = max(0, target.health_current)
-        target.save()
-        # this phase is completed, go on to the next one
+        attack_target(target, player.fire_attack_power)
         skip_to_next_phase(current_game_floor)
 
     if action == 'lightning':
-        # get damage amount and target
-        damage = player.lightning_attack_power
-        target = current_game_floor.enemy.get(pk=selected_enemy)
-
-        target.health_current = target.health_current - damage
-        # prevent negative health
-        target.health_current = max(0, target.health_current)
-        target.save()
-        # this phase is completed, go on to the next one
+        attack_target(target, player.lightning_attack_power)
         skip_to_next_phase(current_game_floor)
 
     if action == 'drain':
-        # get damage amount and target
-        damage = player.drain_attack_power
-        target = current_game_floor.enemy.get(pk=selected_enemy)
-
-        # increase player health with a max of the current enemy's health
-        if target.health_current < damage :
-            player.health_current = player.health_current + max([damage, target.health_current])
-        else:
-            player.health_current = player.health_current + damage
-
-        if player.health_current > player.health_max:
-            player.health_current = player.health_max
-        player.save()
-
-        target.health_current = target.health_current - damage
-        # prevent negative health
-        target.health_current = max(0, target.health_current)
-        target.save()
-        # this phase is completed, go on to the next one
+        heal_player(player, max([player.drain_attack_power,
+                    target.health_current]))
+        attack_target(target, player.drain_attack_power)
         skip_to_next_phase(current_game_floor)
+
 
     # if all enemies are dead now u win the round
     killed = 0
@@ -270,8 +243,3 @@ def skip_to_next_phase(current_game_floor):
         str(n)
         current_game_floor.current_phase = n
         current_game_floor.save()
-
-
-def attack_enemy(player, action, game_floor_enemy):
-
-    attack_power = player
