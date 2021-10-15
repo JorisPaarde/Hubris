@@ -101,9 +101,7 @@ def card_select(request, card):
 
 
 def attack_target(targets, damage):
-
-    print (targets)
-
+    """function to handle target attacks"""
     for target in targets:
         target.health_current = target.health_current - damage
         # prevent negative health
@@ -112,10 +110,16 @@ def attack_target(targets, damage):
 
 
 def heal_player(player, amount):
-
+    """function to handle player healing"""
     player.health_current = player.health_current + amount
     if player.health_current > player.health_max:
         player.health_current = player.health_max
+    player.save()
+
+
+def spend_mana(player, amount):
+    """function to handle mana spending"""
+    player.mana_current = player.mana_current - amount
     player.save()
 
 
@@ -140,36 +144,38 @@ def action_processor(request):
 
         targets = current_game_floor.enemy.all()
 
-    if action == 'healing':
-        heal_player(player, player.healing_power)
+        if action == 'healing':
+            heal_player(player, player.healing_power)
+            spend_mana(player, player.healing_cost)
 
-    if action == 'skip':
-        print('skip')
-        # skip to the next phase as long as there is a next one
+        if action == 'ice':
+            attack_target(targets, player.ice_attack_power)
+            spend_mana(player, player.ice_attack_cost)
+
+        if action == 'golem':
+            attack_target(target, player.golem_attack_power)
+            spend_mana(player, player.golem_attack_cost)
+
+        if action == 'fire':
+            attack_target(target, player.fire_attack_power)
+            spend_mana(player, player.fire_attack_cost)
+
+        if action == 'lightning':
+            attack_target(target, player.lightning_attack_power)
+            spend_mana(player, player.lightning_attack_cost)
+
+        if action == 'drain':
+            enemy = current_game_floor.enemy.get(pk=selected_enemy)
+            # player can only heal to the amount of damge done
+            if player.drain_attack_power > enemy.health_current:
+                amount = enemy.health_current
+            else:
+                amount = player.drain_attack_power
+            heal_player(player, amount)
+            attack_target(target, player.drain_attack_power)
+            spend_mana(player, player.drain_attack_cost)
+
         skip_to_next_phase(current_game_floor)
-
-    if action == 'ice':
-        attack_target(targets, player.ice_attack_power)
-        skip_to_next_phase(current_game_floor)
-
-    if action == 'golem':
-        attack_target(target, player.golem_attack_power)
-        skip_to_next_phase(current_game_floor)
-
-    if action == 'fire':
-        attack_target(target, player.fire_attack_power)
-        skip_to_next_phase(current_game_floor)
-
-    if action == 'lightning':
-        attack_target(target, player.lightning_attack_power)
-        skip_to_next_phase(current_game_floor)
-
-    if action == 'drain':
-        heal_player(player, max([player.drain_attack_power,
-                    target.health_current]))
-        attack_target(target, player.drain_attack_power)
-        skip_to_next_phase(current_game_floor)
-
 
     # if all enemies are dead now u win the round
     killed = 0

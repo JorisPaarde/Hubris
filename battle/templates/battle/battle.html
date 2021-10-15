@@ -57,7 +57,7 @@
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-heart"></i>
                         <span
-                            class="fa-stack-1x fa-inverse stat-number">{{ player.health_current }}{% if not player.health_current %}0{% endif %}</span>
+                            class="fa-stack-1x fa-inverse stat-number">{{ player.health_current }}</span>
                     </span>
                 </li>
                 <!-- lightning defence -->
@@ -100,7 +100,7 @@
                     <span class="fa-stack stat-icon fa-fw">
                         <i class="fas fa-stack-1x fa-flask"></i>
                         <span
-                            class="fa-stack-1x fa-inverse stat-number">{{ player.mana_current }}{% if not player.mana_current %}0{% endif %}</span>
+                            class="fa-stack-1x fa-inverse stat-number">{{ player.mana_current }}</span>
                     </span>
                 </li>
             </ul>
@@ -341,7 +341,8 @@
                                 <!-- !! first classname needs to be the action name for javascript to function -->
                                 <i class="lightning fas m-2 action-icon fa-bolt 
                                     {% if current_game_floor.get_current_phase_display|lower != player.get_lightning_attack_phase_display|lower %}text-muted {% endif %}
-                                        {% if not player.lightning_attack_power %}text-muted {% endif %}
+                                    {% if not player.lightning_attack_power %}text-muted {% endif %}
+                                    {% if player.lightning_attack_cost > player.mana_current %}text-muted {% endif %}
                                     stroke"></i>
                             </div>
                             <div class="row action-stats">
@@ -365,6 +366,7 @@
                                 <i class="fire fas m-2 action-icon fa-fire-alt
                                     {% if current_game_floor.get_current_phase_display|lower != player.get_fire_attack_phase_display|lower %}text-muted {% endif %}
                                     {% if not player.fire_attack_power %}text-muted {% endif %}
+                                    {% if player.fire_attack_cost > player.mana_current %}text-muted {% endif %}
                                     stroke"></i>
                             </div>
                             <div class="row action-stats">
@@ -388,7 +390,8 @@
                                 <i class="ice fas m-2 action-icon fa-snowflake 
                                             {% if current_game_floor.get_current_phase_display|lower != player.get_ice_attack_phase_display|lower %}text-muted {% endif %}
                                             {% if not player.ice_attack_power %}text-muted {% endif %}
-                                            stroke"></i>
+                                            {% if player.ice_attack_cost > player.mana_current %}text-muted {% endif %}
+                                    stroke"></i>
                             </div>
                             <div class="row action-stats">
                                 <div class="col p-1 position-relative">
@@ -410,7 +413,10 @@
                             <div class="row">
                                 <!-- !! first classname needs to be the action name for javascript to function -->
                                 <i
-                                    class="healing fas m-2 action-icon fa-heart {% if not player.healing_power %}text-muted {% endif %}stroke"></i>
+                                    class="healing fas m-2 action-icon fa-heart 
+                                    {% if not player.healing_power %}text-muted {% endif %}
+                                    {% if player.healing_cost > player.mana_current %}text-muted {% endif %}
+                                    stroke"></i>
                             </div>
                             <div class="row action-stats">
                                 <div class="col p-1 position-relative">
@@ -430,7 +436,10 @@
                             <div class="row">
                                 <!-- !! first classname needs to be the action name for javascript to function -->
                                 <i
-                                    class="drain fas m-2 action-icon fa-skull {% if not player.drain_attack_power %}text-muted {% endif %}stroke"></i>
+                                    class="drain fas m-2 action-icon fa-skull 
+                                    {% if not player.drain_attack_power %}text-muted {% endif %}
+                                    {% if player.drain_attack_cost > player.mana_current %}text-muted {% endif %}
+                                    stroke"></i>
                             </div>
                             <div class="row action-stats">
                                 <div class="col p-1 position-relative">
@@ -455,6 +464,7 @@
                                 <i class="golem fas m-2 action-icon fa-robot 
                                     {% if current_game_floor.get_current_phase_display|lower != player.get_golem_attack_phase_display|lower %}text-muted {% endif %}
                                     {% if not player.golem_attack_power %}text-muted {% endif %}
+                                    {% if player.golem_attack_cost > player.mana_current %}text-muted {% endif %}
                                     stroke"></i>
                             </div>
                             <div class="row action-stats">
