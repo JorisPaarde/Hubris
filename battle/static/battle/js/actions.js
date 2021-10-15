@@ -93,6 +93,7 @@ $( ".enemy-image" ).click(function() {
     });
 
 function checkEnemyHealth() {
+    let gameStepNr = parseInt($(" .game-step-nr ").html())
     var totalHealth = 0
     if ($( ".game-floor-enemy" ).length > 0){
         // adds up all enemies health
@@ -101,7 +102,7 @@ function checkEnemyHealth() {
             });
         console.log(totalHealth)
         // if the total is 0 confirmation is send to the backend that they are all dead
-        if (totalHealth == 0){
+        if ((totalHealth == 0)&&(gameStepNr == 2)){
             confirmAllDead(totalHealth);
         };
     };

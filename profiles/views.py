@@ -23,11 +23,11 @@ def player_select(request):
     # check if this user already has a player (with an unfinished game)
     if current_player:
         current_player = get_object_or_404(Player, user=current_user)
-        current_game = Game.objects.filter(player=current_player)
+        current_game = Game.objects.filter(player=current_player, completed=False)
         # if there is an unfinished game send it to the template
         if current_game:
 
-            current_game = get_object_or_404(Game, player=current_player)
+            current_game = get_object_or_404(Game, player=current_player, completed=False)
 
             if not current_game.completed:
                 context.update({'game': current_game})
@@ -55,7 +55,7 @@ def continue_game(request, continue_game):
 
     else:
         # set current game to completed and return to selection screen.
-        current_game = Game.objects.get(player=current_player)
+        current_game = Game.objects.get(player=current_player, completed=False)
         current_game.completed = True
         current_game.save()
         current_game_floor = Current_game_floor.objects.get(pk=current_game.current_game_floor.pk)
@@ -79,67 +79,67 @@ def game_setup(request, selected):
 
         # if not, create a new player and set the initial values for that player
         if not current_player:
-            # get the selected player type
-            selected_type = Player_type.objects.get(selected=selected)
             # create a player for the current user
             player = Player(user=current_user, type=selected_type)
             player.save()
+        
+        # get the selected player type
+        selected_type = Player_type.objects.get(selected=selected)
+        current_player = Player.objects.get(user=current_user)
+        # create an empty hand for this player
+        hand = current_player.hand.clear()
+        # add cards to this hand
+        draw_n_cards = 8
+        draw_cards(draw_n_cards, hand, current_player)
 
-            current_player = Player.objects.get(user=current_user)
-            # create an empty hand for this player
-            hand = current_player.hand
-            # add cards to this hand to 
-            draw_n_cards = 8
-            draw_cards(draw_n_cards, hand, current_player)
+        # create a new game for this player and a first game floor
+        game_floor = Current_game_floor()
+        game_floor.save()
+        game = Game(player=current_player, current_game_floor=game_floor)
+        game.save()
+        context.update({'game': game})
 
-            # create a new game for this player and a first game floor
-            game_floor = Current_game_floor()
-            game_floor.save()
-            game = Game(player=current_player, current_game_floor=game_floor)
-            game.save()
-            context.update({'game': game})
-
-            if str(selected_type):
-                # values set for fire wizard
-                if str(selected_type) == 'FR':
-                    player = Player(pk=current_player.id,
-                                    type=selected_type,
-                                    user=current_user,
-                                    fire_attack_power=3,
-                                    fire_defense=3,
-                                    mana_max=4,
-                                    mana_current=4,
-                                    health_max=6,
-                                    health_current=6
-                                    )
-                    player.save()
-                # values set for lightning wizard
-                elif str(selected_type) == 'LN':
-                    player = Player(pk=current_player.id,
-                                    type=selected_type,
-                                    user=current_user,
-                                    lightning_attack_power=2,
-                                    lightning_defense=3,
-                                    mana_max=4,
-                                    mana_current=4,
-                                    health_max=6,
-                                    health_current=6
-                                    )
-                    player.save()
-                # values set for ice wizard
-                elif str(selected_type) == 'IC':
-                    player = Player(pk=current_player.id,
-                                    type=selected_type,
-                                    user=current_user,
-                                    ice_attack_power=1,
-                                    ice_defense=3,
-                                    mana_max=4,
-                                    mana_current=4,
-                                    health_max=6,
-                                    health_current=6
-                                    )
-                    player.save()
-        # start this users game with this player
+        if str(selected_type):
+            # values set for fire wizard
+            if str(selected_type) == 'FR':
+                player = Player(pk=current_player.id,
+                                type=selected_type,
+                                user=current_user,
+                                fire_attack_power=3,
+                                fire_defense=3,
+                                mana_max=4,
+                                mana_current=4,
+                                health_max=6,
+                                health_current=6
+                                )
+                player.save()
+            # values set for lightning wizard
+            elif str(selected_type) == 'LN':
+                player = Player(pk=current_player.id,
+                                type=selected_type,
+                                user=current_user,
+                                lightning_attack_power=2,
+                                lightning_defense=3,
+                                mana_max=4,
+                                mana_current=4,
+                                health_max=6,
+                                health_current=6
+                                )
+                player.save()
+            # values set for ice wizard
+            elif str(selected_type) == 'IC':
+                player = Player(pk=current_player.id,
+                                type=selected_type,
+                                user=current_user,
+                                ice_attack_power=1,
+                                ice_defense=3,
+                                mana_max=4,
+                                mana_current=4,
+                                health_max=6,
+                                health_current=6
+                                )
+                player.save()
+    # start this users game with this player
 
     return redirect('battle:battle-screen', context)
 
@@ -153,7 +153,6 @@ def draw_cards(n, hand, current_player):
             available_cards = Card.objects.filter(in_freeversion=True)
             # select a random card and add it to the hand
             card = random.choice(available_cards)
-            # make it so that it only creates a new hand card if it's not there and not selected.(needs 8 times all cards max)
             card = Hand_card(card=card)
             card.save()
             current_player.hand.add(card)

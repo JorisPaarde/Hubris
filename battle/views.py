@@ -33,15 +33,17 @@ def battle_screen(request, game):
         if len(Game_floor_enemy.objects.all()) == 0:
             pickmonsters(request, game)
 
-        # pass post requests from action.js to action processor function
+        # pass post requests from action.js to correct function
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             request_data = json.load(request)['post_data']
             print(request_data)
             if 'action' in request_data:
                 action_processor(request, request_data)
             if 'all_enemies_dead' in request_data:
-                check_dead_monsters(request)
+                print(request)
                 print("do shite because the're dead")
+                check_dead_monsters(request)
+
     context = {
         "game": game,
         "current_game_floor": current_game_floor,
@@ -129,7 +131,7 @@ def spend_mana(player, amount):
 
 
 def action_processor(request, request_data):
-    """view to handle player actions"""
+    """function to handle player actions"""
 
     current_user = request.user
     player = Player.objects.get(user=current_user)
@@ -248,7 +250,8 @@ def skip_to_next_phase(current_game_floor):
 
 
 def check_dead_monsters(request):
-
+    """ function to check in the database if all monsters are indeed dead,
+    if so delete data from this level to make room for a next one"""
     current_user = request.user
     player = Player.objects.get(user=current_user)
     game = Game.objects.get(player=player)
@@ -262,5 +265,13 @@ def check_dead_monsters(request):
             killed += 1
 
     if killed == len(current_game_floor.enemy.all()):
-        print("yup it's true")
-        messages.info(request, "They all died.")
+        for enemy in current_game_floor.enemy.all():
+            enemy.delete()
+        game.completed_game_floors = game.completed_game_floors + 1
+        game.game_step = '3'
+        # create a new gamefloor
+        new_game_floor = Current_game_floor()
+        new_game_floor.save()
+        game.current_game_floor = new_game_floor
+        game.save()
+
