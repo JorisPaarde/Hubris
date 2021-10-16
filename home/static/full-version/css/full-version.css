@@ -1,0 +1,24 @@
+.full-version-enemy-image-left{
+    float: right;
+    height: 10vh;
+    margin-right: 1vw;
+    -webkit-transform: scale(2.5,2.5);
+    transform: scale(2.5,2.5);
+    object-fit: contain;
+}
+
+.full-version-enemy-image-middle{
+    display:block;
+    margin:auto;
+    height: 14vh;
+    object-fit: contain;
+}
+
+.full-version-enemy-image-right{
+    height: 10vh;
+    float: left;
+    margin-left: 1vw;
+    -webkit-transform: scale(-2.5,2.5);
+    transform: scale(-2.5,2.5);
+    object-fit: contain;
+}

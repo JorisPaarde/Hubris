@@ -124,6 +124,7 @@ When comparing players hand card to the cards in the database the values seemed 
 Back button press after playing a card made it possible to play infinite cards. Added a check for the gamestep to be '2' to prevent this.
 Restarting the game resulted in an ever increasing list of hand cards. Deleting them when restarting a game.
 Restarting a game resulted in no enemies shown. Deleting the old ones in the database fixed this.
+Possibility to have 2 open games resulted in errors
 
 # technologies used:
 

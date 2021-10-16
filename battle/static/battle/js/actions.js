@@ -113,7 +113,6 @@ function checkEnemyHealth() {
 checkEnemyHealth();
 
 function confirmAllDead() {
-    console.log('DIKKE MEMMEN');
     data = {
         'all_enemies_dead': true,
     };

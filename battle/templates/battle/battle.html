@@ -29,7 +29,7 @@
         <div class="col-12">
             <div class="row">
                 <div class="col-12 title text-center">
-                    <h1 class="medium-large-text mb-0">Score: {{ game.score }} Floor {{ game.completed_game_floors }}
+                    <h1 class="medium-large-text mb-0">Score: {{ game.score }} Floor {{ game.current_game_floor_number }}
                     </h1>
                     <h2 class="medium-text">Phase {{ current_game_floor.get_current_phase_display }}</h2>
                     <h2 class="medium-small-text game-step-nr" data-step="{{ game.game_step }}"> game step: {{ game.game_step }}</h2>

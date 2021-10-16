@@ -8,6 +8,7 @@ from profiles.models import Card
 from django.contrib import messages
 from django.conf import settings
 from django.http import JsonResponse
+from django.urls import reverse
 
 # Create your views here.
 
@@ -32,6 +33,7 @@ def battle_screen(request, game):
         # select monster(s) from database if there are none
         if len(Game_floor_enemy.objects.all()) == 0:
             pickmonsters(request, game)
+            return redirect('battle:proceed_to_next_floor')
 
         # pass post requests from action.js to correct function
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
@@ -40,10 +42,8 @@ def battle_screen(request, game):
             if 'action' in request_data:
                 action_processor(request, request_data)
             if 'all_enemies_dead' in request_data:
-                print(request)
-                print("do shite because the're dead")
                 check_dead_monsters(request)
-
+               
     context = {
         "game": game,
         "current_game_floor": current_game_floor,
@@ -194,12 +194,12 @@ def pickmonsters(request, game):
     current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
 
     # determine the amount of enemies
-    number_of_enemies = 2
-    floor_nr = game.completed_game_floors
-    # if floor_nr % 2 == 0:
-    #     number_of_enemies = 2
-    # if floor_nr % 3 == 0:
-    #     number_of_enemies = 3
+    number_of_enemies = 1
+    floor_nr = game.current_game_floor_number
+    if floor_nr % 2 == 0:
+        number_of_enemies = 2
+    if floor_nr % 3 == 0:
+        number_of_enemies = 3
 
     if current_game_floor:
         for game_floor_enemy in range(number_of_enemies):
@@ -250,8 +250,10 @@ def skip_to_next_phase(current_game_floor):
 
 
 def check_dead_monsters(request):
-    """ function to check in the database if all monsters are indeed dead,
-    if so delete data from this level to make room for a next one"""
+    """
+    Function to check in the database if all monsters are indeed dead,
+    if so delete data from this level and make a next one.
+    """
     current_user = request.user
     player = Player.objects.get(user=current_user)
     game = Game.objects.get(player=player)
@@ -265,13 +267,41 @@ def check_dead_monsters(request):
             killed += 1
 
     if killed == len(current_game_floor.enemy.all()):
+
         for enemy in current_game_floor.enemy.all():
             enemy.delete()
-        game.completed_game_floors = game.completed_game_floors + 1
+        game.total_gamefloors_played = game.total_gamefloors_played + 1
         game.game_step = '3'
         # create a new gamefloor
         new_game_floor = Current_game_floor()
         new_game_floor.save()
+        # delete the old gamefloor
+        game.current_game_floor.delete()
+        # put the new empty one in the game
         game.current_game_floor = new_game_floor
         game.save()
+        print('redirecting')
+        return redirect('battle:proceed_to_next_floor')
 
+
+def proceed_to_next_floor(request):
+    """
+    view to return huberis phase page
+    In this view the player discards a card, and decides if he/she wants to go up a level.
+    """
+
+    print("it's redirected")
+    current_user = request.user
+    player = Player.objects.get(user=current_user)
+    cards = Card.objects.all()
+    game = Game.objects.get(player=player)
+    current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
+
+    context = {
+        "game": game,
+        "player": player,
+        "cards": cards,
+        "current_game_floor": current_game_floor,
+    }
+
+    return render(request, 'battle/proceed/proceed-to-next-floor.html', context)

@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block extra_js %}
+<script src="{% static 'js/force_landscape.js' %}"></script>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'battle/css/battle.css' %}">
+{% endblock %}
+
+{% block body_background %}class="battle-bg"{% endblock %}
+
+{% block content %}
+<h1>Proceed!!</h1>
+<!-- landscape mode screen overlay -->
+<div class="container-fluid d-none landscape-screen">
+    <div class="row h-100 display-flex justify-content-center align-items-center">
+        <div class="col-6 text-center menu-banner medium-text">
+            <h1>Please use landscape mode</h1>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <!-- title and menu button -->
+    <div class="row mt-1 floor z1000">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 title text-center">
+                    <h1 class="medium-large-text mb-0">Score: {{ game.score }} Floor {{ game.current_game_floor_number }}
+                    </h1>
+                    <h2 class="medium-text">Phase {{ current_game_floor.get_current_phase_display }}</h2>
+                    <h2 class="medium-small-text game-step-nr" data-step="{{ game.game_step }}"> game step: {{ game.game_step }}</h2>
+                </div>
+                <!-- main menu button -->
+                <div class="col-2 offset-9 mt-md-4 z500">
+                    <div class="position-relative d-grid">
+                        <a class="position-relative button medium-text text-center" href="{% url 'home:main-menu' %}">
+                            Menu
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- main game screen -->
+    <div class="row">
+        <!-- Card screen -->
+        <div class="col-12 h-100 z2000 card-screen">
+            <div class="row display-flex justify-content-center">
+                <!-- cards -->
+                {% for player_card in player.hand.all %}
+                <div class="col-2 m-1 p-1 skill-card">
+                    {% for card in cards %}
+                    {% if player_card|lower == card.title|lower %}
+                    <div class="row card-title-row m-0">
+                        <!--  phase -->
+                        <div class="col-2 p-0">
+                            <h3 class="text-center m-0 align-middle card-title">{{ card.get_allowed_in_phase_display }}
+                            </h3>
+                        </div>
+                        <!-- title -->
+                        <div class="col-8 p-0">
+                            <h2 class="text-center align-middle m-0 card-title">{{ card.title }}</h2>
+                        </div>
+                        <!-- skill style -->
+                        <div class="col-2 p-0">
+                            {% if card.skill_style|lower == "fr" %}
+                            <span><i
+                                    class="card-style-icon fas fa-fire-alt fire align-middle text-center stroke"></i></span>
+                            {% endif %}
+                            {% if card.skill_style|lower == "ic" %}
+                            <span><i
+                                    class="card-style-icon fas fa-snowflake ice align-middle text-center stroke"></i></span>
+                            {% endif %}
+                            {% if card.skill_style|lower == "ln" %}
+                            <span><i
+                                    class="card-style-icon fas fa-fire-alt lightning align-middle text-center stroke"></i></span>
+                            {% endif %}
+                            {% if card.skill_style|lower == "dr" %}
+                            <span><i
+                                    class="card-style-icon fas fa-skull drain align-middle text-center stroke"></i></span>
+                            {% endif %}
+                            {% if card.skill_style|lower == "gl" %}
+                            <span><i
+                                    class="card-style-icon fas fa-robot golem align-middle text-center stroke"></i></span>
+                            {% endif %}
+                            {% if card.skill_style|lower == "hl" %}
+                            <span><i
+                                    class="card-style-icon fas fa-heart heal align-middle text-center stroke"></i></span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- card image -->
+                    <div class="row m-0 card-image-row">
+                        <img class="card-image" src="{{MEDIA_URL}}{{ card.image.name }}" alt="{{card}} image">
+                    </div>
+                    <!-- card effect text -->
+                    <div class="row m-0 card-effect-row">
+                        <div class="col-12 px-1 mb-1 card-effect">
+                            <h3 class="text-center card-effect-text">{{ card.effect_text }}</h3>
+                        </div>
+                    </div>
+                    <!-- card description -->
+                    <div class="row m-0 card-description-row">
+                        <p class="text-center card-description-text">{{ card.description }}</p>
+                    </div>
+                    <!-- card effect -->
+                    <div class="row card-effect-row m-0">
+                        <!-- card effect -->
+                        <div class="col-3 p-0">
+                            <!-- attack modifier -->
+                            {% if card.attack_modifier  %}
+                            <!-- attack all -->
+                            {% if card.attack_all  %}
+                            <i class="position-absolute fas mt-2 fa-infinity fa-inverse card_attack_all stroke"></i>
+                            {% endif %}
+                            <span><img
+                                    class="position-absolute {% if not card.attack_all %}mt-1 {% endif %}card_action_effect"
+                                    src="{{MEDIA_URL}}sword_{{ card.get_skill_style_display|lower }}.svg"
+                                    alt="{{ card.get_skill_style_display|lower }} attack"></span>
+                            <span
+                                class="position-absolute px-1 {% if not card.attack_all %}mt-1 {% endif %}fa-inverse text-center attack-stat-number stroke">+{{ card.attack_modifier }}</span>
+                            {% endif %}
+                            <!-- defence modifier -->
+                            {% if card.defence_modifier  %}
+                            <span>{{ card.defence_modifier }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="col-6 p-0">
+                            <div class="row">
+                                <div class="col-6 p-0">
+                                    <!-- heal modifier -->
+                                    {% if card.healing_modifier  %}
+                                    <span class="fa-stack fire stroke card-heal-icon fa-fw">
+                                        <i class="fas fa-stack-1x fa-heart"></i>
+                                        <span
+                                            class="fa-stack-1x fa-inverse stat-number">+{{ card.healing_modifier }}</span>
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                <div class="col-6">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- card cost -->
+                        <div class="col-3 p-0">
+                            {% if card.mana_cost %}
+                            <span class="fa-stack card-cost-icon mana stroke fa-fw">
+                                <i class="fas fa-stack-1x fa-flask"></i>
+                                <span class="fa-stack-1x fa-inverse stat-number">{{ card.mana_cost }}</span>
+                            </span>
+                            {% endif %}
+                            {% if card.cards_discard_cost %}
+                            <span>{{ card.cards_discard_cost }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- card select button -->
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <form method="POST" action="{% url 'battle:card-select' card.id %}">
+                                {% csrf_token %}
+                                <button type="submit" name="card-select" class="button small-text px-3">discard</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% if forloop.counter|divisibleby:"4" %}
+            </div>
+            <div class="row display-flex justify-content-center">
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

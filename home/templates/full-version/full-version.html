@@ -1,17 +1,39 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block header %}
 {% include "../includes/header.html" %}
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'full-version/css/full-version.css' %}">
 {% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="row menu-banner mb-4 mt-3">
         <div class="col-12">
-            <h2 class="text-center m-4">Full version</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias officiis earum repellendus a, mollitia
-                nihil velit, laborum recusandae similique ipsa sed adipisci id inventore suscipit, autem illum odio
-                blanditiis corrupti?</p>
+            <h2 class="text-center m-4">Test your skills in the Full version!</h2>
+            <h3 class="text-center medium-text m-4">Complete your way up the tower!<br>
+                access to all levels.</h3>
+            <h3 class="text-center medium-text m-4">Fight enemies u have never encountered<br>before!</h3>
+            <div class="row">
+                <div class="col-4 enemy-images"><img class="full-version-enemy-image-left" src="{{MEDIA_URL}}ORK_02_ATTAK_006_cropped.png" alt="Ork"></div>
+                <div class="col-4 enemy-images"><img class="full-version-enemy-image-middle" src="{{MEDIA_URL}}Knight_02__ATTACK_005_cropped.png" alt="Knight"></div>
+                <div class="col-4 enemy-images"><img class="full-version-enemy-image-right" src="{{MEDIA_URL}}ORK_03_ATTAK_005_cropped.png" alt="Ork"></div>
+            </div>
+            <h3 class="text-center medium-text m-4"> Access to all spells.<br>
+                More powerfull spells!
+                </h3>
+            <h3 class="text-center medium-text m-4">U could claim a spot on the leaderboard.
+            </h3>
+            <h3 class="text-center medium-text m-4">Show the world your true power!</h3>
+            <div class="row">
+                <div class="offset-3 col-6">
+                    <a class="medium-text button p-2 text-center" href="">Take my money</a>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row m-4 d-block d-lg-none d-flex justify-content-center">

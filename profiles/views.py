@@ -117,7 +117,7 @@ def game_setup(request, selected):
                                 health_max=6,
                                 health_current=6
                                 )
-                player.save()
+                current_player.save()
             # values set for lightning wizard
             elif str(selected_type) == 'LN':
                 current_player = Player(pk=current_player.id,
