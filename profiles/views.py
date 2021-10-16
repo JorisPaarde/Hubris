@@ -108,41 +108,41 @@ def game_setup(request, selected):
             # values set for fire wizard
             if str(selected_type) == 'FR':
                 current_player = Player(pk=current_player.id,
-                                type=selected_type,
-                                user=current_user,
-                                fire_attack_power=3,
-                                fire_defense=3,
-                                mana_max=4,
-                                mana_current=4,
-                                health_max=6,
-                                health_current=6
-                                )
+                                        type=selected_type,
+                                        user=current_user,
+                                        fire_attack_power=3,
+                                        fire_defense=3,
+                                        mana_max=4,
+                                        mana_current=4,
+                                        health_max=6,
+                                        health_current=6
+                                        )
                 current_player.save()
             # values set for lightning wizard
             elif str(selected_type) == 'LN':
                 current_player = Player(pk=current_player.id,
-                                type=selected_type,
-                                user=current_user,
-                                lightning_attack_power=2,
-                                lightning_defense=3,
-                                mana_max=4,
-                                mana_current=4,
-                                health_max=6,
-                                health_current=6
-                                )
+                                        type=selected_type,
+                                        user=current_user,
+                                        lightning_attack_power=2,
+                                        lightning_defense=3,
+                                        mana_max=4,
+                                        mana_current=4,
+                                        health_max=6,
+                                        health_current=6
+                                        )
                 current_player.save()
             # values set for ice wizard
             elif str(selected_type) == 'IC':
                 current_player = Player(pk=current_player.id,
-                                type=selected_type,
-                                user=current_user,
-                                ice_attack_power=1,
-                                ice_defense=3,
-                                mana_max=4,
-                                mana_current=4,
-                                health_max=6,
-                                health_current=6
-                                )
+                                        type=selected_type,
+                                        user=current_user,
+                                        ice_attack_power=1,
+                                        ice_defense=3,
+                                        mana_max=4,
+                                        mana_current=4,
+                                        health_max=6,
+                                        health_current=6
+                                        )
                 current_player.save()
     # start this users game with this player
 
