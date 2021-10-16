@@ -1,5 +1,5 @@
 from django.db import models
-from profiles.models import Player, Player_type
+from profiles.models import Player, Player_type, Hand_card
 from django.conf import settings
 
 # Create your models here.

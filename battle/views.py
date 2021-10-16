@@ -3,12 +3,13 @@ import random
 import time
 
 from django.shortcuts import render, redirect
-from .models import Player, Game, Current_game_floor, Enemy, Game_floor_enemy
+from .models import Player, Game, Current_game_floor, Enemy, Game_floor_enemy, Hand_card
 from profiles.models import Card
-from django.contrib import messages
+from profiles.views import draw_cards
 from django.conf import settings
 from django.http import JsonResponse
-from django.urls import reverse
+from django.contrib import messages
+from django.core.exceptions import MultipleObjectsReturned
 
 # Create your views here.
 
@@ -19,7 +20,15 @@ def battle_screen(request, game):
     current_user = request.user
     player = Player.objects.get(user=current_user)
     cards = Card.objects.all()
-    game = Game.objects.get(player=player)
+    # logic to prevent having two unfinished games open at the same time
+    try:
+        game = Game.objects.get(player=player, completed=False)
+    except MultipleObjectsReturned:
+        game = Game.objects.filter(player=player).earliest('date_time_created')
+        game.completed = True
+        game.save()
+        game = Game.objects.get(player=player, completed=False)
+
     current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
     enemies = Enemy.objects.all()
 
@@ -33,7 +42,6 @@ def battle_screen(request, game):
         # select monster(s) from database if there are none
         if len(Game_floor_enemy.objects.all()) == 0:
             pickmonsters(request, game)
-            return redirect('battle:proceed_to_next_floor')
 
         # pass post requests from action.js to correct function
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
@@ -43,7 +51,8 @@ def battle_screen(request, game):
                 action_processor(request, request_data)
             if 'all_enemies_dead' in request_data:
                 check_dead_monsters(request)
-               
+                return redirect('battle:proceed_to_next_floor')
+
     context = {
         "game": game,
         "current_game_floor": current_game_floor,
@@ -60,46 +69,52 @@ def card_select(request, card):
 
     current_user = request.user
     player = Player.objects.get(user=current_user)
-    game = Game.objects.get(player=player)
+    game = Game.objects.get(player=player, completed=False)
 
-    if game.game_step == '1':
-
-        if request.method == 'POST':
+    if request.method == 'POST':
+        played_hand_card = Hand_card.objects.get(pk=card)
+        if game.game_step == '1':
             # get the card and update the players stats
-            card = Card.objects.get(pk=card)
-
-            attack_modifier = card.attack_modifier
-            healing_modifier = card.healing_modifier
-            defence_modifier = card.defence_modifier
-            skill = card.get_skill_style_display().lower()
+            played_card = Card.objects.get(title=played_hand_card)
+            attack_modifier = played_card.attack_modifier
+            healing_modifier = played_card.healing_modifier
+            defence_modifier = played_card.defence_modifier
+            skill = played_card.get_skill_style_display().lower()
 
             if skill == 'lightning':
                 player.lightning_attack_power = player.lightning_attack_power + attack_modifier
                 player.lightning_defense = player.lightning_defense + defence_modifier
-                player.save()
             if skill == 'fire':
                 player.fire_attack_power = player.fire_attack_power + attack_modifier
                 player.fire_defense = player.fire_defense + defence_modifier
-                player.save()
             if skill == 'golem':
                 player.golem_attack_power = player.golem_attack_power + attack_modifier
                 player.physical_defense = player.physical_defense + defence_modifier
-                player.save()
             if skill == 'ice':
                 player.ice_attack_power = player.ice_attack_power + attack_modifier
                 player.ice_defense = player.ice_defense + defence_modifier
-                player.save()
             if skill == 'drain':
                 player.drain_attack_power = player.drain_attack_power + attack_modifier
                 player.drain_defense = player.drain_defense + defence_modifier
-                player.save()
             if skill == 'healing':
                 player.healing_power = player.healing_power + healing_modifier
-                player.save()
+            
+            player.hand.remove(card)
+            player.save()
+            played_hand_card.delete()
 
             # set game step to 2
             game.game_step = '2'
             game.save()
+
+        if game.game_step == '3':
+            # remove the selected card from the players hand and the hand card itself
+            print(played_hand_card)
+            player.hand.remove(card)
+            player.save()
+            played_hand_card.delete()
+            # draw 2 new cards for this player
+            # draw_cards(2, player)
 
     else:
         messages.info(request, "u already selected a spell")
@@ -135,7 +150,7 @@ def action_processor(request, request_data):
 
     current_user = request.user
     player = Player.objects.get(user=current_user)
-    game = Game.objects.get(player=player)
+    game = Game.objects.get(player=player, completed=False)
     current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
 
     # logic for getting the player action with corresponding enemy target,
@@ -190,7 +205,7 @@ def pickmonsters(request, game):
     """function to ramndomly select monsters from the database"""
     current_user = request.user
     player = Player.objects.get(user=current_user)
-    game = Game.objects.get(player=player)
+    game = Game.objects.get(player=player, completed=False)
     current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
 
     # determine the amount of enemies
@@ -256,7 +271,7 @@ def check_dead_monsters(request):
     """
     current_user = request.user
     player = Player.objects.get(user=current_user)
-    game = Game.objects.get(player=player)
+    game = Game.objects.get(player=player, completed=False)
     current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
 
     # if all enemies are dead now u win the round
@@ -280,8 +295,6 @@ def check_dead_monsters(request):
         # put the new empty one in the game
         game.current_game_floor = new_game_floor
         game.save()
-        print('redirecting')
-        return redirect('battle:proceed_to_next_floor')
 
 
 def proceed_to_next_floor(request):
@@ -290,11 +303,10 @@ def proceed_to_next_floor(request):
     In this view the player discards a card, and decides if he/she wants to go up a level.
     """
 
-    print("it's redirected")
     current_user = request.user
     player = Player.objects.get(user=current_user)
     cards = Card.objects.all()
-    game = Game.objects.get(player=player)
+    game = Game.objects.get(player=player, completed=False)
     current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
 
     context = {
@@ -305,3 +317,4 @@ def proceed_to_next_floor(request):
     }
 
     return render(request, 'battle/proceed/proceed-to-next-floor.html', context)
+
