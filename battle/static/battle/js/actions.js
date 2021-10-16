@@ -102,13 +102,11 @@ function checkEnemyHealth() {
             });
         // if the total is 0 confirmation is send to the backend that they are all dead
         console.log(totalHealth)
-        console.log(gameStepNr)
         if ((totalHealth == 0)&&(gameStepNr == 2)){
         confirmAllDead();
         };
-    };
-   
-    };
+    };  
+};
 
 checkEnemyHealth();
 
@@ -128,9 +126,9 @@ function confirmAllDead() {
             body: JSON.stringify({'post_data':data}) //JavaScript object of data to POST
             })
         .then(response => {
-            setTimeout(location.reload(), 2000)
+            console.log(response.url)
+            setTimeout(window.location.replace(response.url), 2000)
             return response
         }); 
     };
-
 });
