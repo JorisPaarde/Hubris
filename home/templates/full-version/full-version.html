@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block header %}
+{% include "../includes/header.html" %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row menu-banner mb-4 mt-3">
+        <div class="col-12">
+            <h2 class="text-center m-4">Full version</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias officiis earum repellendus a, mollitia
+                nihil velit, laborum recusandae similique ipsa sed adipisci id inventore suscipit, autem illum odio
+                blanditiis corrupti?</p>
+        </div>
+    </div>
+    <div class="row m-4 d-block d-lg-none d-flex justify-content-center">
+        <div class="col-12 col-md-4">
+            <div class="d-grid gap-2">
+                <a class="button text-center" href="{% url 'home:main-menu' %}">
+                    <h2 class="m-1">Main menu</h2>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

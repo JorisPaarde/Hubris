@@ -77,3 +77,9 @@ def logout_request(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
     return redirect("home:main-menu")
+
+
+def full_version(request):
+    """view to return buy full version page"""
+
+    return render(request, 'full-version/full-version.html')
