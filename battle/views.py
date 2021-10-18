@@ -85,22 +85,22 @@ def card_select(request, card):
             skill = played_card.get_skill_style_display().lower()
 
             if skill == 'lightning':
-                player.lightning_attack_power = player.lightning_attack_power + attack_modifier
-                player.lightning_defense = player.lightning_defense + defence_modifier
+                player.lightning_attack_power = min(99, player.lightning_attack_power + attack_modifier)
+                player.lightning_defense = min(99, player.lightning_defense + defence_modifier)
             if skill == 'fire':
-                player.fire_attack_power = player.fire_attack_power + attack_modifier
-                player.fire_defense = player.fire_defense + defence_modifier
+                player.fire_attack_power = min(99, player.fire_attack_power + attack_modifier)
+                player.fire_defense = min(99, player.fire_defense + defence_modifier)
             if skill == 'golem':
-                player.golem_attack_power = player.golem_attack_power + attack_modifier
-                player.physical_defense = player.physical_defense + defence_modifier
+                player.golem_attack_power = min(99, player.golem_attack_power + attack_modifier)
+                player.physical_defense = min(99,  player.physical_defense + defence_modifier)
             if skill == 'ice':
-                player.ice_attack_power = player.ice_attack_power + attack_modifier
-                player.ice_defense = player.ice_defense + defence_modifier
+                player.ice_attack_power = min(99, player.ice_attack_power + attack_modifier)
+                player.ice_defense = min(99, player.ice_defense + defence_modifier)
             if skill == 'drain':
-                player.drain_attack_power = player.drain_attack_power + attack_modifier
-                player.drain_defense = player.drain_defense + defence_modifier
+                player.drain_attack_power = min(99, player.drain_attack_power + attack_modifier)
+                player.drain_defense = min(99, player.drain_defense + defence_modifier)
             if skill == 'healing':
-                player.healing_power = player.healing_power + healing_modifier
+                player.healing_power = min(99, player.healing_power + healing_modifier)
 
             player.hand.remove(card)
             player.save()
