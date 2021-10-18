@@ -13,7 +13,6 @@
 {% block body_background %}class="battle-bg"{% endblock %}
 
 {% block content %}
-<h1>Proceed!!</h1>
 <!-- landscape mode screen overlay -->
 <div class="container-fluid d-none landscape-screen">
     <div class="row h-100 display-flex justify-content-center align-items-center">
@@ -180,4 +179,31 @@
         </div>
     </div>
 </div>
+{% if player.hand.all|length == 8 %}
+<!-- next level screen overlay -->
+<div class="container-fluid next-level-screen">
+    <div class="row h-100 display-flex justify-content-center align-items-center">
+        <div class="col-10 text-center menu-banner medium-text">
+            <h2>U  have defeated all your enemies!<br>
+                Up one level?</h2>
+                 <!-- level select button -->
+                 <div class="row">
+                    <div class="col-6 text-center">
+                        <form method="POST" action="{% url 'battle:next-floor-start' 'y' %}">
+                            {% csrf_token %}
+                            <button type="submit" value="y" name="level-select" class="m-3 p-1 button small-text px-3">Sure, this was easy!</button>
+                        </form>
+                    </div>
+                    <!-- level select button -->
+                    <div class="col-6 text-center">
+                        <form method="POST" action="{% url 'battle:next-floor-start' 'n' %}">
+                            {% csrf_token %}
+                            <button type="submit" value="n" name="level-select" class="m-3 p-1 button small-text px-3">No, not yet.</button>
+                        </form>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock %}

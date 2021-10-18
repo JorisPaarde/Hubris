@@ -162,6 +162,16 @@
 
 /* cards screen */
 
+.next-level-screen{
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 999999;
+    width: 100vw;
+    height: 100vh;
+    background-color:rgba(0, 0, 0, 0.25);
+}
+
 .skill-card{
     border-radius: 8px;
     font-family: 'Stylish', sans-serif;

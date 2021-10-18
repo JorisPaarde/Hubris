@@ -34,13 +34,14 @@ def battle_screen(request, game):
 
     # card playing phase
     if game.game_step == '1':
+        # shows cards to play and continues to the battle at step 2
         messages.info(request, "Please select a card to play.")
 
     # monster battle phase
     if game.game_step == '2':
 
-        # select monster(s) from database if there are none
-        if len(Game_floor_enemy.objects.all()) == 0:
+        # select monster(s) from database if there are no enemy's in this gamefloor
+        if len(current_game_floor.enemy.all()) == 0:
             pickmonsters(request, game)
 
         # pass post requests from action.js to correct function
@@ -98,7 +99,7 @@ def card_select(request, card):
                 player.drain_defense = player.drain_defense + defence_modifier
             if skill == 'healing':
                 player.healing_power = player.healing_power + healing_modifier
-            
+
             player.hand.remove(card)
             player.save()
             played_hand_card.delete()
@@ -108,14 +109,16 @@ def card_select(request, card):
             game.save()
 
         if game.game_step == '3':
+            # this is the discard phase of the game
             # remove the selected card from the players hand and the hand card itself
             print(played_hand_card)
             player.hand.remove(card)
             player.save()
             played_hand_card.delete()
             # draw 2 new cards for this player
-            # draw_cards(2, player)
-
+            draw_cards(2, player)
+            # player is send to page where he/she decides to go up a level or not
+            return redirect('battle:proceed_to_next_floor')
     else:
         messages.info(request, "u already selected a spell")
 
@@ -208,6 +211,7 @@ def pickmonsters(request, game):
     game = Game.objects.get(player=player, completed=False)
     current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
 
+    print("picking monsters")
     # determine the amount of enemies
     number_of_enemies = 1
     floor_nr = game.current_game_floor_number
@@ -228,8 +232,8 @@ def pickmonsters(request, game):
             random.seed(time.process_time())
             rand_int_2 = max(4, random.randint(1, rand_int_1))
 
-            max_health = max(rand_int_1, rand_int_2)/number_of_enemies
-            attack_power = min(rand_int_1, rand_int_2)/number_of_enemies
+            max_health = max(rand_int_1, rand_int_2)/number_of_enemies + floor_nr
+            attack_power = min(rand_int_1, rand_int_2)/number_of_enemies + floor_nr
 
             health_current = max_health
             skill_style = random.choice(settings.SKILL_STYLES)[1]
@@ -285,15 +289,7 @@ def check_dead_monsters(request):
 
         for enemy in current_game_floor.enemy.all():
             enemy.delete()
-        game.total_gamefloors_played = game.total_gamefloors_played + 1
         game.game_step = '3'
-        # create a new gamefloor
-        new_game_floor = Current_game_floor()
-        new_game_floor.save()
-        # delete the old gamefloor
-        game.current_game_floor.delete()
-        # put the new empty one in the game
-        game.current_game_floor = new_game_floor
         game.save()
 
 
@@ -309,6 +305,11 @@ def proceed_to_next_floor(request):
     game = Game.objects.get(player=player, completed=False)
     current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
 
+    # if certain amout of floors are finished, stuff happens
+    # eg if not payed and l5 goto buy full
+    # if l15 completed!
+    print(game.current_game_floor_number)
+
     context = {
         "game": game,
         "player": player,
@@ -318,3 +319,39 @@ def proceed_to_next_floor(request):
 
     return render(request, 'battle/proceed/proceed-to-next-floor.html', context)
 
+
+def next_floor_start(request, choice):
+    """
+    view to set up the game for a new level and control if a player goes up a level.
+    """
+    current_user = request.user
+    player = Player.objects.get(user=current_user)
+    # create a new empty gamefloor
+    game = Game.objects.get(player=player, completed=False)
+    next_game_floor = Current_game_floor()
+    next_game_floor.save()
+    # delete the old gamefloor
+    game.current_game_floor.delete()
+    # add the new empty gamefloor to the game
+    game.current_game_floor = next_game_floor
+    # game starts at step 1 again
+    game.game_step = '1'
+    game.save()
+    # player starts next floor with full stats
+    player.health_current = player.health_max
+    player.mana_current = player.mana_max
+    # player completed a floor
+    game.total_gamefloors_played = game.total_gamefloors_played + 1
+    player.save()
+
+    if request.method == 'POST':
+        print(request.POST)
+        if 'level-select' in request.POST:
+            if choice == 'y':
+                # start game at next floor number
+                game.current_game_floor_number = game.current_game_floor_number + 1
+                game.save()
+            else:
+                pass
+            # start game at the current floor number
+            return redirect('battle:battle-screen', game)
