@@ -309,6 +309,7 @@ def proceed_to_next_floor(request):
     # eg if not payed and l5 goto buy full
     # if l15 completed!
     print(game.current_game_floor_number)
+    messages.info(request, "Please select a card to discard")
 
     context = {
         "game": game,

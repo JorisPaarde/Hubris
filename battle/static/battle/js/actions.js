@@ -126,7 +126,6 @@ function confirmAllDead() {
             body: JSON.stringify({'post_data':data}) //JavaScript object of data to POST
             })
         .then(response => {
-            console.log(response.url)
             setTimeout(window.location.replace(response.url), 2000)
             return response
         }); 

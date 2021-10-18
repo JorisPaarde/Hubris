@@ -28,10 +28,12 @@
         <div class="col-12">
             <div class="row">
                 <div class="col-12 title text-center">
-                    <h1 class="medium-large-text mb-0">Score: {{ game.score }} Floor {{ game.current_game_floor_number }}
+                    <h1 class="medium-large-text mb-0">Score: {{ game.score }} Floor
+                        {{ game.current_game_floor_number }}
                     </h1>
                     <h2 class="medium-text">Phase {{ current_game_floor.get_current_phase_display }}</h2>
-                    <h2 class="medium-small-text game-step-nr" data-step="{{ game.game_step }}"> game step: {{ game.game_step }}</h2>
+                    <h2 class="medium-small-text game-step-nr" data-step="{{ game.game_step }}"> game step:
+                        {{ game.game_step }}</h2>
                 </div>
                 <!-- main menu button -->
                 <div class="col-2 offset-9 mt-md-4 z500">
@@ -184,24 +186,51 @@
 <div class="container-fluid next-level-screen">
     <div class="row h-100 display-flex justify-content-center align-items-center">
         <div class="col-10 text-center menu-banner medium-text">
-            <h2>U  have defeated all your enemies!<br>
+            <h2>U have defeated all your enemies!<br>
                 Up one level?</h2>
-                 <!-- level select button -->
-                 <div class="row">
-                    <div class="col-6 text-center">
-                        <form method="POST" action="{% url 'battle:next-floor-start' 'y' %}">
-                            {% csrf_token %}
-                            <button type="submit" value="y" name="level-select" class="m-3 p-1 button small-text px-3">Sure, this was easy!</button>
-                        </form>
-                    </div>
-                    <!-- level select button -->
-                    <div class="col-6 text-center">
-                        <form method="POST" action="{% url 'battle:next-floor-start' 'n' %}">
-                            {% csrf_token %}
-                            <button type="submit" value="n" name="level-select" class="m-3 p-1 button small-text px-3">No, not yet.</button>
-                        </form>
-                    </div>
+            <!-- level select button -->
+            <div class="row">
+                <div class="col-6 text-center">
+                    <form method="POST" action="{% url 'battle:next-floor-start' 'y' %}">
+                        {% csrf_token %}
+                        <button type="submit" value="y" name="level-select" class="m-3 p-1 button small-text px-3">Sure,
+                            this was easy!</button>
+                    </form>
                 </div>
+                <!-- level select button -->
+                <div class="col-6 text-center">
+                    <form method="POST" action="{% url 'battle:next-floor-start' 'n' %}">
+                        {% csrf_token %}
+                        <button type="submit" value="n" name="level-select" class="m-3 p-1 button small-text px-3">No,
+                            not yet.</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% if game.current_game_floor_number > 4 %}
+<!-- next level screen overlay for end of free version-->
+<div class="container-fluid next-level-screen">
+    <div class="row h-100 display-flex justify-content-center align-items-center">
+        <div class="col-10 col-lg-5 p-lg-5 p-2 text-center menu-banner medium-text">
+            <h2>U have completed the free version of huberis.</h2>
+            <h3 class="medium-text">To find even more powerfull spells,<br>
+                defeat more powerfull enemies,<br>
+                Put Your name on the leaderboards.<br>
+                Get the fulll version of huberis!
+            </h3>
+            <!-- Full version button -->
+            <div class="row">
+                <div class="col-6 offset-3 text-center">
+                    <form method="POST" action="{% url 'home:full-version' %}">
+                        {% csrf_token %}
+                        <button type="submit" value="y" name="level-select" class="m-3 p-1 button small-text px-3">Tell
+                            me more.</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

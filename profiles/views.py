@@ -136,7 +136,7 @@ def game_setup(request, selected):
                 current_player = Player(pk=current_player.id,
                                         type=selected_type,
                                         user=current_user,
-                                        ice_attack_power=1,
+                                        ice_attack_power=100,
                                         ice_defense=3,
                                         mana_max=4,
                                         mana_current=4,

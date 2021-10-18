@@ -11,27 +11,27 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row menu-banner mb-4 mt-3">
-        <div class="col-12">
-            <h2 class="text-center m-4">Test your skills in the Full version!</h2>
-            <h3 class="text-center medium-text m-4">Complete your way up the tower!<br>
+<div class="container p-2">
+    <div class="row menu-banner mx-0 mb-4 mt-3">
+        <div class="col-10 offset-1">
+            <h2 class="text-center m-4">Test your skills in the <a href="{% url 'home:main-menu' %}">Full version</a>!</h2>
+            <h3 class="text-center medium-text m-3">Complete your way up the tower!<br>
                 access to all levels.</h3>
-            <h3 class="text-center medium-text m-4">Fight enemies u have never encountered<br>before!</h3>
+            <h3 class="text-center medium-text m-3">Fight enemies u have never encountered<br>before!</h3>
             <div class="row">
                 <div class="col-4 enemy-images"><img class="full-version-enemy-image-left" src="{{MEDIA_URL}}ORK_02_ATTAK_006_cropped.png" alt="Ork"></div>
                 <div class="col-4 enemy-images"><img class="full-version-enemy-image-middle" src="{{MEDIA_URL}}Knight_02__ATTACK_005_cropped.png" alt="Knight"></div>
                 <div class="col-4 enemy-images"><img class="full-version-enemy-image-right" src="{{MEDIA_URL}}ORK_03_ATTAK_005_cropped.png" alt="Ork"></div>
             </div>
-            <h3 class="text-center medium-text m-4"> Access to all spells.<br>
+            <h3 class="text-center medium-text m-3"> Access to all spells.<br>
                 More powerfull spells!
                 </h3>
-            <h3 class="text-center medium-text m-4">U could claim a spot on the leaderboard.
+            <h3 class="text-center medium-text m-3">U could claim a spot on the leaderboard.
             </h3>
-            <h3 class="text-center medium-text m-4">Show the world your true power!</h3>
+            <h3 class="text-center medium-text m-3">Show the world your true power!</h3>
             <div class="row">
-                <div class="offset-3 col-6">
-                    <a class="medium-text button p-2 text-center" href="">Take my money</a>
+                <div class="col-lg-6 offset-lg-3 col-md-12 d-flex justify-content-center">
+                      <a class="medium-text button m-md-4 m-2 p-2 text-center" href="">Take my money</a>
                 </div>
             </div>
         </div>

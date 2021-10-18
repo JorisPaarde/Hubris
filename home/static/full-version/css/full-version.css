@@ -1,24 +1,34 @@
 .full-version-enemy-image-left{
     float: right;
-    height: 10vh;
+    height: 5rem;
     margin-right: 1vw;
-    -webkit-transform: scale(2.5,2.5);
-    transform: scale(2.5,2.5);
+    -webkit-transform: scale(2,2);
+    transform: scale(2,2);
     object-fit: contain;
 }
 
 .full-version-enemy-image-middle{
     display:block;
     margin:auto;
-    height: 14vh;
+    height: 8rem;
     object-fit: contain;
 }
 
 .full-version-enemy-image-right{
-    height: 10vh;
+    height: 5rem;
     float: left;
-    margin-left: 1vw;
-    -webkit-transform: scale(-2.5,2.5);
-    transform: scale(-2.5,2.5);
+    -webkit-transform: scale(-2,2);
+    transform: scale(-2,2);
     object-fit: contain;
+}
+
+
+@media screen and (min-width: 1024px) {
+    .full-version-enemy-image-left, .full-version-enemy-image-right{
+        height: 8rem;
+    }
+    .full-version-enemy-image-middle{
+        height: 10rem;
+    }
+   
 }
