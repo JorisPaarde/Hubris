@@ -139,20 +139,45 @@ $(document).ready(function () {
             });
     };
 
-    // function to chck if enemies are attacking
+    // function to check if enemies are attacking
     function checkEnemyAttack() {
         let gameStepNr = parseInt($(" .game-step-nr ").data("step"));
         let currentPhase = $(" .game-phase-nr ").data("phase");
         if (($(".game-floor-enemy").length > 0)&&(gameStepNr == 2)){
             $(".game-floor-enemy").each(function () {
-                let enemy = $(this).attr("class");
-                let enemyId = enemy.substr(0, enemy.indexOf(' '));
-                let attackphase = $(this).find(" .enemy-attack-phase-icon ").html().toLowerCase();
-                console.log('enemy attack');
-                console.log(enemy);
-                console.log(enemyId);
-                console.log(attackphase);
-                console.log(currentPhase);
+                let enemy = $(this)
+                let enemyClass = $(this).attr("class");
+                let enemyId = enemyClass.substr(0, enemyClass.indexOf(' '));
+                let enemyAttackPhase = $(this).find(" .enemy-attack-phase-icon ").html().toLowerCase();
+                let enemyHealth = parseInt($(this).find(" .enemy-health-current ").html());
+                // detect wether this enemy has already attacked
+                let hasNotAttacked =  enemy.hasClass('False');
+                if ((enemyAttackPhase == currentPhase)&&(enemyHealth > 0)&&(hasNotAttacked)){
+                    console.log(enemyId);
+                    console.log('attacks');
+                    // send correct action and enemy id value to enemy action processor view
+                    data = {
+                        'enemy': enemyId,
+                        'enemy_action': 'attacks',
+                    };
+
+                    fetch(URL, {
+                            method: 'POST',
+                            credentials: 'same-origin',
+                            headers: {
+                                'Accept': 'application/json',
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'X-CSRFToken': csrftoken,
+                            },
+                            body: JSON.stringify({
+                                'post_data': data
+                            }) //JavaScript object of data to POST
+                        })
+                        .then(response => {
+                            location.reload()
+                            return response
+                        });
+                };
             });
         };
     };

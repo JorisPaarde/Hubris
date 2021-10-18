@@ -53,6 +53,8 @@ def battle_screen(request, game):
             if 'all_enemies_dead' in request_data:
                 check_dead_monsters(request)
                 return redirect('battle:proceed_to_next_floor')
+            if 'enemy_action' in request_data:
+                enemy_attack_processor(request, request_data)
 
     context = {
         "game": game,
@@ -111,7 +113,6 @@ def card_select(request, card):
         if game.game_step == '3':
             # this is the discard phase of the game
             # remove the selected card from the players hand and the hand card itself
-            print(played_hand_card)
             player.hand.remove(card)
             player.save()
             played_hand_card.delete()
@@ -134,12 +135,12 @@ def attack_target(targets, damage):
         target.save()
 
 
-def heal_player(player, amount):
+def heal_target(target, amount):
     """function to handle player healing"""
-    player.health_current = player.health_current + amount
-    if player.health_current > player.health_max:
-        player.health_current = player.health_max
-    player.save()
+    target.health_current = target.health_current + amount
+    if target.health_current > target.health_max:
+        target.health_current = target.health_max
+    target.save()
 
 
 def spend_mana(player, amount):
@@ -171,7 +172,7 @@ def action_processor(request, request_data):
         pass
 
     if action == 'healing':
-        heal_player(player, player.healing_power)
+        heal_target(player, player.healing_power)
         spend_mana(player, player.healing_cost)
 
     if action == 'ice':
@@ -197,7 +198,7 @@ def action_processor(request, request_data):
             amount = enemy.health_current
         else:
             amount = player.drain_attack_power
-        heal_player(player, amount)
+        heal_target(player, amount)
         attack_target(target, player.drain_attack_power)
         spend_mana(player, player.drain_attack_cost)
 
@@ -308,7 +309,6 @@ def proceed_to_next_floor(request):
     # if certain amout of floors are finished, stuff happens
     # eg if not payed and l5 goto buy full
     # if l15 completed!
-    print(game.current_game_floor_number)
     messages.info(request, "Please select a card to discard")
 
     context = {
@@ -346,7 +346,6 @@ def next_floor_start(request, choice):
     player.save()
 
     if request.method == 'POST':
-        print(request.POST)
         if 'level-select' in request.POST:
             if choice == 'y':
                 # start game at next floor number
@@ -356,3 +355,35 @@ def next_floor_start(request, choice):
                 pass
             # start game at the current floor number
             return redirect('battle:battle-screen', game)
+
+def  enemy_attack_processor(request, request_data):
+    # get the attacker and its values
+    enemy_id = request_data['enemy']
+    attacker = Game_floor_enemy.objects.get(id=enemy_id)
+    attack_style = attacker.skill_style
+    attack_power = attacker.attack_power
+    # set has attacked to true
+    attacker.has_attacked = True
+    attacker.save()
+    # get the target and its values
+    current_user = request.user
+    player = Player.objects.get(user=current_user)
+    fire_defense = player.fire_defense
+    ice_defense = player.ice_defense
+    golem_defence = player.physical_defense
+    lightning_defense = player.lightning_defense
+    drain_defense = player.drain_defense
+    target_player = Player.objects.filter(user=current_user)
+
+    print(attack_style)
+    print(attack_power)
+    print(fire_defense)
+    print(ice_defense)
+    print(golem_defence)
+    print(lightning_defense)
+    print(drain_defense)
+
+    # calculate amount of damage done to player by this enemy
+    damage = attack_power
+
+    attack_target(target_player, damage)

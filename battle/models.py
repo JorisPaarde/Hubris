@@ -28,6 +28,7 @@ class Game_floor_enemy(models.Model):
     attack_power = models.IntegerField(default=0)
     skill_style = models.CharField(max_length=2, choices=settings.SKILL_STYLES, default=settings.SKILL_STYLES[0][0])
     attack_phase = models.CharField(max_length=1, choices=settings.ATTACK_PHASES, default=settings.ATTACK_PHASES[0][0])
+    has_attacked = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.id)
