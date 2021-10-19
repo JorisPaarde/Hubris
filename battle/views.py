@@ -239,7 +239,7 @@ def pickmonsters(request, game):
             health_current = max_health
             skill_style = random.choice(settings.SKILL_STYLES)[0]
             # while loop to prevent enemy skill to be heal
-            while skill_style.lower() == 'HL':
+            while skill_style.lower() == 'hl':
                 skill_style = random.choice(settings.SKILL_STYLES)[0]
             attack_phase = random.choice(settings.ATTACK_PHASES)[0]
             game_floor_enemy = Game_floor_enemy(

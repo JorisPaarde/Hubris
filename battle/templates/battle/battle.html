@@ -161,7 +161,7 @@
                             <div class="row">
                                 {% for enemy in enemies %}
                                 {% if enemy|lower == gamefloor_enemy.enemy|lower %}
-                                <div class="col-12 z10">
+                                <div class="col-12 enemy-stats-bar z10">
                                     <div class="row">
                                         <div class="col-2 offset-3 text-center enemy-stats">
                                             <!-- health icon -->
@@ -188,7 +188,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <img class="position-relative enemy-image-lower pb-5 enemy-image"
+                                <img class="position-relative enemy-image-lower pb-4 enemy-image"
                                     src="{{MEDIA_URL}}{% if gamefloor_enemy.health_current > 0 %}{{ enemy.image_idle }}{% else %}{{ enemy.image_die }}{% endif %}" alt="{{enemy}} image">
                                 {% endif %}
                                 {% endfor %}

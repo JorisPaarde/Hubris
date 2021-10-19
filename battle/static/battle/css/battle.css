@@ -1,14 +1,19 @@
 /* images */
 
 .player-image{
-    height: 20vw;
+    height: 15vw;
 }
 
 .enemy-image{
     top: 4vh;
-    -webkit-transform: scale(-2.5,2.5);
-    transform: scale(-2.5,2.5);
+    -webkit-transform: scale(-1.1,1.1);
+    transform: scale(-1.1,1.1);
     object-fit: contain;
+}
+
+.enemy-stats-bar{
+    position: relative;
+    top: 7vh;
 }
 
 .enemy-select:hover{
