@@ -369,18 +369,21 @@ def  enemy_attack_processor(request, request_data):
     player = Player.objects.get(user=current_user)
     fire_defense = player.fire_defense
     ice_defense = player.ice_defense
-    golem_defence = player.physical_defense
+    golem_defense = player.physical_defense
     lightning_defense = player.lightning_defense
     drain_defense = player.drain_defense
     target_player = Player.objects.filter(user=current_user)
 
-    print(attack_style)
-    print(attack_power)
-    print(fire_defense)
-    print(ice_defense)
-    print(golem_defence)
-    print(lightning_defense)
-    print(drain_defense)
+    if attack_style == 'DR':
+        attack_power = max(0, attack_power - drain_defense)
+    if attack_style == 'LN':
+        attack_power = max(0, attack_power - lightning_defense)
+    if attack_style == 'FR':
+        attack_power = max(0, attack_power - fire_defense)
+    if attack_style == 'IC':
+        attack_power = max(0, attack_power - ice_defense)
+    if attack_style == 'GL':
+        attack_power = max(0, attack_power - golem_defense)
 
     # calculate amount of damage done to player by this enemy
     damage = attack_power
