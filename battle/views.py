@@ -126,14 +126,27 @@ def card_select(request, card):
     return redirect('battle:battle-screen', game)
 
 
-def attack_target(targets, damage):
+def attack_target(request, targets, damage):
     """function to handle target attacks"""
     for target in targets:
         target.health_current = target.health_current - damage
         # prevent negative health
         target.health_current = max(0, target.health_current)
         target.save()
+        if target.enemy:
+            if target.health_current == 0:
+                # this enemy died score it
+                score(request, target)
 
+
+def score(request, enemy):
+    current_user = request.user
+    player = Player.objects.get(user=current_user)
+    game = Game.objects.get(player=player, completed=False)
+    new_score = enemy.attack_power + enemy.health_max
+    game.score = game.score + new_score
+    game.save()
+ 
 
 def heal_target(target, amount):
     """function to handle player healing"""
@@ -176,19 +189,19 @@ def action_processor(request, request_data):
         spend_mana(player, player.healing_cost)
 
     if action == 'ice':
-        attack_target(targets, player.ice_attack_power)
+        attack_target(request, targets, player.ice_attack_power)
         spend_mana(player, player.ice_attack_cost)
 
     if action == 'golem':
-        attack_target(target, player.golem_attack_power)
+        attack_target(request,target, player.golem_attack_power)
         spend_mana(player, player.golem_attack_cost)
 
     if action == 'fire':
-        attack_target(target, player.fire_attack_power)
+        attack_target(request, target, player.fire_attack_power)
         spend_mana(player, player.fire_attack_cost)
 
     if action == 'lightning':
-        attack_target(target, player.lightning_attack_power)
+        attack_target(request, target, player.lightning_attack_power)
         spend_mana(player, player.lightning_attack_cost)
 
     if action == 'drain':
@@ -199,7 +212,7 @@ def action_processor(request, request_data):
         else:
             amount = player.drain_attack_power
         heal_target(player, amount)
-        attack_target(target, player.drain_attack_power)
+        attack_target(request, target, player.drain_attack_power)
         spend_mana(player, player.drain_attack_cost)
 
     skip_to_next_phase(current_game_floor)
@@ -295,21 +308,24 @@ def check_dead_monsters(request):
 
 def proceed_to_next_floor(request):
     """
-    view to return huberis phase page
+    view to return huberis game step page
     In this view the player discards a card, and decides if he/she wants to go up a level.
     """
 
     current_user = request.user
     player = Player.objects.get(user=current_user)
-    cards = Card.objects.all()
     game = Game.objects.get(player=player, completed=False)
     current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
-
-    # if certain amout of floors are finished, stuff happens
-    # eg if not payed and l5 goto buy full
-    # if l15 completed!
-    messages.info(request, "Please select a card to discard")
-
+    # if the game is not finished yet
+    if game.current_game_floor_number != 15:
+        cards = Card.objects.all()
+        messages.info(request, "Please select a card to discard")
+    #  if the game is finished:
+    if game.current_game_floor_number == 15:
+        game.completed = True
+        game.save()
+        # redirect to victory score page
+        return redirect("home:how-to-play")
     context = {
         "game": game,
         "player": player,
@@ -355,7 +371,11 @@ def next_floor_start(request, choice):
             # start game at the current floor number
             return redirect('battle:battle-screen', game)
 
+
 def  enemy_attack_processor(request, request_data):
+    """
+    Function to handle enemy attacks on player
+    """
     # get the attacker and its values
     enemy_id = request_data['enemy']
     attacker = Game_floor_enemy.objects.get(id=enemy_id)
@@ -373,7 +393,7 @@ def  enemy_attack_processor(request, request_data):
     lightning_defense = player.lightning_defense
     drain_defense = player.drain_defense
     target_player = Player.objects.filter(user=current_user)
-
+    # calculate amount of damage done to player by this enemy
     if attack_style == 'DR':
         attack_power = max(0, attack_power - drain_defense)
         # enemy gets healed by the amount of damage it does
@@ -386,8 +406,39 @@ def  enemy_attack_processor(request, request_data):
         attack_power = max(0, attack_power - ice_defense)
     if attack_style == 'GL':
         attack_power = max(0, attack_power - golem_defense)
-
-    # calculate amount of damage done to player by this enemy
+   
     damage = attack_power
+    attack_target(request, target_player, damage)
 
-    attack_target(target_player, damage)
+
+def player_death(request):
+    """
+    view to set up the game for a new level and control player death.
+    """
+    print("u died and clicked to confirm")
+    current_user = request.user
+    player = Player.objects.get(user=current_user)
+    # check if the player is really dead
+    if player.health_current == 0:
+        # create a new empty gamefloor
+        game = Game.objects.get(player=player, completed=False)
+        next_game_floor = Current_game_floor()
+        next_game_floor.save()
+        # delete the old gamefloor
+        game.current_game_floor.delete()
+        # add the new empty gamefloor to the game
+        game.current_game_floor = next_game_floor
+        # game starts at step 1 again
+        game.game_step = '1'
+        game.save()
+        # player starts next floor with full stats
+        player.health_current = player.health_max
+        player.mana_current = player.mana_max
+        # player played a floor
+        game.total_gamefloors_played = game.total_gamefloors_played + 1
+        player.save()
+        # set game to previous floor number
+        game.current_game_floor_number = max(1, game.current_game_floor_number - 1)
+        game.save()
+        # start game at the current floor number
+    return redirect('battle:battle-screen', game)

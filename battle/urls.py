@@ -10,4 +10,5 @@ urlpatterns = [
     path('action_processor', views.action_processor, name='action_processor'),
     path('proceed-to-next-floor/', views.proceed_to_next_floor, name='proceed_to_next_floor'),
     path('next-floor-start/<choice>', views.next_floor_start, name='next-floor-start'),
+    path('player-death', views.player_death, name='player-death'),
 ]
