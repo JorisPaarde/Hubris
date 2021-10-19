@@ -233,10 +233,10 @@ def pickmonsters(request, game):
             random.seed(time.process_time())
             rand_int_2 = max(4, random.randint(1, rand_int_1))
 
-            max_health = max(rand_int_1, rand_int_2)/number_of_enemies + floor_nr
+            health_max = max(rand_int_1, rand_int_2)/number_of_enemies + floor_nr
             attack_power = min(rand_int_1, rand_int_2)/number_of_enemies + floor_nr
 
-            health_current = max_health
+            health_current = health_max
             skill_style = random.choice(settings.SKILL_STYLES)[0]
             # while loop to prevent enemy skill to be heal
             while skill_style.lower() == 'hl':
@@ -245,7 +245,7 @@ def pickmonsters(request, game):
             game_floor_enemy = Game_floor_enemy(
                                                 enemy=random_enemy,
                                                 health_current=health_current,
-                                                max_health=max_health,
+                                                health_max=health_max,
                                                 attack_power=attack_power,
                                                 skill_style=skill_style,
                                                 attack_phase=attack_phase
@@ -376,6 +376,8 @@ def  enemy_attack_processor(request, request_data):
 
     if attack_style == 'DR':
         attack_power = max(0, attack_power - drain_defense)
+        # enemy gets healed by the amount of damage it does
+        heal_target(attacker, attack_power)
     if attack_style == 'LN':
         attack_power = max(0, attack_power - lightning_defense)
     if attack_style == 'FR':

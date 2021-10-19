@@ -23,7 +23,7 @@ class Enemy(models.Model):
 class Game_floor_enemy(models.Model):
 
     enemy = models.ForeignKey(Enemy, on_delete=models.CASCADE, null=True, blank=True)
-    max_health = models.IntegerField(default=0)
+    health_max = models.IntegerField(default=0)
     health_current = models.IntegerField(null=True)
     attack_power = models.IntegerField(default=0)
     skill_style = models.CharField(max_length=2, choices=settings.SKILL_STYLES, default=settings.SKILL_STYLES[0][0])
