@@ -154,6 +154,7 @@ $(document).ready(function () {
         if (($(".game-floor-enemy").length > 0)&&(gameStepNr == 2)){
             $(".game-floor-enemy").each(function () {
                 let enemy = $(this)
+                let enemyName = $(this).data("enemy");
                 let enemyClass = $(this).attr("class");
                 let enemyId = enemyClass.substr(0, enemyClass.indexOf(' '));
                 let enemyAttackPhase = $(this).find(" .enemy-attack-phase-icon ").html().toLowerCase();
@@ -161,8 +162,6 @@ $(document).ready(function () {
                 // detect wether this enemy has already attacked
                 let hasNotAttacked =  enemy.hasClass('False');
                 if ((enemyAttackPhase == currentPhase)&&(enemyHealth > 0)&&(hasNotAttacked)){
-                    console.log(enemyId);
-                    console.log('attacks');
                     // send correct action and enemy id value to enemy action processor view
                     data = {
                         'enemy': enemyId,
@@ -182,16 +181,21 @@ $(document).ready(function () {
                             }) //JavaScript object of data to POST
                         })
                         .then(response => {
-                            setTimeout(reload, 3000)
+                            // player gets indication of enemy that attacked
+                            $("#message-text").html(`u where attacked by ${enemyName}!`);
+                            toggleMessage();
+                            setTimeout(reload, 2000);
                             return response
                         });
                 };
             });
         };
     };
-
     checkEnemyAttack();
 });
+
+
+// helper functions
 
 function reload() {
     location.reload()
