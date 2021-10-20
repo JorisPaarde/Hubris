@@ -50,7 +50,7 @@ def continue_game(request, continue_game):
 
     if continue_game == 'y':
 
-        game = Game.objects.get(player=current_player)
+        game = Game.objects.get(player=current_player, completed=False)
         context = {
             'game': game,
         }
@@ -160,3 +160,36 @@ def draw_cards(n, current_player):
         card.save()
         current_player.hand.add(card)
         current_player.save()
+
+
+def player_death(request):
+    """
+    view to set up the game for a new level and control player death.
+    """
+    print("u died and clicked to confirm")
+    current_user = request.user
+    player = Player.objects.get(user=current_user)
+    # check if the player is really dead
+    if player.health_current == 0:
+        # create a new empty gamefloor
+        game = Game.objects.get(player=player, completed=False)
+        next_game_floor = Current_game_floor()
+        next_game_floor.save()
+        # delete the old gamefloor
+        game.current_game_floor.delete()
+        # add the new empty gamefloor to the game
+        game.current_game_floor = next_game_floor
+        # game starts at step 1 again
+        game.game_step = '1'
+        game.save()
+        # player starts next floor with full stats
+        player.health_current = player.health_max
+        player.mana_current = player.mana_max
+        # player played a floor
+        game.total_gamefloors_played = game.total_gamefloors_played + 1
+        player.save()
+        # set game to previous floor number
+        game.current_game_floor_number = max(1, game.current_game_floor_number - 1)
+        game.save()
+        # start game at the current floor number
+    return redirect('battle:battle-screen', game)

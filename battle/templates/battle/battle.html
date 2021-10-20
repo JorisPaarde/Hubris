@@ -514,10 +514,7 @@
             <!-- Back one level button -->
             <div class="row">
                 <div class="col-6 offset-3 text-center">
-                    <form method="POST" action="{% url 'battle:player-death' %}">
-                        {% csrf_token %}
-                        <button type="submit" name="player-death" class="m-3 p-1 button small-text px-3">I can do this..</button>
-                    </form>
+                    <a class="m-3 p-1 button small-text px-3" href="{% url 'profiles:player-death' %}">I can do this..</a>
                 </div>
             </div>
         </div>

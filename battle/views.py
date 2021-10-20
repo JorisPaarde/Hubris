@@ -117,6 +117,7 @@ def card_select(request, card):
             player.save()
             played_hand_card.delete()
             # draw 2 new cards for this player
+            print(len(player.hand))
             draw_cards(2, player)
             # player is send to page where he/she decides to go up a level or not
             return redirect('battle:proceed_to_next_floor')
@@ -146,7 +147,7 @@ def score(request, enemy):
     new_score = enemy.attack_power + enemy.health_max
     game.score = game.score + new_score
     game.save()
- 
+
 
 def heal_target(target, amount):
     """function to handle player healing"""
@@ -271,13 +272,13 @@ def pickmonsters(request, game):
 
 def skip_to_next_phase(current_game_floor):
     """function to skip to the next phase as long as there is a next one"""
-    n = int(current_game_floor.current_phase)
-    if n >= len(settings.ATTACK_PHASES):
+    phase = int(current_game_floor.current_phase)
+    if phase >= len(settings.ATTACK_PHASES):
         pass
     else:
-        n += 1
-        str(n)
-        current_game_floor.current_phase = n
+        phase += 1
+        str(phase)
+        current_game_floor.current_phase = phase
         current_game_floor.save()
 
 
@@ -372,7 +373,7 @@ def next_floor_start(request, choice):
             return redirect('battle:battle-screen', game)
 
 
-def  enemy_attack_processor(request, request_data):
+def enemy_attack_processor(request, request_data):
     """
     Function to handle enemy attacks on player
     """
@@ -410,35 +411,3 @@ def  enemy_attack_processor(request, request_data):
     damage = attack_power
     attack_target(request, target_player, damage)
 
-
-def player_death(request):
-    """
-    view to set up the game for a new level and control player death.
-    """
-    print("u died and clicked to confirm")
-    current_user = request.user
-    player = Player.objects.get(user=current_user)
-    # check if the player is really dead
-    if player.health_current == 0:
-        # create a new empty gamefloor
-        game = Game.objects.get(player=player, completed=False)
-        next_game_floor = Current_game_floor()
-        next_game_floor.save()
-        # delete the old gamefloor
-        game.current_game_floor.delete()
-        # add the new empty gamefloor to the game
-        game.current_game_floor = next_game_floor
-        # game starts at step 1 again
-        game.game_step = '1'
-        game.save()
-        # player starts next floor with full stats
-        player.health_current = player.health_max
-        player.mana_current = player.mana_max
-        # player played a floor
-        game.total_gamefloors_played = game.total_gamefloors_played + 1
-        player.save()
-        # set game to previous floor number
-        game.current_game_floor_number = max(1, game.current_game_floor_number - 1)
-        game.save()
-        # start game at the current floor number
-    return redirect('battle:battle-screen', game)

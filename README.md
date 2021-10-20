@@ -127,6 +127,7 @@ Restarting a game resulted in no enemies shown. Deleting the old ones in the dat
 Possibility to have 2 open games resulted in errors. created try except logic to complete the oldest game.
 Player having completed games resulted in MultipleObjectsReturned. Added check in all views to get the game that is not finished.
 After deployment, pickmonsters function trew an error on the length of skillstyle and attackphase values, changed input from value ('LN') to key ('Lightning').
+The player death view did not run but, gave a 200 status code... Moving it to another app fixed this. why? no idea...
 
 # technologies used:
 
