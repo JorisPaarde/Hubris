@@ -166,15 +166,18 @@ def player_death(request):
     """
     view to set up the game for a new level and control player death.
     """
-    print("u died and clicked to confirm")
     current_user = request.user
     player = Player.objects.get(user=current_user)
     # check if the player is really dead
     if player.health_current == 0:
+
         # create a new empty gamefloor
         game = Game.objects.get(player=player, completed=False)
         next_game_floor = Current_game_floor()
         next_game_floor.save()
+        # delete all enemys from this gamefloor
+        for enemy in game.current_game_floor.enemy.all():
+            enemy.delete()
         # delete the old gamefloor
         game.current_game_floor.delete()
         # add the new empty gamefloor to the game
