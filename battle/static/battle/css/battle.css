@@ -264,6 +264,20 @@
 
 /* screen layers and screen sizes */
 
+.message-screen{
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 999999;
+    width: 100vw;
+    height: 100vh;
+}
+.message-screen .message{
+    position: relative;
+    top: -25vh;
+}
+
+
 .battle-screen,
 .card-screen {
     position: fixed;

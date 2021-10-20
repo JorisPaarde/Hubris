@@ -56,11 +56,16 @@ $(document).ready(function () {
                     }) //JavaScript object of data to POST
                 })
                 .then(response => {
-                    setTimeout(location.reload(), 1000)
+                    $("#message-text").html(`you chose ${action}`);
+                    toggleMessage();
+                    setTimeout(reload, 1000)
                     return response
                 });
         } else {
             // enemys get enemy select class to indicate they can be attacked
+            $("#message-text").html(`select an enemy to attack with ${action}`);
+            toggleMessage();
+            setTimeout(toggleMessage, 1000);
             $(".enemy-image").addClass("enemy-select");
         };
     });
@@ -91,7 +96,7 @@ $(document).ready(function () {
                     }) //JavaScript object of data to POST
                 })
                 .then(response => {
-                    location.reload()
+                    reload()
                     return response
                 });
         };
@@ -108,7 +113,10 @@ $(document).ready(function () {
             });
             // if the total is 0 confirmation is send to the backend that they are all dead
             if ((totalHealth == 0) && (gameStepNr == 2)) {
-                setTimeout(confirmAllDead(), 3000);
+                message = `U killed all enemies!!`
+                $("#message-text").html(message);
+                toggleMessage();
+                setTimeout(confirmAllDead, 2000);
             };
         };
     };
@@ -134,7 +142,7 @@ $(document).ready(function () {
                 }) //JavaScript object of data to POST
             })
             .then(response => {
-                setTimeout(window.location.replace(response.url), 1000)
+                window.location.replace(response.url)
                 return response
             });
     };
@@ -174,7 +182,7 @@ $(document).ready(function () {
                             }) //JavaScript object of data to POST
                         })
                         .then(response => {
-                            location.reload()
+                            setTimeout(reload, 3000)
                             return response
                         });
                 };
@@ -184,3 +192,11 @@ $(document).ready(function () {
 
     checkEnemyAttack();
 });
+
+function reload() {
+    location.reload()
+}
+
+function toggleMessage() {
+    $(".message-screen").toggleClass("d-none");
+}

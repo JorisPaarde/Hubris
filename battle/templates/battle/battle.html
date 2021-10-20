@@ -23,6 +23,15 @@
     </div>
 </div>
 
+<!-- message modal screen overlay -->
+<div class="container-fluid d-none message-screen">
+    <div class="row h-100 display-flex justify-content-center align-items-center">
+        <div class="col-6 text-center menu-banner message medium-text">
+            <h3 id="message-text" class="medium-small-text m-0">message</h3>
+        </div>
+    </div>
+</div>
+
 <div class="container-fluid">
     <!-- title and menu button -->
     <div class="row mt-1 floor z1000">
@@ -493,7 +502,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -513,7 +521,7 @@
             </h3>
             <!-- Back one level button -->
             <div class="row">
-                <div class="col-6 offset-3 text-center">
+                <div class="col-8 offset-2 text-center">
                     <a class="m-3 p-1 button small-text px-3" href="{% url 'profiles:player-death' %}">I can do this..</a>
                 </div>
             </div>
