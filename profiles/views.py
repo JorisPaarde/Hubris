@@ -1,12 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Player_type, Player, Card, Hand_card
-from battle.models import Game, Current_game_floor
 from django.contrib import messages
+from battle.models import Game, Current_game_floor
 
+from .models import Player_type, Player
+from .utils import draw_cards
 
-import random
-# Create your views here.
 
 @login_required(login_url='home:login')
 def player_select(request):
@@ -76,7 +75,7 @@ def continue_game(request, continue_game):
 
 @login_required(login_url='home:login')
 def game_setup(request, selected):
-
+    """view to process player selection and return the battle screen"""
     if request.method == 'POST':
 
         context = {}
@@ -150,19 +149,6 @@ def game_setup(request, selected):
     # start this users game with this player
 
     return redirect('battle:battle-screen', context)
-
-
-# function to draw new cards for a hand
-def draw_cards(n, current_player):
-    for card in range(n):
-        # get a list of cards available to this player
-        available_cards = Card.objects.filter(in_freeversion=True)
-        # select a random card and add it to the hand
-        card = random.choice(available_cards)
-        card = Hand_card(card=card)
-        card.save()
-        current_player.hand.add(card)
-        current_player.save()
 
 
 @login_required(login_url='home:login')
