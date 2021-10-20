@@ -144,6 +144,8 @@ def proceed_to_next_floor(request):
     if game.current_game_floor_number == 15:
         game.completed = True
         game.save()
+        # delete gamefloor
+        current_game_floor.delete()
         # redirect to victory score page
         return redirect("home:how-to-play")
     context = {
