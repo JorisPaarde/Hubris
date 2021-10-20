@@ -128,6 +128,8 @@ Possibility to have 2 open games resulted in errors. created try except logic to
 Player having completed games resulted in MultipleObjectsReturned. Added check in all views to get the game that is not finished.
 After deployment, pickmonsters function trew an error on the length of skillstyle and attackphase values, changed input from value ('LN') to key ('Lightning').
 The player death view did not run but, gave a 200 status code... Moving it to another app fixed this. why? no idea...
+Attacking a player resuted in errors, updated check for enemy to: "hasattr(target, 'enemy')" instead of "target.enemy".
+When dieing, player needed to discard multiple cards and draw new ones to get to 8 cards again. Now draws cards function draws new cards to fill hand to 8.
 
 # technologies used:
 

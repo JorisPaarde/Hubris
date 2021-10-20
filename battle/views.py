@@ -116,9 +116,9 @@ def card_select(request, card):
             player.hand.remove(card)
             player.save()
             played_hand_card.delete()
-            # draw 2 new cards for this player
-            print(len(player.hand))
-            draw_cards(2, player)
+            # draw new cards for this player
+            number_cards_in_hand = len(player.hand.all())
+            draw_cards((8-number_cards_in_hand), player)
             # player is send to page where he/she decides to go up a level or not
             return redirect('battle:proceed_to_next_floor')
     else:
@@ -134,7 +134,7 @@ def attack_target(request, targets, damage):
         # prevent negative health
         target.health_current = max(0, target.health_current)
         target.save()
-        if target.enemy:
+        if hasattr(target, 'enemy'):
             if target.health_current == 0:
                 # this enemy died score it
                 score(request, target)
