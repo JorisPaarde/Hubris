@@ -47,7 +47,6 @@ def battle_screen(request, game):
         # pass post requests from action.js to correct function
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             request_data = json.load(request)['post_data']
-            print(request_data)
             if 'action' in request_data:
                 action_processor(request, request_data)
             if 'all_enemies_dead' in request_data:
@@ -216,7 +215,7 @@ def action_processor(request, request_data):
         attack_target(request, target, player.drain_attack_power)
         spend_mana(player, player.drain_attack_cost)
 
-    skip_to_next_phase(current_game_floor)
+    skip_to_next_phase(request, current_game_floor)
 
 
 def pickmonsters(request, game):
@@ -226,7 +225,6 @@ def pickmonsters(request, game):
     game = Game.objects.get(player=player, completed=False)
     current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
 
-    print("picking monsters")
     # determine the amount of enemies
     number_of_enemies = 1
     floor_nr = game.current_game_floor_number
@@ -270,11 +268,18 @@ def pickmonsters(request, game):
             current_game_floor.save()
 
 
-def skip_to_next_phase(current_game_floor):
+def skip_to_next_phase(request, current_game_floor):
     """function to skip to the next phase as long as there is a next one"""
+    current_user = request.user
+    player = Player.objects.get(user=current_user)
     phase = int(current_game_floor.current_phase)
-    if phase >= len(settings.ATTACK_PHASES):
-        pass
+    # if this is the last phase
+    if phase == len(settings.ATTACK_PHASES):
+        # check if all enemies are dead
+        # if they are not, kill player
+        if not check_dead_monsters(request):
+            player.health_current = 0
+            player.save()
     else:
         phase += 1
         str(phase)
@@ -305,6 +310,9 @@ def check_dead_monsters(request):
             enemy.delete()
         game.game_step = '3'
         game.save()
+    else:
+        # return they are not all dead
+        return False
 
 
 def proceed_to_next_floor(request):
@@ -407,7 +415,6 @@ def enemy_attack_processor(request, request_data):
         attack_power = max(0, attack_power - ice_defense)
     if attack_style == 'GL':
         attack_power = max(0, attack_power - golem_defense)
-   
+
     damage = attack_power
     attack_target(request, target_player, damage)
-

@@ -194,7 +194,6 @@ $(document).ready(function () {
     checkEnemyAttack();
 });
 
-
 // helper functions
 
 function reload() {
