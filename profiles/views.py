@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from .models import Player_type, Player, Card, Hand_card
 from battle.models import Game, Current_game_floor
 from django.contrib import messages
@@ -7,7 +8,7 @@ from django.contrib import messages
 import random
 # Create your views here.
 
-
+@login_required(login_url='home:login')
 def player_select(request):
     """view to return player selection page"""
 
@@ -41,6 +42,7 @@ def player_select(request):
     return render(request, 'profiles/player-select.html', context)
 
 
+@login_required(login_url='home:login')
 def continue_game(request, continue_game):
     """view to return player to current game or start a new game"""
 
@@ -72,6 +74,7 @@ def continue_game(request, continue_game):
         return redirect('profiles:player_select')
 
 
+@login_required(login_url='home:login')
 def game_setup(request, selected):
 
     if request.method == 'POST':
@@ -162,6 +165,7 @@ def draw_cards(n, current_player):
         current_player.save()
 
 
+@login_required(login_url='home:login')
 def player_death(request):
     """
     view to set up the game for a new level and control player death.

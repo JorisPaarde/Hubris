@@ -3,17 +3,18 @@ import random
 import time
 
 from django.shortcuts import render, redirect
-from .models import Player, Game, Current_game_floor, Enemy, Game_floor_enemy, Hand_card
-from profiles.models import Card
-from profiles.views import draw_cards
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from django.http import JsonResponse
 from django.contrib import messages
 from django.core.exceptions import MultipleObjectsReturned
+from profiles.models import Card
+from profiles.views import draw_cards
+from .models import Player, Game, Current_game_floor, Enemy, Game_floor_enemy, Hand_card
+
 
 # Create your views here.
 
-
+@login_required(login_url='home:login')
 def battle_screen(request, game):
     """view to return battle_screen page"""
 
@@ -66,6 +67,7 @@ def battle_screen(request, game):
     return render(request, 'battle/battle.html', context)
 
 
+@login_required(login_url='home:login')
 def card_select(request, card):
     """function to handle card selection and return to the next game step"""
 
@@ -140,6 +142,7 @@ def attack_target(request, targets, damage):
 
 
 def score(request, enemy):
+    """function to score enemy kills"""
     current_user = request.user
     player = Player.objects.get(user=current_user)
     game = Game.objects.get(player=player, completed=False)
@@ -276,7 +279,7 @@ def skip_to_next_phase(request, current_game_floor):
     # if this is the last phase
     if phase == len(settings.ATTACK_PHASES):
         # check if all enemies are dead
-        # if they are not, kill player
+        # if they are not,player failed, kill player
         if not check_dead_monsters(request):
             player.health_current = 0
             player.save()
@@ -315,12 +318,12 @@ def check_dead_monsters(request):
         return False
 
 
+@login_required(login_url='home:login')
 def proceed_to_next_floor(request):
     """
     view to return huberis game step page
     In this view the player discards a card, and decides if he/she wants to go up a level.
     """
-
     current_user = request.user
     player = Player.objects.get(user=current_user)
     game = Game.objects.get(player=player, completed=False)
@@ -345,6 +348,7 @@ def proceed_to_next_floor(request):
     return render(request, 'battle/proceed/proceed-to-next-floor.html', context)
 
 
+@login_required(login_url='home:login')
 def next_floor_start(request, choice):
     """
     view to set up the game for a new level and control if a player goes up a level.
