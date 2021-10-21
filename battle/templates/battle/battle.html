@@ -233,29 +233,12 @@
                         </div>
                         <!-- skill style -->
                         <div class="col-2 p-0">
-                            {% if card.skill_style|lower == "fr" %}
-                            <span><i
-                                    class="card-style-icon fas fa-fire-alt fire align-middle text-center stroke"></i></span>
-                            {% endif %}
-                            {% if card.skill_style|lower == "ic" %}
-                            <span><i
-                                    class="card-style-icon fas fa-snowflake ice align-middle text-center stroke"></i></span>
-                            {% endif %}
-                            {% if card.skill_style|lower == "ln" %}
-                            <span><i
-                                    class="card-style-icon fas fa-fire-alt lightning align-middle text-center stroke"></i></span>
-                            {% endif %}
-                            {% if card.skill_style|lower == "dr" %}
-                            <span><i
-                                    class="card-style-icon fas fa-skull drain align-middle text-center stroke"></i></span>
-                            {% endif %}
-                            {% if card.skill_style|lower == "gl" %}
-                            <span><i
-                                    class="card-style-icon fas fa-robot golem align-middle text-center stroke"></i></span>
-                            {% endif %}
                             {% if card.skill_style|lower == "hl" %}
                             <span><i
-                                    class="card-style-icon fas fa-heart heal align-middle text-center stroke"></i></span>
+                                    class="card-style-icon fas fa-heart fire align-middle text-center stroke"></i></span>
+                            {% else %}   
+                            <span><i
+                                    class="card-style-icon fas fa-fire-alt {{ card.get_skill_style_display|lower }} align-middle text-center stroke"></i></span>
                             {% endif %}
                         </div>
                     </div>
@@ -279,32 +262,46 @@
                         <div class="col-3 p-0">
                             <!-- attack modifier -->
                             {% if card.attack_modifier  %}
-                            <!-- attack all -->
-                            {% if card.attack_all  %}
-                            <i class="position-absolute fas mt-2 fa-infinity fa-inverse card_attack_all stroke"></i>
-                            {% endif %}
-                            <span><img
-                                    class="position-absolute {% if not card.attack_all %}mt-1 {% endif %}card_action_effect"
-                                    src="{{MEDIA_URL}}sword_{{ card.get_skill_style_display|lower }}.svg"
-                                    alt="{{ card.get_skill_style_display|lower }} attack"></span>
-                            <span
-                                class="position-absolute px-1 {% if not card.attack_all %}mt-1 {% endif %}fa-inverse text-center attack-stat-number stroke">+{{ card.attack_modifier }}</span>
-                            {% endif %}
+                                <!-- attack all -->
+                                {% if card.attack_all  %}
+                                <i class="position-absolute fas mt-2 fa-infinity fa-inverse card_attack_all stroke"></i>
+                                {% endif %}
+                                <span><img
+                                        class="position-absolute {% if not card.attack_all %}mt-1 {% endif %}card_action_effect"
+                                        src="{{MEDIA_URL}}sword_{{ card.get_skill_style_display|lower }}.svg"
+                                        alt="{{ card.get_skill_style_display|lower }} attack"></span>
+                                <span
+                                    class="position-absolute px-1 {% if not card.attack_all %} {% endif %}fa-inverse text-center card-stat-number stroke">+{{ card.attack_modifier }}</span>
+                                {% else %}
+                                  <!-- heal modifier -->
+                                  {% if card.healing_modifier  %}
+                                  <span class="fa-stack fire stroke card-heal-icon fa-fw">
+                                      <i class="fas fa-stack-1x fa-heart"></i>
+                                      <span
+                                          class="fa-stack-1x fa-inverse card-stat-number">+{{ card.healing_modifier }}</span>
+                                  </span>
+                                  {% endif %}
+                                {% endif %}
                             <!-- defence modifier -->
                             {% if card.defence_modifier  %}
-                            <span>{{ card.defence_modifier }}</span>
+                            <span class="fa-stack stat-icon fa-fw {{ card.get_skill_style_display|lower }} stroke">
+                                <i class="fas fa-stack-1x fa-shield-alt"></i>
+                                <span class="fa-stack-1x fa-inverse card-stat-number">{{ card.defence_modifier }}</span>
+                            </span>
                             {% endif %}
                         </div>
                         <div class="col-6 p-0">
                             <div class="row">
                                 <div class="col-6 p-0">
+                                    {% if card.attack_modifier  %}
                                     <!-- heal modifier -->
                                     {% if card.healing_modifier  %}
                                     <span class="fa-stack fire stroke card-heal-icon fa-fw">
                                         <i class="fas fa-stack-1x fa-heart"></i>
                                         <span
-                                            class="fa-stack-1x fa-inverse stat-number">+{{ card.healing_modifier }}</span>
+                                            class="fa-stack-1x fa-inverse card-stat-number">+{{ card.healing_modifier }}</span>
                                     </span>
+                                    {% endif %}
                                     {% endif %}
                                 </div>
                                 <div class="col-6">
@@ -316,7 +313,7 @@
                             {% if card.mana_cost %}
                             <span class="fa-stack card-cost-icon mana stroke fa-fw">
                                 <i class="fas fa-stack-1x fa-flask"></i>
-                                <span class="fa-stack-1x fa-inverse stat-number">{{ card.mana_cost }}</span>
+                                <span class="fa-stack-1x fa-inverse card-stat-number">{{ card.mana_cost }}</span>
                             </span>
                             {% endif %}
                             {% if card.cards_discard_cost %}
