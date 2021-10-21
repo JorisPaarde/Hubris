@@ -82,7 +82,8 @@ def card_select(request, card):
             healing_modifier = played_card.healing_modifier
             defence_modifier = played_card.defence_modifier
             skill = played_card.get_skill_style_display().lower()
-
+            print("card played")
+            print(skill)
             if skill == 'lightning':
                 player.lightning_attack_power = min(99, player.lightning_attack_power + attack_modifier)
                 player.lightning_defense = min(99, player.lightning_defense + defence_modifier)
@@ -98,7 +99,7 @@ def card_select(request, card):
             if skill == 'drain':
                 player.drain_attack_power = min(99, player.drain_attack_power + attack_modifier)
                 player.drain_defense = min(99, player.drain_defense + defence_modifier)
-            if skill == 'healing':
+            if skill == 'heal':
                 player.healing_power = min(99, player.healing_power + healing_modifier)
 
             player.hand.remove(card)
