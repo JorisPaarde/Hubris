@@ -252,7 +252,7 @@
             <div class="row">
                 <div class="col-6 offset-3 text-center">
                     <a href="{% url 'home:full-version' %}"></a>
-                    <form method="POST" action="{% url 'home:full-version' %}">
+                    <form method="POST" action="{% url 'checkout:full-version' %}">
                         {% csrf_token %}
                         <button type="submit" value="y" name="level-select" class="m-3 p-1 button small-text px-3">Tell
                             me more.</button>

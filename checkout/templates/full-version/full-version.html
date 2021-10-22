@@ -2,6 +2,11 @@
 
 {% load static %}
 
+{% block extra_js %}
+<script src="https://js.stripe.com/v3/"></script>
+<script src="{% static 'checkout/js/checkout.js' %}"></script>
+{% endblock %}
+
 {% block header %}
 {% include "../includes/header.html" %}
 {% endblock %}
@@ -31,7 +36,7 @@
             <h3 class="text-center medium-text m-3">Show the world your true power!</h3>
             <div class="row">
                 <div class="col-lg-6 offset-lg-3 col-md-12 d-flex justify-content-center">
-                      <a class="medium-text button m-md-4 m-2 p-2 text-center" href="{% url 'checkout:checkout' %}">Take my money</a>
+                      <a class="medium-text button m-md-4 m-2 p-2 text-center" id="submitBtn">Take my money</a>
                 </div>
             </div>
         </div>

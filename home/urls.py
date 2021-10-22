@@ -10,7 +10,6 @@ urlpatterns = [
   path("login/", views.login_request, name="login"),
   path("logout/", views.logout_request, name="logout"),
   path("how-to-play/", views.how_to_play, name="how-to-play"),
-  path("full-version/", views.full_version, name="full-version"),
 ]
 
 if settings.DEBUG:
