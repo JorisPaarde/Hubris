@@ -2,6 +2,7 @@ import random
 import time
 
 from django.conf import settings
+from django.shortcuts import redirect
 from .models import Player, Game, Current_game_floor, Enemy, Game_floor_enemy
 
 
@@ -117,6 +118,9 @@ def pickmonsters(request, game):
         for game_floor_enemy in range(number_of_enemies):
             # get a list of enemies available to this player
             available_enemies = Enemy.objects.filter(in_freeversion=True)
+            # if full version is payed all enemies are available
+            if current_user.profile.payed_full_version:
+                available_enemies = Enemy.objects.all()
             # select a random enemy and add it to the game_floor
             random_enemy = random.choice(available_enemies)
             # determine the stats for this enemy
@@ -159,8 +163,8 @@ def skip_to_next_phase(request, current_game_floor):
     # if this is the last phase
     if phase == len(settings.ATTACK_PHASES):
         # check if all enemies are dead
-        # if they are not,player failed, kill player
         if not check_dead_monsters(request):
+            # if they are not,player failed, kill player
             player.health_current = 0
             player.save()
     else:
@@ -183,7 +187,6 @@ def check_dead_monsters(request):
     # if all enemies are dead now u win the round
     killed = 0
     for enemy in current_game_floor.enemy.all():
-
         if enemy.health_current == 0:
             killed += 1
 
@@ -193,6 +196,7 @@ def check_dead_monsters(request):
             enemy.delete()
         game.game_step = '3'
         game.save()
+        return True
     else:
         # return they are not all dead
         return False
