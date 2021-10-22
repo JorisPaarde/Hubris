@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.models import Site
 from django.http.response import JsonResponse, HttpResponse
+from django.contrib.auth.models import User
 
 from profiles.models import Profile
 import stripe
@@ -38,6 +39,7 @@ def stripe_config(request):
 @csrf_exempt
 def create_checkout_session(request):
     if request.method == 'GET':
+        print(request.user.id)
         current_site = Site.objects.get_current()
         domain_url = current_site.domain
         stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -55,6 +57,7 @@ def create_checkout_session(request):
                 success_url=domain_url + 'checkout/success?session_id={CHECKOUT_SESSION_ID}',
                 cancel_url=domain_url + 'checkout/cancelled/',
                 payment_method_types=['card'],
+                metadata={"user_id": request.user.id},
                 mode='payment',
                 line_items=[
                     {
@@ -91,13 +94,11 @@ def stripe_webhook(request):
 
     # Handle the checkout.session.completed event
     if event['type'] == 'checkout.session.completed':
-        print("Payment was successful.")
+        # this user has payed saving that in his profile
         intent = event.data.object
-        username = intent.metadata.username
-        print(username)
-        current_user = Profile(user=username)
-        current_user.payed_full_version = True
+        user_id = intent.metadata.user_id
+        current_user = User.objects.get(pk=user_id)
+        current_user.profile.payed_full_version = True
         current_user.save()
-        print(current_user.payed_full_version)
 
     return HttpResponse(status=200)
