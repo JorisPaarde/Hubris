@@ -121,9 +121,9 @@ def pickmonsters(request, game):
             random_enemy = random.choice(available_enemies)
             # determine the stats for this enemy
             random.seed(time.process_time())
-            rand_int_1 = random.randint(3, floor_nr * 3)
+            rand_int_1 = random.randint(1, floor_nr * 3) + floor_nr
             random.seed(time.process_time())
-            rand_int_2 = max(4, random.randint(1, rand_int_1))
+            rand_int_2 = max(3, random.randint(1, rand_int_1))
 
             health_max = max(rand_int_1, rand_int_2)/number_of_enemies + floor_nr
             attack_power = min(rand_int_1, rand_int_2)/number_of_enemies + floor_nr
@@ -132,6 +132,9 @@ def pickmonsters(request, game):
             skill_style = random.choice(settings.SKILL_STYLES)[0]
             # while loop to prevent enemy skill to be heal
             while skill_style.lower() == 'hl':
+                skill_style = random.choice(settings.SKILL_STYLES)[0]
+            # while loop to prevent enemy skill to be mana
+            while skill_style.lower() == 'mn':
                 skill_style = random.choice(settings.SKILL_STYLES)[0]
             attack_phase = random.choice(settings.ATTACK_PHASES)[0]
             game_floor_enemy = Game_floor_enemy(
