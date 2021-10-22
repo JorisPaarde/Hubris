@@ -34,6 +34,8 @@ class Card(models.Model):
     skill_style = models.CharField(max_length=2, choices=settings.SKILL_STYLES)
     attack_modifier = models.IntegerField(default=0)
     healing_modifier = models.IntegerField(default=0)
+    health_modifier = models.IntegerField(default=0)
+    mana_modifier = models.IntegerField(default=0)
     defence_modifier = models.IntegerField(default=0)
     mana_cost = models.IntegerField(default=2)
     cards_discard_cost = models.IntegerField(default=0)
@@ -58,7 +60,7 @@ class Player(models.Model):
     type = models.ForeignKey(Player_type, on_delete=models.CASCADE, null=True)
     fire_attack_power = models.IntegerField(default=0)
     fire_defense = models.IntegerField(default=0)
-    fire_attack_cost = models.IntegerField(default=4)
+    fire_attack_cost = models.IntegerField(default=3)
     fire_attack_phase = models.CharField(max_length=4,
                                         choices=settings.ALLOWED_PHASES, default='2')
     ice_attack_power = models.IntegerField(default=0)
