@@ -7,6 +7,8 @@ class EnemyyAdmin(admin.ModelAdmin):
     list_display = (
         'name',
         'in_freeversion',
+        'image_idle',
+        'image_die',
     )
 
 admin.site.register(Enemy, EnemyyAdmin)
