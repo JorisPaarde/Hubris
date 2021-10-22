@@ -236,6 +236,21 @@
                             {% if card.skill_style|lower == "hl" %}
                             <span><i
                                     class="card-style-icon fas fa-heart fire align-middle text-center stroke"></i></span>
+                            {% elif card.skill_style|lower == "ln" %}
+                            <span><i
+                                class="card-style-icon fas fa-bolt {{ card.get_skill_style_display|lower }} align-middle text-center stroke"></i></span>
+                            {% elif card.skill_style|lower == "gl" %}
+                            <span><i
+                                class="card-style-icon fas fa-robot {{ card.get_skill_style_display|lower }} align-middle text-center stroke"></i></span>
+                            {% elif card.skill_style|lower == "dr" %}
+                            <span><i
+                                class="card-style-icon fas fa-skull {{ card.get_skill_style_display|lower }} align-middle text-center stroke"></i></span>
+                            {% elif card.skill_style|lower == "ic" %}
+                            <span><i
+                                class="card-style-icon fas fa-snowflake {{ card.get_skill_style_display|lower }} align-middle text-center stroke"></i></span>
+                            {% elif card.skill_style|lower == "mn" %}
+                            <span><i
+                                class="card-style-icon fas fa-flask {{ card.get_skill_style_display|lower }} align-middle text-center stroke"></i></span>
                             {% else %}   
                             <span><i
                                     class="card-style-icon fas fa-fire-alt {{ card.get_skill_style_display|lower }} align-middle text-center stroke"></i></span>
@@ -275,16 +290,31 @@
                                 {% else %}
                                   <!-- heal modifier -->
                                   {% if card.healing_modifier  %}
-                                  <span class="fa-stack fire stroke card-heal-icon fa-fw">
+                                  <span class="fa-stack medium-small-text fire stroke card-heal-icon fa-fw">
                                       <i class="fas fa-stack-1x fa-heart"></i>
                                       <span
                                           class="fa-stack-1x fa-inverse card-stat-number">+{{ card.healing_modifier }}</span>
                                   </span>
                                   {% endif %}
-                                {% endif %}
+                                  <!-- health modifier -->
+                                  {% if card.health_modifier  %}
+                                  <span class="fa-stack fire stroke card-heal-icon fa-fw">
+                                      <i class="fas medium-small-text fa-stack-1x fa-heart"></i>
+                                      <span
+                                          class="fa-stack-1x fa-inverse card-stat-number">+{{ card.health_modifier }}</span>
+                                  </span>
+                                  {% endif %}
+                                  <!-- mana modifier -->
+                                  {% if card.mana_modifier  %}
+                                  <span class="fa-stack card-cost-icon mana stroke fa-fw">
+                                    <i class="fas medium-small-text fa-stack-1x fa-flask"></i>
+                                    <span class="fa-stack-1x fa-inverse card-stat-number">+{{ card.mana_modifier }}</span>
+                                </span>
+                                  {% endif %}
+                            {% endif %}
                             <!-- defence modifier -->
                             {% if card.defence_modifier  %}
-                            <span class="fa-stack stat-icon fa-fw {{ card.get_skill_style_display|lower }} stroke">
+                            <span class="fa-stack medium-small-text stat-icon fa-fw {{ card.get_skill_style_display|lower }} stroke">
                                 <i class="fas fa-stack-1x fa-shield-alt"></i>
                                 <span class="fa-stack-1x fa-inverse card-stat-number">{{ card.defence_modifier }}</span>
                             </span>
@@ -297,7 +327,7 @@
                                     <!-- heal modifier -->
                                     {% if card.healing_modifier  %}
                                     <span class="fa-stack fire stroke card-heal-icon fa-fw">
-                                        <i class="fas fa-stack-1x fa-heart"></i>
+                                        <i class="fas medium-small-text fa-stack-1x fa-heart"></i>
                                         <span
                                             class="fa-stack-1x fa-inverse card-stat-number">+{{ card.healing_modifier }}</span>
                                     </span>
@@ -312,7 +342,7 @@
                         <div class="col-3 p-0">
                             {% if card.mana_cost %}
                             <span class="fa-stack card-cost-icon mana stroke fa-fw">
-                                <i class="fas fa-stack-1x fa-flask"></i>
+                                <i class="fas medium-small-text fa-stack-1x fa-flask"></i>
                                 <span class="fa-stack-1x fa-inverse card-stat-number">{{ card.mana_cost }}</span>
                             </span>
                             {% endif %}
