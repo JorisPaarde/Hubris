@@ -82,6 +82,7 @@ def logout_request(request):
     return redirect("home:main-menu")
 
 
+@login_required(login_url='home:login')
 def full_version(request):
     """view to return buy full version page"""
 

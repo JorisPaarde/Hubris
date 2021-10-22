@@ -1,4 +1,4 @@
-console.log("Sanity check!");
+//  https://testdriven.io/blog/django-stripe-tutorial/
 
 // Get Stripe publishable key
 fetch("/checkout/config/")
@@ -21,3 +21,4 @@ fetch("/checkout/config/")
     });
   });
 });
+//  https://testdriven.io/blog/django-stripe-tutorial/

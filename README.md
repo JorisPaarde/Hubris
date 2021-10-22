@@ -143,5 +143,6 @@ models profile
 https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html#onetoone
 settings
 https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/a07c1ca5a3b973eb47e5c944829cea06ead3936d/boutique_ado/settings.py
-
+stripe
+https://testdriven.io/blog/django-stripe-tutorial/
 
