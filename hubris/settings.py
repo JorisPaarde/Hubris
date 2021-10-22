@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'battle',
     'profiles',
+    'checkout',
 
     # https://www.ordinarycoders.com/blog/article/django-allauth
     'django.contrib.sites',

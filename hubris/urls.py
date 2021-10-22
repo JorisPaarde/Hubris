@@ -23,6 +23,7 @@ urlpatterns = [
     path('battle/', include('battle.urls')),
     path('profiles/', include('profiles.urls')),
     path('accounts/', include('allauth.urls')),
+    path('checkout/', include('checkout.urls')),
 ]
 
 if settings.DEBUG:
