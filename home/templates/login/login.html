@@ -14,21 +14,18 @@
 {% block content %}
 <div class="container-fluid">
     <div class="row menu d-flex align-items-center">
-        <div class="col-10 offset-1 col-md-6 offset-md-3 col-lg-4 offset-lg-4 menu-banner">
-            <div class="signin mt-2 m-lg-3 text-center">
-                <a href="{% provider_login_url 'google' %}" class="text-dark"><img
-                        src="{{ MEDIA_URL }}btn_google_signin_light_normal_web@2x.png" style="width:14rem; height:auto"></a>
-            </div>
+        <div class="col-10 offset-1 col-md-6 offset-md-3 col-lg-4 offset-lg-4 p-4 menu-banner">
             <div>
-                <div class="text-muted text-center">
-                    OR
-                </div>
             </div>
             <form class="register-form" method="post">
                 {% csrf_token %}
                 {{ login_form|crispy }}
                 <div class="text-center">
                     <button type="submit" class="button medium-text m-2 m-lg-4">Login</button>
+                    <h4 class="text-muted medium-small-text text-center">
+                        Or if u haven't:
+                    </h4>
+                    <a class="medium-text p-2 button text-center" href="{% url 'home:register' %}">Register</a>
                 </div>
             </form>
         </div>

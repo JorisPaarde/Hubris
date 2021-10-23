@@ -68,20 +68,6 @@ if 'DEVELOPMENT' in os.environ:
 
 LOGIN_REDIRECT_URL = ''
 
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
-    }
-}
-
-# https://www.ordinarycoders.com/blog/article/django-allauth
-
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',

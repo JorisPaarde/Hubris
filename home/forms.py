@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 # Create your forms here.
 
 class NewUserForm(UserCreationForm):
-    email = forms.EmailField(required=True)
+    email = forms.EmailField(required=True,)
     password1 = forms.CharField(label='Enter password',
                                 widget=forms.PasswordInput)
     password2 = forms.CharField(label='Confirm password',

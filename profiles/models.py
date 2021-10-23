@@ -73,7 +73,7 @@ class Player(models.Model):
     drain_attack_cost = models.IntegerField(default=1)
     drain_attack_phase = models.CharField(max_length=4,
                                         choices=settings.ALLOWED_PHASES, default='ALL')
-    lightning_attack_power = models.IntegerField(default=0, validators=[])
+    lightning_attack_power = models.IntegerField(default=0)
     lightning_defense = models.IntegerField(default=0)
     lightning_attack_cost = models.IntegerField(default=2)
     lightning_attack_phase = models.CharField(max_length=4,
