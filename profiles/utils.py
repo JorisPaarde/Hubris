@@ -20,3 +20,24 @@ def draw_cards(number_of_cards, current_player):
         card.save()
         current_player.hand.add(card)
         current_player.save()
+
+
+def reset_player_stats(player):
+
+    player.type = None
+    player.fire_attack_power = 0
+    player.fire_defense = 0
+    player.ice_attack_power = 0
+    player.ice_defense = 0
+    player.drain_attack_power = 0
+    player.drain_defense = 0
+    player.lightning_attack_power = 0
+    player.lightning_defense = 0
+    player.golem_attack_power = 0
+    player.physical_defense = 0
+    player.healing_power = 0
+    player.mana_current = 0
+    player.mana_max = 0
+    player.health_current = 0
+    player.health_max = 0
+    player.save()

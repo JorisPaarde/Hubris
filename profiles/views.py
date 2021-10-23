@@ -4,7 +4,7 @@ from django.contrib import messages
 from battle.models import Game, Current_game_floor
 
 from .models import Player_type, Player
-from .utils import draw_cards
+from .utils import draw_cards, reset_player_stats
 
 
 @login_required(login_url='home:login')
@@ -67,9 +67,9 @@ def continue_game(request, continue_game):
         # delete all cards and enemies from this game
         current_game_floor.enemy.all().delete()
         current_game_floor.delete()
+        print(current_player.hand.all())
         current_player.hand.all().delete()
-        current_player.delete()
-
+        reset_player_stats(current_player)
         return redirect('profiles:player_select')
 
 

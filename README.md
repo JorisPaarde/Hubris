@@ -131,6 +131,7 @@ The player death view did not run but, gave a 200 status code... Moving it to an
 Attacking a player resuted in errors, updated check for enemy to: "hasattr(target, 'enemy')" instead of "target.enemy".
 When dieing, player needed to discard multiple cards and draw new ones to get to 8 cards again. Now draws cards function draws new cards to fill hand to 8.
 After player death, gamefloor enemy's where not deleted, causing the database to fill with unused enemys. Added deleting all enemys to the player death function.
+When starting a new game, all scores where deleted from a player, because the player was deleted. fixed by resetting stats rather than deleting player.
 
 # technologies used:
 
