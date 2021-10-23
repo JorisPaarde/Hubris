@@ -7,6 +7,7 @@ from django.contrib.sites.models import Site
 from django.http.response import JsonResponse, HttpResponse
 from django.contrib.auth.models import User
 
+from battle.models import Player, Game
 from profiles.models import Profile
 import stripe
 

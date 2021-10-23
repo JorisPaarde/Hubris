@@ -4,6 +4,9 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .forms import NewUserForm
+from django.contrib.auth.models import User
+
+from battle.models import Player, Game
 
 # Create your views here.
 
@@ -22,8 +25,14 @@ def how_to_play(request):
 
 def leaderboard(request):
     """view to return how to play page"""
+    # Get 10 best scoring games least gamefloors played, highest score
+    games = Game.objects.all().order_by('total_gamefloors_played', '-score')[:11]
+    template = "leaderboard/leaderboard.html"
+    context = {
+        "games": games,
+    }
 
-    return render(request, 'leaderboard/leaderboard.html')
+    return render(request, template, context)
 
 # https://www.ordinarycoders.com/blog/article/django-allauth
 
