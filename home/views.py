@@ -19,6 +19,12 @@ def how_to_play(request):
 
     return render(request, 'how-to-play/how-to-play.html')
 
+
+def leaderboard(request):
+    """view to return how to play page"""
+
+    return render(request, 'leaderboard/leaderboard.html')
+
 # https://www.ordinarycoders.com/blog/article/django-allauth
 
 

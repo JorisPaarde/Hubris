@@ -21,9 +21,11 @@
                 <a class="medium-text button text-center" href="{% url 'home:login' %}">Login</a>
                 <a class="medium-text button text-center" href="{% url 'home:register' %}">Register</a>
             {% endif %}
+            {% if not user.profile.payed_full_version %}
             <a class="medium-text button text-center" href="{% url 'checkout:checkout' %}">Full version</a>
+            {% endif %}
             <a class="medium-text button text-center" href="{% url 'home:how-to-play' %}">How to play</a>
-            <a class="medium-text button text-center" href="">Leaderboard</a>
+            <a class="medium-text button text-center" href="{% url 'home:leaderboard' %}">Leaderboard</a>
         </div>
     </div>
 </div>

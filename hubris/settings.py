@@ -59,7 +59,12 @@ AUTHENTICATION_BACKENDS = (
  'allauth.account.auth_backends.AuthenticationBackend',
  )
 
+
+# set correct site id for stripe webhook to work correctly
 SITE_ID = 3
+if 'DEVELOPMENT' in os.environ:
+    SITE_ID = 4
+
 
 LOGIN_REDIRECT_URL = ''
 
