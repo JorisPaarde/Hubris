@@ -12,16 +12,7 @@
 {% block content %}
 <div class="container-fluid">
     <div class="row menu d-flex align-items-center">
-        <div class="col-11 col-md-6 offset-md-3 col-lg-4 offset-lg-4 menu-banner">
-            <div class="signin mt-2 mb-1 text-center">
-                <a href="{% provider_login_url 'google' %}" class="text-dark"><img alt="google sign-in"
-                        src="{{ MEDIA_URL }}btn_google_signin_light_normal_web@2x.png" style="width:14rem; height:auto"></a>
-            </div>
-            <div>
-                <div class="text-center">
-                    OR
-                </div>
-            </div>
+        <div class="col-11 col-md-6 offset-md-3 col-lg-4 p-4 offset-lg-4 menu-banner">
             <form class="register-form" method="post">
                 {% csrf_token %}
                 {{ form|crispy }}
@@ -32,6 +23,4 @@
         </div>
     </div>
 </div>
-
-
 {% endblock %}
