@@ -154,7 +154,7 @@ def proceed_to_next_floor(request):
         # delete gamefloor
         current_game_floor.delete()
         # redirect to victory score page
-        return redirect("home:how-to-play")
+        return redirect("home:leaderboard")
     context = {
         "game": game,
         "player": player,
