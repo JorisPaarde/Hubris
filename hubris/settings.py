@@ -220,6 +220,15 @@ SKILL_STYLES = (
     ('MN', 'Mana'),
 )
 
+ENEMY_SKILL_STYLES = (
+    ('LN', 'Lightning'),
+    ('FR', 'Fire'),
+    ('GL', 'Golem'),
+    ('DR', 'Drain'),
+    ('IC', 'Ice'),
+)
+
+
 PLAYER_STYLES = (
     ('LN', 'Lightning'),
     ('FR', 'Fire'),
