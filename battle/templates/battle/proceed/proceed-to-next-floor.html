@@ -237,6 +237,7 @@
     </div>
 </div>
 {% endif %}
+{% if not user.profile.payed_full_version %}
 {% if game.current_game_floor_number > 4 %}
 <!-- next level screen overlay for end of free version-->
 <div class="container-fluid next-level-screen">
@@ -246,21 +247,18 @@
             <h3 class="medium-text">To find even more powerfull spells,<br>
                 defeat more powerfull enemies,<br>
                 Put Your name on the leaderboards.<br>
-                Get the fulll version of huberis!
+                Get the full version of huberis!
             </h3>
             <!-- Full version button -->
             <div class="row">
                 <div class="col-6 offset-3 text-center">
-                    <a href="{% url 'home:full-version' %}"></a>
-                    <form method="POST" action="{% url 'checkout:full-version' %}">
-                        {% csrf_token %}
-                        <button type="submit" value="y" name="level-select" class="m-3 p-1 button small-text px-3">Tell
-                            me more.</button>
-                    </form>
+                    <a class="m-3 p-1 button small-text px-3" href="{% url 'checkout:checkout' %}">Tell
+                            me more.</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% endif %}
 {% endif %}
 {% endblock %}
