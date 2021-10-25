@@ -223,8 +223,7 @@ def next_floor_start(request, choice):
         if 'level-select' in request.POST:
             if choice == 'y':
                 # start game at next floor number
-                cgfnr = game.current_game_floor_number
-                cgfnr = cgfnr + 1
+                game.current_game_floor_number = game.current_game_floor_number + 1
                 game.save()
             else:
                 pass

@@ -54,7 +54,6 @@ class Hand_card(models.Model):
 
 
 class Player(models.Model):
-
     date_time_created = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     type = models.ForeignKey(Player_type, on_delete=models.CASCADE, null=True)

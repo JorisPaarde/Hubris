@@ -127,7 +127,7 @@
                         {% for gamefloor_enemy in current_game_floor.enemy.all %}
                         {% if forloop.counter|divisibleby:"2" %}
                         <!-- !! first classname needs to be the gamefloor_enemy for javascript to function -->
-                        <div class="{{ gamefloor_enemy }} {{ gamefloor_enemy.has_attacked }}  col-4 game-floor-enemy mt-4 align-self-center" data-enemy="{{ gamefloor_enemy.enemy }}">
+                        <div class="{{ gamefloor_enemy }} {{ gamefloor_enemy.has_attacked }} {{ forloop.counter }} col-4 game-floor-enemy mt-4 align-self-center" data-enemy="{{ gamefloor_enemy.enemy }}">
                             <div class="row">
                                 {% for enemy in enemies %}
                                 {% if enemy|lower == gamefloor_enemy.enemy|lower %}
@@ -165,8 +165,9 @@
                             </div>
                         </div>
                         {% else %}
+                        <!-- !! first classname needs to be the gamefloor_enemy for javascript to function -->
                         <div
-                            class="{{ gamefloor_enemy }} {{ gamefloor_enemy.has_attacked }} col-4 game-floor-enemy
+                            class="{{ gamefloor_enemy }} {{ gamefloor_enemy.has_attacked }} {{ forloop.counter }} col-4 game-floor-enemy
                             {% if current_game_floor.enemy.all|length == 1 %} offset-4 align-self-center 
                             {% elif current_game_floor.enemy.all|length == 2 %} offset-2 align-self-end 
                             {% else %} align-self-end 

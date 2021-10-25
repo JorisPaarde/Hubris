@@ -2,11 +2,15 @@
 
 ## The magic card batle game
 
-some short description
+A small game where you as as a wizard battle your way op a tower filled with monsters.
+Play cards to increase your strength and decide if u go up a level in the tower.
+each level the monsters get stronger, will u be able to defeat them?
+If you don't u have to go down a level.
+Players that take the least amount of tries and have the highest score get their names on the leaderboard.
 
 [View the live project here](https://hubris-the-game.herokuapp.com/)
 
-![Hubris mockup image]()
+![Hubris mockup image](media/readme-images/mockup.png)
 
 # Table of Contents
 
@@ -25,18 +29,18 @@ some short description
 ## User stories:
 
 - As a site owner, i want to:
-    1. Offer a replayable game. That users enjoy playing again and again.(game should be different every time ea. Random selection of enemies and cards. Aslo different starting hero)
+    1. Offer a replayable game. That users enjoy playing again and again.(game should be different every time ea. Random selection of enemies and cards. Also different starting hero)
     2. Entice people to buy the full version.(clear explanation of what u get and easy access to the checkout. Also the free version as a teaser.)
-    3. Make it as easy as possible (minimize #actions) for users to register and login. (username/password or google account.)
-    4. Make it as easy as possible (minimize #actions) to pay for the full version. (apple / google pay / creditcard)
+    3. Make it as easy as possible (minimize #actions) for users to register and login. (username/password)
+    4. Make it as easy as possible (minimize #actions) to pay for the full version. (google pay / creditcard)
     5. Add / edit / delete cards, starting player stats, and enemies in the database.
     6. Have a secured access to the admin.(provided by oath)
 
 - As a first time user, i want to:
-    1. Login / register with username/password or google account.
+    1. Login / register with username/password.
     2. Reset my password.
     3. Learn the game rules.
-    4. Learn the UI.
+    4. Learn the UI of the game.
     5. See what monsters and spells are in the game through a wiki page.
     6. Try the free version to see if i like the game.
     7. Find out what i get in the full version. (also after i play the free game)
@@ -45,11 +49,10 @@ some short description
 
 - As a paying user, i want to:
     1. Play the game now. (minimize #actions after login: play now? / menu)
-    2. Contact the site owner.
-    3. See what monsters and spells are in the game.
-    4. Access the leaderboard.
-    5. Continue my game or start a new one.
-    6. Have a replayable game. That i enjoy playing again and again.
+    2. See what monsters and spells are in the game.
+    3. Access the leaderboard.
+    4. Continue my game or start a new one.
+    5. Have a replayable game. That i enjoy playing again and again.
 
 - As a player who plays the game, i want to:
     1. play in fullscreen
@@ -69,7 +72,6 @@ some short description
     15. Select a spell available to me in this phase.
     16. Select which enemy to attack.
     17. Skip to the next phase.
-    18. Know when i get an extra card for my xp.
 
 - As a player who plays the game on mobile, i want to:
     1. Have a fullscreen gaming experience
@@ -81,46 +83,39 @@ some short description
     3. search enemies by type, xp, phase
     4. sort enemies by attack power, health
 
-
-### First time user:
-
-As a first time user i want to:
-
-- 
-
-### Recurring user:
-
-- 
-
 # Design
-
-
-## Colour Scheme
-
 
 ### Fonts
 
+Fonts used in this project are:<br>
+For all text and the title:<br>
+[Stylish](https://fonts.google.com/specimen/Stylish#about)<br>
+And for the numbers on cards and menu's:<br>
+[Roboto](https://fonts.google.com/specimen/Roboto?query=roboto)<br>
 
 ## Database schema
 
 ### Original database design:
 
-This original desing was made in dbdiagram, and can be acessed via this [link]()
-![Schema](readme-images/db-schema.png)
+This original design was made in dbdiagram, and can be acessed via this [link](https://dbdiagram.io/d/613622d3825b5b0146f53245)<br>
+Under my diagrams > Huberis<br>
+![Schema](media/readme-images/db-schema.png)
 
-During development turned out ....
-
-### Database models in django:
+During development some of these designs turned out to be incomplete or needed adjustments.<br>
+This resulted in some changes to the db models.<br>
+This can be found under diagrams > Huberis2.0<br>
+The final versions look like this:<br>
+![Schema-final](media/readme-images/db-schema-2.png)
 
 ## Imagery
 
-The following images where used:
+All imagery used in this project came from [craftpix](https://craftpix.net/all-game-assets/)
 
 ## Mockup
 
 -  The mockup design of this site was made in Figma. U can view it [here](https://www.figma.com/file/p55Dty6wFf4cGkjfJhYHT4/Hubris-1.0?node-id=0%3A1) 
 
-![Hubris mockup image](readme-images/design-mockup.jpg)
+![Hubris mockup image](media/readme-images/mockup-design.png)
 
 # Features
 
@@ -152,14 +147,12 @@ https://ezgif.com/maker
 
 ### Frameworks, Libraries & Programs Used
 
-1. [Materialize css 0.100.2:](http://archives.materializecss.com/0.100.2/getting-started.html)
-    - Materialize was used to create the responsive structure of the website.
 1. [jQuery:](https://jquery.com/)
-    - jQuery Used among other things in script file to initialze materialize scripts.
+    - jQuery Used in script files.
 1. [Git](https://git-scm.com/)
     - Git was used for version control by utilizing the terminal in gitpod to regularly commit, with comments, to Git and Push to GitHub.
 1. [GitHub:](https://github.com/)
-    - GitHub is used to store the projects code and assets and to fork the project for the customer.
+    - GitHub is used to store the projects code and assets.
 1. [Figma:](https://figma.com/)
     - Figma was used to create the website design and prototype.
 1. [Heroku:](https://www.heroku.com)
@@ -196,9 +189,9 @@ All testing can be found [here](TESTING.md).
 
 ### Clone this repository:
 ### In linux:
-To find the link, go to the "code" dropdown menu in this repository.
-Click the clipboard icon next to the url.
-In your terminal type:
+To find the link, go to the "code" dropdown menu in this repository.<br>
+Click the clipboard icon next to the url.<br>
+In your terminal type:<br>
 
 ```
 $mkdir <jour project directory>
