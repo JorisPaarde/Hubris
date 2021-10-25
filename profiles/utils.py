@@ -2,7 +2,8 @@ import random
 
 from django.contrib.auth.models import User
 
-from .models import Card, Hand_card
+from .models import Card
+from .models import Hand_card
 
 
 def draw_cards(number_of_cards, current_player):

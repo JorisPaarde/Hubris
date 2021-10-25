@@ -3,7 +3,11 @@ import time
 
 from django.conf import settings
 from django.shortcuts import redirect
-from .models import Player, Game, Current_game_floor, Enemy, Game_floor_enemy
+from .models import Player
+from .models import Game
+from .models import Current_game_floor
+from .models import Enemy
+from .models import Game_floor_enemy
 
 
 def attack_target(request, targets, damage):
@@ -49,7 +53,8 @@ def action_processor(request, request_data):
     current_user = request.user
     player = Player.objects.get(user=current_user)
     game = Game.objects.get(player=player, completed=False)
-    current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
+    current_game_floor = Current_game_floor.objects.get(
+        pk=game.current_game_floor.pk)
 
     # logic for getting the player action with corresponding enemy target,
     # and sending it to the action processor
@@ -104,7 +109,8 @@ def pickmonsters(request, game):
     current_user = request.user
     player = Player.objects.get(user=current_user)
     game = Game.objects.get(player=player, completed=False)
-    current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
+    current_game_floor = Current_game_floor.objects.get(
+        pk=game.current_game_floor.pk)
 
     # determine the amount of enemies
     number_of_enemies = 1
@@ -129,8 +135,10 @@ def pickmonsters(request, game):
             random.seed(time.process_time())
             rand_int_2 = max(3, random.randint(1, rand_int_1))
 
-            health_max = max(rand_int_1, rand_int_2)/number_of_enemies + floor_nr
-            attack_power = min(rand_int_1, rand_int_2)/number_of_enemies + floor_nr
+            health_max = max(
+                rand_int_1, rand_int_2)/number_of_enemies + floor_nr
+            attack_power = min(
+                rand_int_1, rand_int_2)/number_of_enemies + floor_nr
 
             health_current = health_max
             skill_style = random.choice(settings.ENEMY_SKILL_STYLES)[0]
@@ -176,7 +184,8 @@ def check_dead_monsters(request):
     current_user = request.user
     player = Player.objects.get(user=current_user)
     game = Game.objects.get(player=player, completed=False)
-    current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
+    current_game_floor = Current_game_floor.objects.get(
+        pk=game.current_game_floor.pk)
 
     # if all enemies are dead now u win the round
     killed = 0

@@ -8,8 +8,17 @@ from django.core.exceptions import MultipleObjectsReturned
 from profiles.models import Card
 from profiles.utils import draw_cards
 
-from .models import Player, Game, Current_game_floor, Enemy, Game_floor_enemy, Hand_card
-from .utils import action_processor, attack_target, heal_target, check_dead_monsters, pickmonsters
+from .models import Player
+from .models import Game
+from .models import Current_game_floor
+from .models import Enemy
+from .models import Game_floor_enemy
+from .models import Hand_card
+from .utils import action_processor
+from .utils import attack_target
+from .utils import heal_target
+from .utils import check_dead_monsters
+from .utils import pickmonsters
 
 
 @login_required(login_url='home:login')
@@ -28,7 +37,8 @@ def battle_screen(request, game):
         game.save()
         game = Game.objects.get(player=player, completed=False)
 
-    current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
+    current_game_floor = Current_game_floor.objects.get(
+        pk=game.current_game_floor.pk)
     enemies = Enemy.objects.all()
 
     # card playing phase
@@ -39,7 +49,8 @@ def battle_screen(request, game):
     # monster battle phase
     if game.game_step == '2':
 
-        # select monster(s) from database if there are no enemy's in this gamefloor
+        # select monster(s) from database 
+        # if there are no enemy's in this gamefloor
         if len(current_game_floor.enemy.all()) == 0:
             pickmonsters(request, game)
 
@@ -86,27 +97,39 @@ def card_select(request, card):
             skill = played_card.get_skill_style_display().lower()
 
             if skill == 'lightning':
-                player.lightning_attack_power = min(99, player.lightning_attack_power + attack_modifier)
-                player.lightning_defense = min(99, player.lightning_defense + defence_modifier)
+                player.lightning_attack_power = min(
+                    99, player.lightning_attack_power + attack_modifier)
+                player.lightning_defense = min(
+                    99, player.lightning_defense + defence_modifier)
             if skill == 'fire':
-                player.fire_attack_power = min(99, player.fire_attack_power + attack_modifier)
-                player.fire_defense = min(99, player.fire_defense + defence_modifier)
+                player.fire_attack_power = min(
+                    99, player.fire_attack_power + attack_modifier)
+                player.fire_defense = min(
+                    99, player.fire_defense + defence_modifier)
             if skill == 'golem':
-                player.golem_attack_power = min(99, player.golem_attack_power + attack_modifier)
-                player.physical_defense = min(99,  player.physical_defense + defence_modifier)
+                player.golem_attack_power = min(
+                    99, player.golem_attack_power + attack_modifier)
+                player.physical_defense = min(
+                    99,  player.physical_defense + defence_modifier)
             if skill == 'ice':
-                player.ice_attack_power = min(99, player.ice_attack_power + attack_modifier)
-                player.ice_defense = min(99, player.ice_defense + defence_modifier)
+                player.ice_attack_power = min(
+                    99, player.ice_attack_power + attack_modifier)
+                player.ice_defense = min(
+                    99, player.ice_defense + defence_modifier)
             if skill == 'drain':
-                player.drain_attack_power = min(99, player.drain_attack_power + attack_modifier)
-                player.drain_defense = min(99, player.drain_defense + defence_modifier)
+                player.drain_attack_power = min(
+                    99, player.drain_attack_power + attack_modifier)
+                player.drain_defense = min(
+                    99, player.drain_defense + defence_modifier)
             if skill == 'heal':
-                player.healing_power = min(99, player.healing_power + healing_modifier)
-                player.health_max = min(99, player.health_max + health_modifier)
+                player.healing_power = min(
+                    99, player.healing_power + healing_modifier)
+                player.health_max = min(
+                    99, player.health_max + health_modifier)
                 player.health_current = player.health_max
             if skill == 'mana':
                 player.mana_max = min(99, player.mana_max + mana_modifier)
-                player.mana_current =player.mana_max
+                player.mana_current = player.mana_max
 
             player.hand.remove(card)
             player.save()
@@ -118,14 +141,16 @@ def card_select(request, card):
 
         if game.game_step == '3':
             # this is the discard phase of the game
-            # remove the selected card from the players hand and the hand card itself
+            # remove the selected card from the players hand
+            #  and the hand card itself
             player.hand.remove(card)
             player.save()
             played_hand_card.delete()
             # draw new cards for this player
             number_cards_in_hand = len(player.hand.all())
             draw_cards((8-number_cards_in_hand), player)
-            # player is send to page where he/she decides to go up a level or not
+            # player is send to page where
+            # he/she decides to go up a level or not
             return redirect('battle:proceed_to_next_floor')
     else:
         messages.info(request, "u already selected a spell")
@@ -137,12 +162,14 @@ def card_select(request, card):
 def proceed_to_next_floor(request):
     """
     view to return huberis game step page
-    In this view the player discards a card, and decides if he/she wants to go up a level.
+    In this view the player discards a card,
+    and decides if he/she wants to go up a level.
     """
     current_user = request.user
     player = Player.objects.get(user=current_user)
     game = Game.objects.get(player=player, completed=False)
-    current_game_floor = Current_game_floor.objects.get(pk=game.current_game_floor.pk)
+    current_game_floor = Current_game_floor.objects.get(
+        pk=game.current_game_floor.pk)
     # if the game is not finished yet
     if game.current_game_floor_number != 15:
         cards = Card.objects.all()
@@ -162,13 +189,15 @@ def proceed_to_next_floor(request):
         "current_game_floor": current_game_floor,
     }
 
-    return render(request, 'battle/proceed/proceed-to-next-floor.html', context)
+    return render(request,
+                  'battle/proceed/proceed-to-next-floor.html', context)
 
 
 @login_required(login_url='home:login')
 def next_floor_start(request, choice):
     """
-    view to set up the game for a new level and control if a player goes up a level.
+    view to set up the game for a new level,
+    and control if a player goes up a level.
     """
     current_user = request.user
     player = Player.objects.get(user=current_user)
@@ -194,7 +223,8 @@ def next_floor_start(request, choice):
         if 'level-select' in request.POST:
             if choice == 'y':
                 # start game at next floor number
-                game.current_game_floor_number = game.current_game_floor_number + 1
+                cgfnr = game.current_game_floor_number
+                cgfnr = cgfnr + 1
                 game.save()
             else:
                 pass

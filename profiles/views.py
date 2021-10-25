@@ -1,10 +1,14 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render
+from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from battle.models import Game, Current_game_floor
 
-from .models import Player_type, Player
-from .utils import draw_cards, reset_player_stats
+from .models import Player_type
+from .models import Player
+from .utils import reset_player_stats
+from .utils import draw_cards
 
 
 @login_required(login_url='home:login')
@@ -27,16 +31,19 @@ def player_select(request):
     # check if this user already has a player (with an unfinished game)
     if current_player:
         current_player = get_object_or_404(Player, user=current_user)
-        current_game = Game.objects.filter(player=current_player, completed=False)
+        current_game = Game.objects.filter(
+            player=current_player, completed=False)
         # if there is an unfinished game send it to the template
         if current_game:
 
-            current_game = get_object_or_404(Game, player=current_player, completed=False)
+            current_game = get_object_or_404(
+                Game, player=current_player, completed=False)
 
             if not current_game.completed:
                 context.update({'game': current_game})
                 messages.info(
-                    request, f"{current_user} do you want to continue your current game?")
+                    request,
+                    f"{current_user} do you want to continue the current game?")
 
     return render(request, 'profiles/player-select.html', context)
 
@@ -63,7 +70,8 @@ def continue_game(request, continue_game):
         current_game = Game.objects.get(player=current_player, completed=False)
         current_game.completed = True
         current_game.save()
-        current_game_floor = Current_game_floor.objects.get(pk=current_game.current_game_floor.pk)
+        current_game_floor = Current_game_floor.objects.get(
+            pk=current_game.current_game_floor.pk)
         # delete all cards and enemies from this game
         current_game_floor.enemy.all().delete()
         current_game_floor.delete()
@@ -85,7 +93,8 @@ def game_setup(request, selected):
         # get the selected player type
 
         selected_type = Player_type.objects.get(selected=selected)
-        # if not, create a new player and set the initial values for that player
+        # if not, create a new player
+        # and set the initial values for that player
         if not current_player_resultset:
             # create a player for the current user
             current_player = Player(user=current_user, type=selected_type)
@@ -182,7 +191,8 @@ def player_death(request):
         game.total_gamefloors_played = game.total_gamefloors_played + 1
         player.save()
         # set game to previous floor number
-        game.current_game_floor_number = max(1, game.current_game_floor_number - 1)
+        game.current_game_floor_number = max(
+            1, game.current_game_floor_number - 1)
         game.save()
         # start game at the current floor number
     return redirect('battle:battle-screen', game)
