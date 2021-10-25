@@ -119,16 +119,25 @@ All imagery used in this project came from [craftpix](https://craftpix.net/all-g
 
 # Features
 
-- 
+- main menu with adaptive buttons
+- cards selection menu
+- player selection menu
+- continue current game if there is one
+- card discard menu
+- payment page
+- full feature unlock when payment is made
+- animations on buttons on click amd mouseover
+- animations on selections of enemies
 
 ## future features
 
-- 
+- animations on attacks an deaths of characters
+- Google signin
+- apple pay and ideal as payment options
+- sound effects
+- background music
 
 # technologies used:
-
-https://ezgif.com/maker
-
 
 ### Languages Used
 
@@ -138,9 +147,9 @@ https://ezgif.com/maker
     - CSS3 was used to give the html styling and layout.
     And to make the page responsive to differentscreen sizes.
 -   [Javascript](https://nl.wikipedia.org/wiki/JavaScript)
-    - Javascript was used for
+    - Javascript was used for enemy selection and player action process.
 -   [Python](https://www.python.org/)
-    - Python was used for writing 
+    - Python was used for writing all backend code.
 -   [Jinja](https://jinja.palletsprojects.com/en/3.0.x/)
     - Jinja was used for writing the template code.
 
@@ -152,13 +161,20 @@ https://ezgif.com/maker
 1. [Git](https://git-scm.com/)
     - Git was used for version control by utilizing the terminal in gitpod to regularly commit, with comments, to Git and Push to GitHub.
 1. [GitHub:](https://github.com/)
-    - GitHub is used to store the projects code and assets.
+    - GitHub was used to store the projects code and assets.
+1. [Django:](https://docs.djangoproject.com/en/3.2/)
+    -Django was used set up project and all apps.
 1. [Figma:](https://figma.com/)
     - Figma was used to create the website design and prototype.
 1. [Heroku:](https://www.heroku.com)
     - Heroku was used to deploy the app.
 1. [dbdiagram](https://dbdiagram.io/)
     - To design the database schema.
+1. [Aws](https://eu-central-1.console.aws.amazon.com/)
+    - To store and serve static all files
+1. [ezgif](https://ezgif.com/maker)
+    - To create animated gif for player types
+
 
 # Testing
 
@@ -196,7 +212,7 @@ In your terminal type:<br>
 ```
 $mkdir <jour project directory>
 $git init <jour project directory> (to set up a new repository)
-$git clone https://github.com/JorisPaarde/my-vegan-recipes.git
+$git clone https://github.com/JorisPaarde/Hubris.git
 ```
 
 In Windows:
@@ -208,10 +224,9 @@ Install all requirements through the requirements.txt file:
 pip install -r requirements.txt
 ```
 
+## To deploy this project on Heroku:
+
 ### Create your account 
-
-## To deploy this project on Heroku: 
-
 - Create your account on Heroku here: https://signup.heroku.com/login
 
 - Create a new app on heroku:
@@ -219,36 +234,56 @@ pip install -r requirements.txt
 - Go to: https://dashboard.heroku.com/apps
 select new, create new app from the dropdown menu on the right.
 Enter your app-name and region and click create app.
-Under delpoyment method, select github.
+Under deployment method, select github.
 
-![github connect](readme-images/github-connect.png)
+![github connect](media/readme-images/github-connect.png)
 
 - Select your repository and connect.
 
-- Go to settings, config vars and enter the variables for
+- In resources search for the heroku-postgres addon, select Hobby Dev – Free.
+![postgres](media/readme-images/postgres.png)
 
-![Config vars](readme-images/Inkedheroku_vars.jpg)
+- Set up your was s3 bucket [here](https://aws.amazon.com/s3/)
+    - obtain your AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY here.
 
+- Get your Django SECRET-KEY [here](https://djecrety.ir/)
+
+- For your Stripe follow this [link](https://stripe.com/):
+    - set up your account.
+    - add your product:
+    ![product](media/readme-images/stripe-product.png)
+
+
+- Go to settings, config vars and enter the variables for:
+![github connect](media/readme-images/config-vars.png)
+
+- 
 - Go to deploy and at the bottom of the page manually deploy your main github branch
 
 Your app is now deployed and ready to run.
-At the top of th epage click open app to run it.
+At the top of the page click open app to run it.
 
 # Credits
 
 
-Thanks to Precious for his mentoring.
-And of course all the people on slack.
+Thanks to Precious for his mentoring.<br>
+Thanks to igor for his wise words:<br>
+![axiom](media/readme-images/first-axiom.png)<br>
+Thanks to John for being there with me:<br>
+![baffled](media/readme-images/baffled.png)<br>
+Thanks to Alan for the moral support:<br>
+![support](media/readme-images/moral-support.png)<br>
+Special thanks to Chris Zielinski who had ALL the answers, for everyone on the full stack frameworks slack channel.<br>
+And of course all the fine people on slack.<br>
 
 
 ## Code
 
-The following code was copied from external sources:
+The following code was copied (and in some cases slightly altered) from external sources:
 
-
-- models profile
+- in profile.models
 https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html#onetoone
-- settings
+- in settings
 https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/a07c1ca5a3b973eb47e5c944829cea06ead3936d/boutique_ado/settings.py
-- stripe
+- in checkout.views:
 https://testdriven.io/blog/django-stripe-tutorial/
