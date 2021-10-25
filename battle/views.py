@@ -49,7 +49,7 @@ def battle_screen(request, game):
     # monster battle phase
     if game.game_step == '2':
 
-        # select monster(s) from database 
+        # select monster(s) from database
         # if there are no enemy's in this gamefloor
         if len(current_game_floor.enemy.all()) == 0:
             pickmonsters(request, game)
