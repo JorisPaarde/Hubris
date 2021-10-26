@@ -2,6 +2,7 @@ from django import forms
 from django.conf import settings
 
 SEARCH_SKILL_STYLES = (
+    ('AL', 'All'),
     ('LN', 'Lightning'),
     ('FR', 'Fire'),
     ('GL', 'Golem'),
@@ -9,7 +10,6 @@ SEARCH_SKILL_STYLES = (
     ('IC', 'Ice'),
     ('HL', 'Heal'),
     ('MN', 'Mana'),
-    ('AL', 'All'),
 )
 
 SEARCH_ALLOWED_PHASES = (
