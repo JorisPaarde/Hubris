@@ -12,11 +12,9 @@
 {% include "../includes/header.html" %}
 {% endblock %}
 
-{% block body_background %}class="menu-bg"{% endblock %}
-
 {% block content %}
 <div class="container-fluid">
-    <div class="row menu d-flex align-items-center">
+    <div class="row menu d-flex my-4 align-items-center">
         <div class="col-10 offset-1 menu-banner">
             <div class="row text-muted text-center">
                 <h1>Cards wiki page</h1>
@@ -33,7 +31,7 @@
             <div class="row">
                 <div id="results" class="col-10 offset-1">
                     <h2 class="text-center">Your search results:</h2>
-                    <div class="row justify-content-between">
+                    <div class="row justify-content-around">
                         {% if cards|length == 0 %}
                         <div class="col-10 offset-1">
                             <h3 class="text-center my-4">We're sorry, there are no cards with these parameters..<br>
