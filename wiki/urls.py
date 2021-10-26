@@ -4,5 +4,5 @@ from . import views
 app_name = "wiki"
 
 urlpatterns = [
-    path('wiki/', views.wiki, name='wiki'),
+    path('', views.wiki, name='wiki'),
 ]

@@ -49,14 +49,14 @@ def player_select(request):
 
 
 @login_required(login_url='home:login')
-def continue_game(request, continue_game):
+def continue_game(request, continue_this_game):
     """view to return player to current game or start a new game"""
 
     # get current player
     current_user = request.user
     current_player = Player.objects.get(user=current_user)
 
-    if continue_game == 'y':
+    if continue_this_game == 'y':
 
         game = Game.objects.get(player=current_player, completed=False)
         context = {

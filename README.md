@@ -78,10 +78,9 @@ Players that take the least amount of tries and have the highest score get their
     2. Play the game in landscape mode only so i get the best experience.
 <br><br>
 - As a user who uses the wiki page, i want to:
-    1. search cards by type, level, phase, effect(heal/attack/drain/defence)
+    1. search cards by type, free version availability or attack-phase
     2. sort cards by cost
-    3. search enemies by type, xp, phase
-    4. sort enemies by attack power, health
+
 <br><br>
 
 # Design

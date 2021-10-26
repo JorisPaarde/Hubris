@@ -1,1 +1,188 @@
-wiki
+{% extends "base.html" %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'wiki/css/wiki.css' %}">
+{% endblock %}
+
+{% block header %}
+{% include "../includes/header.html" %}
+{% endblock %}
+
+{% block body_background %}class="menu-bg"{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row menu d-flex align-items-center">
+        <div class="col-10 offset-1 menu-banner">
+            <div class="row text-muted text-center">
+                <h1>Cards wiki page</h1>
+            </div>
+            <div class="row">
+                <div class="col-6 offset-3">
+                    <form class="text-center" action="/wiki/" method="post">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button class="button m-3" type="submit">search</button>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div id="results" class="col-10 offset-1">
+                    <h2 class="text-center">Your search results:</h2>
+                    <div class="row justify-content-around">
+                        {% if cards|length == 0 %}
+                        <h3 class="text-center my-4">We're sorry, there are no cards with these parameters..<br>
+                        Yet...</h3>
+                        {% endif %}
+                        {% for card in cards %}
+                        <div class="col-sm-6 col-md-5 col-lg-4 col-xl-3 my-4 m-1 p-2 skill-card">
+                            <div class="row card-title-row m-0">
+                                <!--  phase -->
+                                <div class="col-2 p-0">
+                                    <h3 class="text-center m-0 align-middle card-title">
+                                        {{ card.get_allowed_in_phase_display }}
+                                    </h3>
+                                </div>
+                                <!-- title -->
+                                <div class="col-8 p-0">
+                                    <h2 class="text-center align-middle m-0 medium-text card-title">{{ card.title }}</h2>
+                                </div>
+                                <!-- skill style -->
+                                <div class="col-2 p-0">
+                                    {% if card.skill_style|lower == "hl" %}
+                                    <span><i
+                                            class="card-style-icon fas fa-heart fire align-middle text-center stroke"></i></span>
+                                    {% elif card.skill_style|lower == "ln" %}
+                                    <span><i
+                                            class="card-style-icon fas fa-bolt {{ card.get_skill_style_display|lower }} align-middle text-center stroke"></i></span>
+                                    {% elif card.skill_style|lower == "gl" %}
+                                    <span><i
+                                            class="card-style-icon fas fa-robot {{ card.get_skill_style_display|lower }} align-middle text-center stroke"></i></span>
+                                    {% elif card.skill_style|lower == "dr" %}
+                                    <span><i
+                                            class="card-style-icon fas fa-skull {{ card.get_skill_style_display|lower }} align-middle text-center stroke"></i></span>
+                                    {% elif card.skill_style|lower == "ic" %}
+                                    <span><i
+                                            class="card-style-icon fas fa-snowflake {{ card.get_skill_style_display|lower }} align-middle text-center stroke"></i></span>
+                                    {% elif card.skill_style|lower == "mn" %}
+                                    <span><i
+                                            class="card-style-icon fas fa-flask {{ card.get_skill_style_display|lower }} align-middle text-center stroke"></i></span>
+                                    {% else %}
+                                    <span><i
+                                            class="card-style-icon fas fa-fire-alt {{ card.get_skill_style_display|lower }} align-middle text-center stroke"></i></span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- card image -->
+                            <div class="row m-0 card-image-row">
+                                <img class="card-image" src="{{MEDIA_URL}}{{ card.image.name }}" width="100px"
+                                    alt="{{card}} image">
+                            </div>
+                            <!-- card effect text -->
+                            <div class="row m-0 card-effect-row">
+                                <div class="col-12 px-1 mb-1 card-effect">
+                                    <h3 class="text-center card-effect-text">{{ card.effect_text }}</h3>
+                                </div>
+                            </div>
+                            <!-- card description -->
+                            <div class="row m-0 card-description-row">
+                                <p class="text-center card-description-text">{{ card.description }}</p>
+                            </div>
+                            <!-- card effect -->
+                            <div class="row card-effect-row m-0">
+                                <!-- card effect -->
+                                <div class="col-3 p-0">
+                                    <!-- attack modifier -->
+                                    {% if card.attack_modifier  %}
+                                    <!-- attack all -->
+                                    {% if card.attack_all  %}
+                                    <i
+                                        class="position-absolute fas mt-2 fa-infinity fa-inverse card_attack_all stroke"></i>
+                                    {% endif %}
+                                    <span><img
+                                            class="position-absolute {% if not card.attack_all %}mt-1 {% endif %}card_action_effect"
+                                            src="{{MEDIA_URL}}sword_{{ card.get_skill_style_display|lower }}.svg"
+                                            alt="{{ card.get_skill_style_display|lower }} attack"></span>
+                                    <span
+                                        class="position-absolute px-1 {% if not card.attack_all %} {% endif %}fa-inverse text-center card-stat-number stroke">+{{ card.attack_modifier }}</span>
+                                    {% else %}
+                                    <!-- heal modifier -->
+                                    {% if card.healing_modifier  %}
+                                    <span class="fa-stack medium-small-text fire stroke card-heal-icon fa-fw">
+                                        <i class="fas fa-stack-1x fa-heart"></i>
+                                        <span
+                                            class="fa-stack-1x fa-inverse card-stat-number">+{{ card.healing_modifier }}</span>
+                                    </span>
+                                    {% endif %}
+                                    <!-- health modifier -->
+                                    {% if card.health_modifier  %}
+                                    <span class="fa-stack fire stroke card-heal-icon fa-fw">
+                                        <i class="fas medium-small-text fa-stack-1x fa-heart"></i>
+                                        <span
+                                            class="fa-stack-1x fa-inverse card-stat-number">+{{ card.health_modifier }}</span>
+                                    </span>
+                                    {% endif %}
+                                    <!-- mana modifier -->
+                                    {% if card.mana_modifier  %}
+                                    <span class="fa-stack card-cost-icon mana stroke fa-fw">
+                                        <i class="fas medium-small-text fa-stack-1x fa-flask"></i>
+                                        <span
+                                            class="fa-stack-1x fa-inverse card-stat-number">+{{ card.mana_modifier }}</span>
+                                    </span>
+                                    {% endif %}
+                                    {% endif %}
+                                    <!-- defence modifier -->
+                                    {% if card.defence_modifier  %}
+                                    <span
+                                        class="fa-stack medium-small-text stat-icon fa-fw {{ card.get_skill_style_display|lower }} stroke">
+                                        <i class="fas fa-stack-1x fa-shield-alt"></i>
+                                        <span
+                                            class="fa-stack-1x fa-inverse card-stat-number">{{ card.defence_modifier }}</span>
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                <div class="col-6 p-0">
+                                    <div class="row">
+                                        <div class="col-6 p-0">
+                                            {% if card.attack_modifier  %}
+                                            <!-- heal modifier -->
+                                            {% if card.healing_modifier  %}
+                                            <span class="fa-stack fire stroke card-heal-icon fa-fw">
+                                                <i class="fas medium-small-text fa-stack-1x fa-heart"></i>
+                                                <span
+                                                    class="fa-stack-1x fa-inverse card-stat-number">+{{ card.healing_modifier }}</span>
+                                            </span>
+                                            {% endif %}
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-6">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- card cost -->
+                                <div class="col-3 p-0">
+                                    {% if card.mana_cost %}
+                                    <span class="fa-stack card-cost-icon mana stroke fa-fw">
+                                        <i class="fas medium-small-text fa-stack-1x fa-flask"></i>
+                                        <span
+                                            class="fa-stack-1x fa-inverse card-stat-number">{{ card.mana_cost }}</span>
+                                    </span>
+                                    {% endif %}
+                                    {% if card.cards_discard_cost %}
+                                    <span>{{ card.cards_discard_cost }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                     {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
