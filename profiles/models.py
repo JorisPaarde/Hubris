@@ -4,8 +4,13 @@ from django.dispatch import receiver
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from battle.models import BaseClass
+
 # Create your models here.
+
+class BaseClass(models.Model):
+    class Meta:
+        ordering = ['pk']
+        abstract = True
 
 
 class Player_type(BaseClass):
