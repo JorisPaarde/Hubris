@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'battle',
     'profiles',
     'checkout',
+    'wiki',
 
     # https://www.ordinarycoders.com/blog/article/django-allauth
     'django.contrib.sites',

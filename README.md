@@ -35,7 +35,7 @@ Players that take the least amount of tries and have the highest score get their
     4. Make it as easy as possible (minimize #actions) to pay for the full version. (google pay / creditcard)
     5. Add / edit / delete cards, starting player stats, and enemies in the database.
     6. Have a secured access to the admin.(provided by oath)
-
+<br><br>
 - As a first time user, i want to:
     1. Login / register with username/password.
     2. Reset my password.
@@ -46,14 +46,14 @@ Players that take the least amount of tries and have the highest score get their
     7. Find out what i get in the full version. (also after i play the free game)
     8. See an indication that i’m on the free version.
     9. Pay for the full version with the least amount of effort.
-
+<br><br>
 - As a paying user, i want to:
     1. Play the game now. (minimize #actions after login: play now? / menu)
     2. See what monsters and spells are in the game.
     3. Access the leaderboard.
     4. Continue my game or start a new one.
     5. Have a replayable game. That i enjoy playing again and again.
-
+<br><br>
 - As a player who plays the game, i want to:
     1. play in fullscreen
     2. Select a wizard to play with.
@@ -72,16 +72,17 @@ Players that take the least amount of tries and have the highest score get their
     15. Select a spell available to me in this phase.
     16. Select which enemy to attack.
     17. Skip to the next phase.
-
+<br><br>
 - As a player who plays the game on mobile, i want to:
     1. Have a fullscreen gaming experience
     2. Play the game in landscape mode only so i get the best experience.
-
+<br><br>
 - As a user who uses the wiki page, i want to:
     1. search cards by type, level, phase, effect(heal/attack/drain/defence)
     2. sort cards by cost
     3. search enemies by type, xp, phase
     4. sort enemies by attack power, health
+<br><br>
 
 # Design
 
@@ -237,7 +238,7 @@ Under deployment method, select github.
 ![wh](media/readme-images/wh-signing-secret.png)<br>
 
 
-- Go back to heroku, settings, config vars and enter the variables for:
+- Go back to heroku, settings, config vars and enter the variables for:<br>
 ![github connect](media/readme-images/config-vars.png)<br>
 
 <br><br>

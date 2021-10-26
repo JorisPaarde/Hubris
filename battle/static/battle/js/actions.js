@@ -104,9 +104,10 @@ $(document).ready(function () {
 
     // function to check if enemy's are dead
     function checkEnemyHealth() {
+        console.log('checking health')
         let gameStepNr = parseInt($(" .game-step-nr ").data("step"));
         let totalHealth = 0;
-        if ($(".game-floor-enemy").length > 0) {
+        if ($(".game-floor-enemy").length >= 0) {
             // adds up all enemies health
             $(".enemy-health-current").each(function () {
                 totalHealth = totalHealth + parseInt($(this).html())

@@ -24,6 +24,7 @@ urlpatterns = [
     path('profiles/', include('profiles.urls')),
     path('accounts/', include('allauth.urls')),
     path('checkout/', include('checkout.urls')),
+    path('wiki/', include('wiki.urls')),
 ]
 
 if settings.DEBUG:
