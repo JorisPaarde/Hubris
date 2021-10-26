@@ -5,7 +5,13 @@ from django.conf import settings
 # Create your models here.
 
 
-class Enemy(models.Model):
+class BaseClass(models.Model):
+    class Meta:
+        ordering = ['pk']
+        abstract = True
+
+
+class Enemy(BaseClass):
 
     in_freeversion = models.BooleanField(default=True)
     name = models.CharField(max_length=254)
@@ -20,7 +26,7 @@ class Enemy(models.Model):
         return self.name
 
 
-class Game_floor_enemy(models.Model):
+class Game_floor_enemy(BaseClass):
 
     enemy = models.ForeignKey(Enemy, on_delete=models.CASCADE, null=True, blank=True)
     health_max = models.IntegerField(default=0)
@@ -34,7 +40,7 @@ class Game_floor_enemy(models.Model):
         return str(self.id)
 
 
-class Current_game_floor(models.Model):
+class Current_game_floor(BaseClass):
 
     date_time_created = models.DateTimeField(auto_now=True)
     current_phase = models.CharField(max_length=1, choices=settings.ATTACK_PHASES, default=settings.ATTACK_PHASES[0][0])
@@ -44,7 +50,7 @@ class Current_game_floor(models.Model):
         return str(self.id)
 
 
-class Game(models.Model):
+class Game(BaseClass):
 
     date_time_created = models.DateTimeField(auto_now=True)
     player = models.ForeignKey(Player, on_delete=models.CASCADE)

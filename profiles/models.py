@@ -3,10 +3,12 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
 from django.contrib.auth.models import User
+
+from battle.models import BaseClass
 # Create your models here.
 
 
-class Player_type(models.Model):
+class Player_type(BaseClass):
 
     selected = models.CharField(max_length=2, choices=settings.PLAYER_STYLES)
     image_idle = models.ImageField(null=True, blank=True)
@@ -20,7 +22,7 @@ class Player_type(models.Model):
         return self.selected
 
 
-class Card(models.Model):
+class Card(BaseClass):
 
     in_freeversion = models.BooleanField(default=True)
     title = models.CharField(max_length=254, null=True, blank=True)
@@ -44,7 +46,7 @@ class Card(models.Model):
         return self.title
 
 
-class Hand_card(models.Model):
+class Hand_card(BaseClass):
 
     date_time_created = models.DateTimeField(auto_now=True)
     card = models.ForeignKey(Card, on_delete=models.CASCADE, null=True)
@@ -53,7 +55,7 @@ class Hand_card(models.Model):
         return str(self.card)
 
 
-class Player(models.Model):
+class Player(BaseClass):
     date_time_created = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     type = models.ForeignKey(Player_type, on_delete=models.CASCADE, null=True)
@@ -95,7 +97,7 @@ class Player(models.Model):
 
 # https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html#onetoone
 
-class Profile(models.Model):
+class Profile(BaseClass):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)
