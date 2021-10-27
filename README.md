@@ -79,7 +79,7 @@ Players that take the least amount of tries and have the highest score get their
 - As a user who uses the wiki page, i want to:
     1. Search cards by type
     2. Search cards by free version availability
-    3. Search cards by attack-phase
+    3. Search cards by allowed-phase
 
 <br><br>
 
