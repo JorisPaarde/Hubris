@@ -152,26 +152,44 @@ Firefox|Yes|Yes|None
 
 ## To validate the html and CSS [W3C markup validation](https://validator.w3.org/) was used.
 
-### index: no errors
-### battle:
-### player-select:
-### proceed-to-next-floor:
-### register:
-### login: no errors
-### leaderboard:
-### how-to-play:
-### wiki:
-
 <br>
 
+## index: no errors
+## battle: no errors
+## player-select: no errors
+## proceed-to-next-floor: no errors
+## register: no erros
+## login: no errors
+## leaderboard: no errors
+## how-to-play:
+![how-to-play-errors](media/readme-images/html-check-how-to-play.png)
+<br>
+Adjusted width and added css.
+<br>
+
+## wiki:
+![wiki-errors](media/readme-images/html-check-wiki.png)
+<br>
+Solved by adding 'None' as input to the field.
+
+<br>
+<br>
 For the CSS the results were as follows:
 
-### base.css
-### battle.css
-### full-version.css
-### profiles.css
-### wiki.css
+### base no errors
+### battle no errors
+### full-version
+### profiles
+### wiki
 
+<br>
+<p>
+<a href="http://jigsaw.w3.org/css-validator/check/referer">
+    <img style="border:0;width:88px;height:31px"
+        src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+        alt="Valid CSS!" />
+    </a>
+</p>
 <br>
 
 ## For Javascript validation [JSHint](https://jshint.com/) was used.
