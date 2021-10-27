@@ -40,16 +40,15 @@ Players that take the least amount of tries and have the highest score get their
     1. Login / register with username/password.
     2. Reset my password.
     3. Learn the game rules.
-    4. Learn the UI of the game.
-    5. See what monsters and spells are in the game through a wiki page.
-    6. Try the free version to see if i like the game.
-    7. Find out what i get in the full version. (also after i play the free game)
-    8. See an indication that i’m on the free version.
-    9. Pay for the full version with the least amount of effort.
+    4. See what spells are in the game through a wiki page.
+    5. Try the free version to see if i like the game.
+    6. Find out what i get in the full version. (also after i play the free game)
+    7. See an indication that i’m on the free version.
+    8. Pay for the full version with the least amount of effort.
 <br><br>
 - As a paying user, i want to:
     1. Play the game now. (minimize #actions after login: play now? / menu)
-    2. See what monsters and spells are in the game.
+    2. See what spells are in the game.
     3. Access the leaderboard.
     4. Continue my game or start a new one.
     5. Have a replayable game. That i enjoy playing again and again.
