@@ -122,7 +122,7 @@
                     <img src="{{MEDIA_URL}}{{ player.type.image_idle.name }}" class="player-image" alt="player">
                 </div>
                 <!-- enemies -->
-                <div class="col-8 h-100 d-flex">
+                <div class="col-8 d-flex">
                     <div class="row">
                         {% for gamefloor_enemy in current_game_floor.enemy.all %}
                         {% if forloop.counter|divisibleby:"2" %}
@@ -216,7 +216,7 @@
             </div>
         </div>
         <!-- Card screen -->
-        <div class="col-12 {% if not game.game_step == '1' %}d-none{% endif %} h-100 z2000 card-screen">
+        <div class="col-12 {% if not game.game_step == '1' %}d-none{% endif %} z2000 card-screen">
             <div class="row display-flex justify-content-center">
                 <!-- cards -->
                 {% for player_card in player.hand.all %}

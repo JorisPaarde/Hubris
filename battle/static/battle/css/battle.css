@@ -282,6 +282,7 @@
 
 .battle-screen,
 .card-screen {
+    height: 100vh;
     position: fixed;
     top: 4%;
 }
