@@ -152,15 +152,15 @@ Firefox|Yes|Yes|None
 
 ## To validate the html and CSS [W3C markup validation](https://validator.w3.org/) was used.
 
-### index.html:
-### battle.html:
-### player-select.html:
-### proceed-to-next-floor.html:
-### register.html:
-### login.html:
-### leaderboard.html:
-### how-to-play.html:
-### wiki.html:
+### index: no errors
+### battle:
+### player-select:
+### proceed-to-next-floor:
+### register:
+### login: no errors
+### leaderboard:
+### how-to-play:
+### wiki:
 
 <br>
 
