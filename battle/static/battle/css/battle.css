@@ -280,10 +280,14 @@
 }
 
 
-.battle-screen,
-.card-screen {
+.battle-screen {
     height: 100vh;
     position: fixed;
+    top: 4%;
+}
+
+.card-screen {
+    height: 100vh;
     top: 4%;
 }
 
