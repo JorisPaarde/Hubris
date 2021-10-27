@@ -4,10 +4,9 @@ from django.http.response import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.models import Site
-from django.http.response import JsonResponse, HttpResponse
+from django.http.response import HttpResponse
 from django.contrib.auth.models import User
 
-from profiles.models import Profile
 import stripe
 
 
@@ -20,16 +19,20 @@ def checkout(request):
 
 # https://testdriven.io/blog/django-stripe-tutorial/
 
+
 def success_view(request):
+    """view to return the payment success page"""
     return render(request, 'success/success.html')
 
 
 def cancelled_view(request):
+    """view to return the payment cancelled page"""
     return render(request, 'cancelled/cancelled.html')
 
 
 @csrf_exempt
 def stripe_config(request):
+    """view to get the stripe public key"""
     if request.method == 'GET':
         stripe_config_data = {'publicKey': settings.STRIPE_PUBLIC_KEY}
         return JsonResponse(stripe_config_data, safe=False)
@@ -37,6 +40,7 @@ def stripe_config(request):
 
 @csrf_exempt
 def create_checkout_session(request):
+    """view to create a stripe checkout session"""
     if request.method == 'GET':
         print(request.user.id)
         current_site = Site.objects.get_current()
@@ -67,6 +71,7 @@ def create_checkout_session(request):
 
 @csrf_exempt
 def stripe_webhook(request):
+    """view to handle the stripe checkout session complete webhook"""
     stripe.api_key = settings.STRIPE_SECRET_KEY
     endpoint_secret = settings.STRIPE_WH_SECRET
     payload = request.body
@@ -79,9 +84,11 @@ def stripe_webhook(request):
         )
     except ValueError as e:
         # Invalid payload
+        print(e)
         return HttpResponse(status=400)
     except stripe.error.SignatureVerificationError as e:
         # Invalid signature
+        print(e)
         return HttpResponse(status=400)
 
     # Handle the checkout.session.completed event

@@ -4,6 +4,7 @@ from .models import Enemy, Game, Current_game_floor, Game_floor_enemy
 
 
 class EnemyyAdmin(admin.ModelAdmin):
+    """ class to adjust enemy admin display values """
     list_display = (
         'name',
         'in_freeversion',
@@ -13,6 +14,7 @@ class EnemyyAdmin(admin.ModelAdmin):
 
 
 class GameAdmin(admin.ModelAdmin):
+    """ class to adjust game admin display values """
     list_display = (
         'pk',
         'completed',

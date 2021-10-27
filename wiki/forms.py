@@ -1,5 +1,4 @@
 from django import forms
-from django.conf import settings
 
 SEARCH_SKILL_STYLES = (
     ('AL', 'All'),
