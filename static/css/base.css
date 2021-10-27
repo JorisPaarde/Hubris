@@ -157,6 +157,12 @@ a.button:hover, button.button:hover{
     background-color:var(--offwhite);
 }
 
+/* images */
+
+.screenshot-image{
+    width: 100%;
+}
+
 /* media queries */
 
 @media screen and (max-width: 1820px) {
