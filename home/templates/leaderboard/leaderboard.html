@@ -22,15 +22,11 @@
                             <th>Score</th>
                           </tr>
                         {% for game in games %}
-                            {% if game.completed == True %}
-                                {% if game.total_gamefloors_played >= 15 %}
                                 <tr>
                                     <td>{{ game.player.user }}</td>
                                     <td>{{ game.total_gamefloors_played }}</td>
                                     <td>{{ game.score }}</td>
                                 </tr>
-                                {% endif %}
-                            {% endif %}
                         {% endfor %}
                     </table>
                 </div>

@@ -24,9 +24,15 @@ def how_to_play(request):
 
 def leaderboard(request):
     """view to return how to play page"""
-    # Get 10 best scoring games least gamefloors played, highest score
+    # Get games least gamefloors played, highest score
     games = Game.objects.all().order_by(
-        'total_gamefloors_played', '-score')[:11]
+        'total_gamefloors_played', '-score')
+    # filter the completed games
+    games = games.filter(completed=True)
+    # filter the games that finished the game
+    games = games.filter(current_game_floor_number=15)
+    # cap off the list at 10 tp scores
+    games = games[:10]
     template = "leaderboard/leaderboard.html"
     context = {
         "games": games,
