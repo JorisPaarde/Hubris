@@ -20,7 +20,7 @@ SEARCH_ALLOWED_PHASES = (
     ('4', 'IV'),
     ('5', 'V'),
     ('ALL', 'I-V'),
-    ('NONE', ''),
+    ('NONE', 'None'),
 )
 
 
