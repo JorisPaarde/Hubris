@@ -63,7 +63,7 @@ AUTHENTICATION_BACKENDS = (
 
 # set correct site id for stripe webhook to work correctly
 SITE_ID = 3
-if os.environ.get('DEVELOPMENT'):
+if 'PRODUCTION' in os.environ:
     SITE_ID = 4
 
 
