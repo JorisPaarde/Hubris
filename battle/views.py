@@ -1,3 +1,18 @@
+"""
+Battle App - Views
+----------------
+Views for Battle app:
+
+    - Battle_screen
+    - Card_select
+    - Proceed_to_next_floor
+    - Next_floor_start
+
+Function to handle enemy attacks:
+    - enemy_attack_processor
+"""
+
+
 import json
 
 from django.shortcuts import render, redirect
