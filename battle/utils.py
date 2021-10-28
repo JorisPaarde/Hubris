@@ -1,8 +1,21 @@
+"""
+Battle App - Utilitys
+----------------
+various utilities for Battle app views.
+    - Attack_target
+    - Score
+    - Heal_target
+    - Spend_mana
+    - Action_processor
+    - Pickmonsters
+    - Skip_to_next_phase
+    - Check_dead_monsters
+"""
+
 import random
 import time
 
 from django.conf import settings
-from django.shortcuts import redirect
 from .models import Player
 from .models import Game
 from .models import Current_game_floor
