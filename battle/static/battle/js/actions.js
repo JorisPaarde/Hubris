@@ -31,9 +31,9 @@ $(document).ready(function () {
         action = classes.substr(0, classes.indexOf(' '));
 
         // if the icon is muted it can not be used
-        isMuted = classes.includes("text-muted")
+        isMuted = classes.includes("text-muted");
         if (isMuted) {
-            return
+            return;
         };
 
         // if the action does't need a target specified, send the data
@@ -104,17 +104,16 @@ $(document).ready(function () {
 
     // function to check if enemy's are dead
     function checkEnemyHealth() {
-        console.log('checking health')
         let gameStepNr = parseInt($(" .game-step-nr ").data("step"));
         let totalHealth = 0;
         if ($(".game-floor-enemy").length >= 0) {
             // adds up all enemies health
             $(".enemy-health-current").each(function () {
-                totalHealth = totalHealth + parseInt($(this).html())
+                totalHealth = totalHealth + parseInt($(this).html());
             });
             // if the total is 0 confirmation is send to the backend that they are all dead
             if ((totalHealth == 0) && (gameStepNr == 2)) {
-                message = `U killed all enemies!!`
+                message = `U killed all enemies!!`;
                 $("#message-text").html(message);
                 toggleMessage();
                 setTimeout(confirmAllDead, 2000);
@@ -143,8 +142,8 @@ $(document).ready(function () {
                 }) //JavaScript object of data to POST
             })
             .then(response => {
-                window.location.replace(response.url)
-                return response
+                window.location.replace(response.url);
+                return response;
             });
     };
 
@@ -154,7 +153,7 @@ $(document).ready(function () {
         let currentPhase = $(" .game-phase-nr ").data("phase");
         if (($(".game-floor-enemy").length > 0)&&(gameStepNr == 2)){
             $(".game-floor-enemy").each(function () {
-                let enemy = $(this)
+                let enemy = $(this);
                 let enemyName = $(this).data("enemy");
                 let enemyClass = $(this).attr("class");
                 let enemyId = enemyClass.substr(0, enemyClass.indexOf(' '));
@@ -186,7 +185,7 @@ $(document).ready(function () {
                             $("#message-text").html(`u where attacked by ${enemyName}!`);
                             toggleMessage();
                             setTimeout(reload, 2000);
-                            return response
+                            return response;
                         });
                 };
             });
@@ -198,9 +197,9 @@ $(document).ready(function () {
 // helper functions
 
 function reload() {
-    location.reload()
-}
+    location.reload();
+};
 
 function toggleMessage() {
     $(".message-screen").toggleClass("d-none");
-}
+};
