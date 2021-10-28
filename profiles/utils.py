@@ -3,7 +3,7 @@ import random
 from django.contrib.auth.models import User
 
 from .models import Card
-from .models import Hand_card
+from .models import HandCard
 
 
 def draw_cards(number_of_cards, current_player):
@@ -17,7 +17,7 @@ def draw_cards(number_of_cards, current_player):
             available_cards = Card.objects.all()
         # select a random card and add it to the hand
         card = random.choice(available_cards)
-        card = Hand_card(card=card)
+        card = HandCard(card=card)
         card.save()
         current_player.hand.add(card)
         current_player.save()

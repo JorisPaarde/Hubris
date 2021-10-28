@@ -18,9 +18,9 @@ import time
 from django.conf import settings
 from .models import Player
 from .models import Game
-from .models import Current_game_floor
+from .models import CurrentGameFloor
 from .models import Enemy
-from .models import Game_floor_enemy
+from .models import GameFloorEnemy
 
 
 def attack_target(request, targets, damage):
@@ -66,7 +66,7 @@ def action_processor(request, request_data):
     current_user = request.user
     player = Player.objects.get(user=current_user)
     game = Game.objects.get(player=player, completed=False)
-    current_game_floor = Current_game_floor.objects.get(
+    current_game_floor = CurrentGameFloor.objects.get(
         pk=game.current_game_floor.pk)
 
     # logic for getting the player action with corresponding enemy target,
@@ -122,7 +122,7 @@ def pickmonsters(request, game):
     current_user = request.user
     player = Player.objects.get(user=current_user)
     game = Game.objects.get(player=player, completed=False)
-    current_game_floor = Current_game_floor.objects.get(
+    current_game_floor = CurrentGameFloor.objects.get(
         pk=game.current_game_floor.pk)
 
     # determine the amount of enemies
@@ -156,7 +156,7 @@ def pickmonsters(request, game):
             health_current = health_max
             skill_style = random.choice(settings.ENEMY_SKILL_STYLES)[0]
             attack_phase = random.choice(settings.ATTACK_PHASES)[0]
-            game_floor_enemy = Game_floor_enemy(
+            game_floor_enemy = GameFloorEnemy(
                                                 enemy=random_enemy,
                                                 health_current=health_current,
                                                 health_max=health_max,
@@ -197,7 +197,7 @@ def check_dead_monsters(request):
     current_user = request.user
     player = Player.objects.get(user=current_user)
     game = Game.objects.get(player=player, completed=False)
-    current_game_floor = Current_game_floor.objects.get(
+    current_game_floor = CurrentGameFloor.objects.get(
         pk=game.current_game_floor.pk)
 
     # if all enemies are dead now u win the round

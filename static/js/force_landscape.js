@@ -4,5 +4,5 @@ $( window ).on( "load", function() {
 
 window.addEventListener("orientationchange", function() {
     $(".landscape-screen").toggleClass( 'd-none', (window.innerHeight < window.innerWidth) );
-    location.reload()
+    location.reload();
   });

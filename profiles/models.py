@@ -13,15 +13,12 @@ class BaseClass(models.Model):
         abstract = True
 
 
-class Player_type(BaseClass):
+class PlayerType(BaseClass):
 
     selected = models.CharField(max_length=2, choices=settings.PLAYER_STYLES)
     image_idle = models.ImageField(null=True, blank=True)
-    image_idle_url = models.URLField(null=True, blank=True)
     image_attack = models.ImageField(null=True, blank=True)
-    image_attack_url = models.URLField(null=True, blank=True)
     image_die = models.ImageField(null=True, blank=True)
-    image_die_url = models.URLField(null=True, blank=True)
 
     def __str__(self):
         return self.selected
@@ -33,7 +30,6 @@ class Card(BaseClass):
     title = models.CharField(max_length=254, null=True, blank=True)
     description = models.TextField(max_length=1024, null=True, blank=True)
     image = models.ImageField(null=True, blank=True)
-    image_url = models.URLField(null=True, blank=True)
     effect_text = models.CharField(max_length=254, null=True, blank=True)
     allowed_in_phase = models.CharField(max_length=4,
                                         choices=settings.ALLOWED_PHASES)
@@ -51,7 +47,7 @@ class Card(BaseClass):
         return self.title
 
 
-class Hand_card(BaseClass):
+class HandCard(BaseClass):
 
     date_time_created = models.DateTimeField(auto_now=True)
     card = models.ForeignKey(Card, on_delete=models.CASCADE, null=True)
@@ -63,7 +59,7 @@ class Hand_card(BaseClass):
 class Player(BaseClass):
     date_time_created = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    type = models.ForeignKey(Player_type, on_delete=models.CASCADE, null=True)
+    type = models.ForeignKey(PlayerType, on_delete=models.CASCADE, null=True)
     fire_attack_power = models.IntegerField(default=0)
     fire_defense = models.IntegerField(default=0)
     fire_attack_cost = models.IntegerField(default=3)
@@ -95,7 +91,7 @@ class Player(BaseClass):
     mana_max = models.IntegerField(default=0)
     health_current = models.IntegerField(default=0)
     health_max = models.IntegerField(default=0)
-    hand = models.ManyToManyField(Hand_card)
+    hand = models.ManyToManyField(HandCard)
 
     def __str__(self):
         return str(self.user)

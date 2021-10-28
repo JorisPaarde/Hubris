@@ -65,8 +65,8 @@ def create_checkout_session(request):
                 ]
             )
             return JsonResponse({'sessionId': checkout_session['id']})
-        except Exception as e:
-            return JsonResponse({'error': str(e)})
+        except Exception as error:
+            return JsonResponse({'error': str(error)})
 
 
 @csrf_exempt
@@ -82,13 +82,13 @@ def stripe_webhook(request):
         event = stripe.Webhook.construct_event(
             payload, sig_header, endpoint_secret
         )
-    except ValueError as e:
+    except ValueError as error:
         # Invalid payload
-        print(e)
+        print(error)
         return HttpResponse(status=400)
-    except stripe.error.SignatureVerificationError as e:
+    except stripe.error.SignatureVerificationError as error:
         # Invalid signature
-        print(e)
+        print(error)
         return HttpResponse(status=400)
 
     # Handle the checkout.session.completed event

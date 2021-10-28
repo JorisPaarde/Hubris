@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
-    var action = ""
-    var enemy = "notspecified"
+    var action = "";
+    var enemy = "notspecified";
 
     // function to get the csrf token
     // https://docs.djangoproject.com/en/3.2/ref/csrf/
@@ -15,11 +15,11 @@ $(document).ready(function () {
                 if (cookie.substring(0, name.length + 1) === (name + '=')) {
                     cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                     break;
-                };
-            };
-        };
+                }
+            }
+        }
         return cookieValue;
-    };
+    }
 
     const csrftoken = getCookie('csrftoken');
     // https://docs.djangoproject.com/en/3.2/ref/csrf/
@@ -31,14 +31,14 @@ $(document).ready(function () {
         action = classes.substr(0, classes.indexOf(' '));
 
         // if the icon is muted it can not be used
-        isMuted = classes.includes("text-muted");
+        let isMuted = classes.includes("text-muted");
         if (isMuted) {
             return;
-        };
+        }
 
         // if the action does't need a target specified, send the data
         if ((action == "healing") || (action == "ice") || (action == "skip")) {
-            data = {
+            let data = {
                 'enemy': enemy,
                 'action': action,
             };
@@ -58,8 +58,8 @@ $(document).ready(function () {
                 .then(response => {
                     $("#message-text").html(`you chose ${action}`);
                     toggleMessage();
-                    setTimeout(reload, 1000)
-                    return response
+                    setTimeout(reload, 1000);
+                    return response;
                 });
         } else {
             // enemys get enemy select class to indicate they can be attacked
@@ -67,7 +67,7 @@ $(document).ready(function () {
             toggleMessage();
             setTimeout(toggleMessage, 1000);
             $(".enemy-image").addClass("enemy-select");
-        };
+        }
     });
 
     // funtion to handle enemy attack selection clicks
@@ -78,7 +78,7 @@ $(document).ready(function () {
             let classes = $(this).closest(".game-floor-enemy").attr("class");
             enemy = classes.substr(0, classes.indexOf(' '));
             // send correct action and enemy id value to action processor view
-            data = {
+            let data = {
                 'enemy': enemy,
                 'action': action,
             };
@@ -96,10 +96,10 @@ $(document).ready(function () {
                     }) //JavaScript object of data to POST
                 })
                 .then(response => {
-                    reload()
-                    return response
+                    reload();
+                    return response;
                 });
-        };
+        }
     });
 
     // function to check if enemy's are dead
@@ -113,19 +113,19 @@ $(document).ready(function () {
             });
             // if the total is 0 confirmation is send to the backend that they are all dead
             if ((totalHealth == 0) && (gameStepNr == 2)) {
-                message = `U killed all enemies!!`;
+                let message = `U killed all enemies!!`;
                 $("#message-text").html(message);
                 toggleMessage();
                 setTimeout(confirmAllDead, 2000);
-            };
-        };
-    };
+            }
+        }
+    }
 
     checkEnemyHealth();
 
     // function to confirm to the backend that all enemies died
     function confirmAllDead() {
-        data = {
+        let data = {
             'all_enemies_dead': true,
         };
 
@@ -145,13 +145,13 @@ $(document).ready(function () {
                 window.location.replace(response.url);
                 return response;
             });
-    };
+    }
 
     // function to check if enemies are attacking
     function checkEnemyAttack() {
         let gameStepNr = parseInt($(" .game-step-nr ").data("step"));
         let currentPhase = $(" .game-phase-nr ").data("phase");
-        if (($(".game-floor-enemy").length > 0)&&(gameStepNr == 2)){
+        if (($(".game-floor-enemy").length > 0) && (gameStepNr == 2)) {
             $(".game-floor-enemy").each(function () {
                 let enemy = $(this);
                 let enemyName = $(this).data("enemy");
@@ -160,10 +160,10 @@ $(document).ready(function () {
                 let enemyAttackPhase = $(this).find(" .enemy-attack-phase-icon ").html().toLowerCase();
                 let enemyHealth = parseInt($(this).find(" .enemy-health-current ").html());
                 // detect wether this enemy has already attacked
-                let hasNotAttacked =  enemy.hasClass('False');
-                if ((enemyAttackPhase == currentPhase)&&(enemyHealth > 0)&&(hasNotAttacked)){
+                let hasNotAttacked = enemy.hasClass('False');
+                if ((enemyAttackPhase == currentPhase) && (enemyHealth > 0) && (hasNotAttacked)) {
                     // send correct action and enemy id value to enemy action processor view
-                    data = {
+                    let data = {
                         'enemy': enemyId,
                         'enemy_action': 'attacks',
                     };
@@ -187,10 +187,10 @@ $(document).ready(function () {
                             setTimeout(reload, 2000);
                             return response;
                         });
-                };
+                }
             });
-        };
-    };
+        }
+    }
     checkEnemyAttack();
 });
 
@@ -198,8 +198,8 @@ $(document).ready(function () {
 
 function reload() {
     location.reload();
-};
+}
 
 function toggleMessage() {
     $(".message-screen").toggleClass("d-none");
-};
+}

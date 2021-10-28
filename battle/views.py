@@ -2,12 +2,10 @@
 Battle App - Views
 ----------------
 Views for Battle app:
-
     - Battle_screen
     - Card_select
     - Proceed_to_next_floor
     - Next_floor_start
-
 Function to handle enemy attacks:
     - enemy_attack_processor
 """
@@ -22,13 +20,13 @@ from django.core.exceptions import MultipleObjectsReturned
 
 from profiles.models import Card
 from profiles.utils import draw_cards
+from profiles.models import HandCard
 
 from .models import Player
 from .models import Game
-from .models import Current_game_floor
+from .models import CurrentGameFloor
 from .models import Enemy
-from .models import Game_floor_enemy
-from .models import Hand_card
+from .models import GameFloorEnemy
 from .utils import action_processor
 from .utils import attack_target
 from .utils import heal_target
@@ -52,7 +50,7 @@ def battle_screen(request, game):
         game.save()
         game = Game.objects.get(player=player, completed=False)
 
-    current_game_floor = Current_game_floor.objects.get(
+    current_game_floor = CurrentGameFloor.objects.get(
         pk=game.current_game_floor.pk)
     enemies = Enemy.objects.all()
 
@@ -100,7 +98,7 @@ def card_select(request, card):
     game = Game.objects.get(player=player, completed=False)
 
     if request.method == 'POST':
-        played_hand_card = Hand_card.objects.get(pk=card)
+        played_hand_card = HandCard.objects.get(pk=card)
         if game.game_step == '1':
             # get the card and update the players stats
             played_card = Card.objects.get(title=played_hand_card)
@@ -183,7 +181,7 @@ def proceed_to_next_floor(request):
     current_user = request.user
     player = Player.objects.get(user=current_user)
     game = Game.objects.get(player=player, completed=False)
-    current_game_floor = Current_game_floor.objects.get(
+    current_game_floor = CurrentGameFloor.objects.get(
         pk=game.current_game_floor.pk)
     # if the game is not finished yet
     if game.current_game_floor_number != 15:
@@ -218,7 +216,7 @@ def next_floor_start(request, choice):
     player = Player.objects.get(user=current_user)
     # create a new empty gamefloor
     game = Game.objects.get(player=player, completed=False)
-    next_game_floor = Current_game_floor()
+    next_game_floor = CurrentGameFloor()
     next_game_floor.save()
     # delete the old gamefloor
     game.current_game_floor.delete()
@@ -252,7 +250,7 @@ def enemy_attack_processor(request, request_data):
     """
     # get the attacker and its values
     enemy_id = request_data['enemy']
-    attacker = Game_floor_enemy.objects.get(id=enemy_id)
+    attacker = GameFloorEnemy.objects.get(id=enemy_id)
     attack_style = attacker.skill_style
     attack_power = attacker.attack_power
     # set has attacked to true

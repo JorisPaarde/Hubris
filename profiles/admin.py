@@ -1,5 +1,9 @@
 from django.contrib import admin
-from .models import *
+from .models import Player
+from .models import Card
+from .models import HandCard
+from .models import Profile
+from .models import PlayerType
 # Register your models here.
 
 
@@ -10,7 +14,7 @@ class CardAdmin(admin.ModelAdmin):
         'image',
     )
 
-class Player_typeAdmin(admin.ModelAdmin):
+class PlayerTypeAdmin(admin.ModelAdmin):
     list_display = (
         'selected',
         'image_idle',
@@ -19,6 +23,6 @@ class Player_typeAdmin(admin.ModelAdmin):
 
 admin.site.register(Player)
 admin.site.register(Card, CardAdmin)
-admin.site.register(Hand_card)
-admin.site.register(Player_type,Player_typeAdmin)
+admin.site.register(HandCard)
+admin.site.register(PlayerType,PlayerTypeAdmin)
 admin.site.register(Profile)

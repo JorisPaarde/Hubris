@@ -154,13 +154,13 @@ Firefox|Yes|Yes|None
 
 <br>
 
-## index: no errors
-## battle: no errors
-## player-select: no errors
-## proceed-to-next-floor: no errors
-## register: no erros
-## login: no errors
-## leaderboard: no errors
+## index: no errors.
+## battle: no errors.
+## player-select: no errors.
+## proceed-to-next-floor: no errors.
+## register: no erros.
+## login: no errors.
+## leaderboard: no errors.
 ## how-to-play:
 ![how-to-play-errors](media/readme-images/html-check-how-to-play.png)
 <br>
@@ -176,11 +176,11 @@ Solved by adding 'None' as input to the field.
 <br>
 For the CSS the results were as follows:
 
-### base no errors
-### battle no errors
-### full-version
-### profiles
-### wiki
+### base: No errors.
+### battle: No errors.
+### full-version: No errors.
+### profiles: 1 error, added unit to values on current-game-menu to fix it.
+### wiki: No errors.
 
 <br>
 <p>
@@ -194,32 +194,37 @@ For the CSS the results were as follows:
 
 ## For Javascript validation [JSHint](https://jshint.com/) was used.
 
-### actions.js
-### checkout.js
-### force_landscape.js
+### actions: After some minor semicolon and defining variable adjustments, no errors.
+### checkout: One undefined variable: 9 Stripe. This is the stripe.js script, so this error is ignored.
+### force_landscape: No errors
 
 <br>
 
 ## For python validation [pep8online](http://pep8online.com/) was used.
 
-### battle: utils.py
-### battle.views.py
-### battle.models.py
-### battle.admin.py
-### battle.urls.py
+### battle: utils : Added module docstring. 
+### battle: views : 
+Added module docstring.
+One line to long, but since this is only 1 variable with 1 added to it this was igored.
+### battle: models : 
+Added module docstring.
+Class names didn't conform to PascalCase naming style. Adjusted classnames.
+### battle: admin :
+### battle: urls :
 
-### checkout.urls.py
-### checkout.views.py
+### checkout: urls :
+### checkout: views :
 
-### profiles.views.py
-### profiles.utils.py
-### profiles.models.py
-### profiles.urls.py
+### profiles: views :
+### profiles: utils :
+### profiles: models :
+### profiles: urls :
 
-### wiki.forms.py
-### wiki.urls.py
-### wiki.views.py
+### wiki: forms :
+### wiki: urls :
+### wiki: views :
 
+### All Class 'Foo' has no objects member error where ignored, since this is a known pylint ussue that can be ignored.
 <br>
 
 # Lighthouse Report 

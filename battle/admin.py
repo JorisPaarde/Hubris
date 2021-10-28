@@ -1,9 +1,20 @@
+"""
+Battle app admin models
+-------------------------
+Classes for Battle app:
+    - EnemyAdmin
+    - GameAdmin
+"""
+
 from django.contrib import admin
-from .models import Enemy, Game, Current_game_floor, Game_floor_enemy
+from .models import Enemy
+from .models import Game
+from .models import CurrentGameFloor
+from .models import GameFloorEnemy
 # Register your models here.
 
 
-class EnemyyAdmin(admin.ModelAdmin):
+class EnemyAdmin(admin.ModelAdmin):
     """ class to adjust enemy admin display values """
     list_display = (
         'name',
@@ -23,7 +34,7 @@ class GameAdmin(admin.ModelAdmin):
     )
 
 
-admin.site.register(Enemy, EnemyyAdmin)
+admin.site.register(Enemy, EnemyAdmin)
 admin.site.register(Game, GameAdmin)
-admin.site.register(Current_game_floor)
-admin.site.register(Game_floor_enemy)
+admin.site.register(CurrentGameFloor)
+admin.site.register(GameFloorEnemy)

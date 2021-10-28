@@ -1,6 +1,11 @@
-from django.urls import path
-from . import views
+"""
+URL patterns for the Home app
+"""
+
 from django.conf import settings
+from django.urls import path
+
+from . import views
 
 app_name = "home"
 

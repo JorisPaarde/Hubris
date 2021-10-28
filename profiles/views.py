@@ -3,9 +3,10 @@ from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from battle.models import Game, Current_game_floor
+from battle.models import Game
+from battle.models import CurrentGameFloor
 
-from .models import Player_type
+from .models import PlayerType
 from .models import Player
 from .utils import reset_player_stats
 from .utils import draw_cards
@@ -23,7 +24,7 @@ def player_select(request):
         current_player.save()
 
     # collect all player types
-    player_type = Player_type.objects.all()
+    player_type = PlayerType.objects.all()
     context = {
         'player_type': player_type,
     }
@@ -70,7 +71,7 @@ def continue_game(request, continue_this_game):
         current_game = Game.objects.get(player=current_player, completed=False)
         current_game.completed = True
         current_game.save()
-        current_game_floor = Current_game_floor.objects.get(
+        current_game_floor = CurrentGameFloor.objects.get(
             pk=current_game.current_game_floor.pk)
         # delete all cards and enemies from this game
         current_game_floor.enemy.all().delete()
@@ -92,7 +93,7 @@ def game_setup(request, selected):
         current_player_resultset = Player.objects.filter(user=current_user)
         # get the selected player type
 
-        selected_type = Player_type.objects.get(selected=selected)
+        selected_type = PlayerType.objects.get(selected=selected)
         # if not, create a new player
         # and set the initial values for that player
         if not current_player_resultset:
@@ -109,7 +110,7 @@ def game_setup(request, selected):
         draw_cards(draw_n_cards, current_player)
 
         # create a new game for this player and a first game floor
-        game_floor = Current_game_floor()
+        game_floor = CurrentGameFloor()
         game_floor.save()
         game = Game(player=current_player, current_game_floor=game_floor)
         game.save()
@@ -172,7 +173,7 @@ def player_death(request):
 
         # create a new empty gamefloor
         game = Game.objects.get(player=player, completed=False)
-        next_game_floor = Current_game_floor()
+        next_game_floor = CurrentGameFloor()
         next_game_floor.save()
         # delete all enemys from this gamefloor
         for enemy in game.current_game_floor.enemy.all():

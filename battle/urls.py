@@ -1,3 +1,7 @@
+"""
+URL patterns for the Battle app
+"""
+
 from django.urls import path
 from . import views
 
