@@ -1,3 +1,18 @@
+"""
+Checkout App - Views
+----------------
+Views for Checkout app:
+    - Checkout
+    - success_view
+    - cancelled_view
+    - stripe_config
+    - stripe_config
+    - create_checkout_session
+    - stripe_webhook
+Function to handle enemy attacks:
+    - enemy_attack_processor
+"""
+
 from django.shortcuts import render
 from django.conf import settings
 from django.http.response import JsonResponse
@@ -40,7 +55,10 @@ def stripe_config(request):
 
 @csrf_exempt
 def create_checkout_session(request):
-    """view to create a stripe checkout session"""
+    """
+    view to create a stripe checkout session.
+    Adds current logged in user id as meta data.
+    """
     if request.method == 'GET':
         print(request.user.id)
         current_site = Site.objects.get_current()
@@ -50,7 +68,9 @@ def create_checkout_session(request):
             # Create new Checkout Session for the order
             # will have the session ID set as a query param
             checkout_session = stripe.checkout.Session.create(
-                success_url=domain_url + 'checkout/success?session_id={CHECKOUT_SESSION_ID}',
+                success_url=(domain_url +
+                             'checkout/success?session_id='
+                             '{CHECKOUT_SESSION_ID}'),
                 cancel_url=domain_url + 'checkout/cancelled/',
                 payment_method_types=['card'],
                 metadata={"user_id": request.user.id},
@@ -71,7 +91,11 @@ def create_checkout_session(request):
 
 @csrf_exempt
 def stripe_webhook(request):
-    """view to handle the stripe checkout session complete webhook"""
+    """
+    View to handle the stripe checkout
+    When session complete webhook is recieved,
+    Updates user profile to payed_full_version.
+    """
     stripe.api_key = settings.STRIPE_SECRET_KEY
     endpoint_secret = settings.STRIPE_WH_SECRET
     payload = request.body

@@ -202,6 +202,8 @@ For the CSS the results were as follows:
 
 ## For python validation [pep8online](http://pep8online.com/) was used.
 
+<br>
+
 ### battle: utils : Added module docstring. 
 ### battle: views : 
 Added module docstring.
@@ -209,20 +211,38 @@ One line to long, but since this is only 1 variable with 1 added to it this was 
 ### battle: models : 
 Added module docstring.
 Class names didn't conform to PascalCase naming style. Adjusted classnames.
-### battle: admin :
+After these corrections no errors.
+### battle: admin : Added module docstring.
 ### battle: urls :
+Added module docstring.
+Constant name "app_name" doesn't conform to UPPER_CASE naming style: Changing this breaks the links in the program. Therefore this was ignored.
+
+<br>
 
 ### checkout: urls :
+Added module docstring.
+Constant name "app_name" doesn't conform to UPPER_CASE naming style: Changing this breaks the links in the program. Therefore this was ignored.
 ### checkout: views :
+Warning: Catching too general exception Exception.
+
+<br>
 
 ### profiles: views :
 ### profiles: utils :
 ### profiles: models :
 ### profiles: urls :
+Added module docstring.
+Constant name "app_name" doesn't conform to UPPER_CASE naming style: Changing this breaks the links in the program. Therefore this was ignored.
+
+<br>
 
 ### wiki: forms :
 ### wiki: urls :
+Added module docstring.
+Constant name "app_name" doesn't conform to UPPER_CASE naming style: Changing this breaks the links in the program. Therefore this was ignored.
 ### wiki: views :
+
+<br>
 
 ### All Class 'Foo' has no objects member error where ignored, since this is a known pylint ussue that can be ignored.
 <br>
