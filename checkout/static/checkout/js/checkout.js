@@ -14,7 +14,7 @@ fetch("/checkout/config/")
       .then((data) => {
         console.log(data);
         // Redirect to Stripe Checkout
-        return stripe.redirectToCheckout({sessionId: data.sessionId})
+        return stripe.redirectToCheckout({sessionId: data.sessionId});
       })
       .then((res) => {
         console.log(res);
