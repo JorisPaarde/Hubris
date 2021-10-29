@@ -119,7 +119,11 @@
             <div class="row h-100">
                 <!-- player -->
                 <div class="col-4 h-100 d-flex justify-content-end align-items-center">
+                    {% if player.health_current == 0 %}
+                    <img src="{{MEDIA_URL}}{{ player.type.image_die.name }}" class="player-image" alt="player">
+                    {% else %}
                     <img src="{{MEDIA_URL}}{{ player.type.image_idle.name }}" class="player-image" alt="player">
+                    {% endif %}
                 </div>
                 <!-- enemies -->
                 <div class="col-8 d-flex">
