@@ -1,3 +1,13 @@
+"""
+Proflies App - Views
+----------------
+Views for Profile app:
+    - player_select
+    - continue_game
+    - game_setup
+    - player_death
+"""
+
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
@@ -44,7 +54,8 @@ def player_select(request):
                 context.update({'game': current_game})
                 messages.info(
                     request,
-                    f"{current_user} do you want to continue the current game?")
+                    f'{current_user}'
+                    ' do you want to continue your current game?')
 
     return render(request, 'profiles/player-select.html', context)
 

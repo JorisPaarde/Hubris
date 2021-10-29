@@ -1,3 +1,11 @@
+"""
+Profiles App - Utilitys
+----------------
+various utilities for Profiles app views.
+    - draw_cards
+    - reset_player_stats
+"""
+
 import random
 
 from django.contrib.auth.models import User
@@ -24,7 +32,7 @@ def draw_cards(number_of_cards, current_player):
 
 
 def reset_player_stats(player):
-
+    """ Function to reset player stats """
     player.type = None
     player.fire_attack_power = 0
     player.fire_defense = 0
