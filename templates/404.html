@@ -39,15 +39,15 @@
     <title>Hubris</title>
 </head>
 
-<body {% block body_background %}{% endblock %}>
+<body {% block body_background %}class="menu-bg"{% endblock %}>
     {% block header %}
     {% endblock %}
     {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-12 mt-4 text-center">
-                <h1>Oops something went wrong...</h1>
-                <a class="button" href="/">take me back</a>
+            <div class="col-12 my-4 text-center">
+                <h1 class="title my-4">Oops something went wrong...</h1>
+                <h2><a class="button p-3" href="/">take me back</a></h2>
             </div>
         </div>
     </div>
