@@ -288,7 +288,7 @@
 
 .card-screen {
     height: 100vh;
-    top: 4%;
+    padding-top: 12px;
 }
 
 .floor {
