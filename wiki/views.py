@@ -1,3 +1,7 @@
+"""
+Wiki App View
+"""
+
 from django.shortcuts import render
 
 from profiles.models import Card
