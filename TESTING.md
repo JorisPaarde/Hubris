@@ -227,20 +227,25 @@ Warning: Catching too general exception Exception.
 
 <br>
 
-### profiles: views :
-### profiles: utils :
+### profiles: views : Added module docstring.
+### profiles: utils : Added module docstring.
 ### profiles: models :
+Method should have "self" as first argument on line 163 and 169.
+Unused argument 'kwargs' on line 163 and 169.
+Solving these was posponed due to time limit on submission.
+I found out these methods should actually be in a separate reviever file,
+but this broke my registration process.
 ### profiles: urls :
 Added module docstring.
 Constant name "app_name" doesn't conform to UPPER_CASE naming style: Changing this breaks the links in the program. Therefore this was ignored.
 
 <br>
 
-### wiki: forms :
+### wiki: forms : Added module docstring.
 ### wiki: urls :
 Added module docstring.
 Constant name "app_name" doesn't conform to UPPER_CASE naming style: Changing this breaks the links in the program. Therefore this was ignored.
-### wiki: views :
+### wiki: views : Added module docstring.
 
 <br>
 
@@ -251,25 +256,71 @@ Constant name "app_name" doesn't conform to UPPER_CASE naming style: Changing th
 
 ## desktop
 ### index.html:
+![index](media/readme-images/lighthouse-index.png)
+
+## After adding meta description, SEO score was increased significantly:
+## This score was seen on all pages after this adjustment.
+![index](media/readme-images/lighthouse-index-seo-optimized.png)
+
 ### battle.html:
+![battle](media/readme-images/lighthouse-battle.png)
+
 ### player-select.html:
+![player-select](media/readme-images/lighthouse-player-select.png)
+
 ### proceed-to-next-floor.html:
+![proceed-to-next-floor](media/readme-images/lighthouse-proceed-to-next-floor.png)
+
 ### register.html:
+![register](media/readme-images/lighthouse-register.png)
+
 ### login.html:
+![login](media/readme-images/lighthouse-login.png)
+
 ### leaderboard.html:
+![leaderboard](media/readme-images/lighthouse-leaderboard.png)
+
 ### how-to-play.html:
+![how-to-play](media/readme-images/lighthouse-how-to-play.png)
+
 ### wiki.html:
+![wiki](media/readme-images/lighthouse-wiki.png)
+
 
 ## mobile
 ### index.html:
+![index](media/readme-images/lighthouse-index-mb.png)
+
 ### battle.html:
+![battle](media/readme-images/lighthouse-battle-mb.png)
+## This screen was tested in portrait mode, therefore this test has only partial significance.
+## Given that the layout is optimized for landscape mode and a secreen overlay is presented to the user in portrait.
+
 ### player-select.html:
+![player-select](media/readme-images/lighthouse-player-select-mb.png)
+## This screen was tested in portrait mode, therefore this test has only partial significance.
+## Given that the layout is optimized for landscape mode and a secreen overlay is presented to the user in portrait.
+
 ### proceed-to-next-floor.html:
+![proceed-to-next-floor](media/readme-images/lighthouse-proceed-to-next-floor-mb.png)
+## This screen was tested in portrait mode, therefore this test has only partial significance.
+## Given that the layout is optimized for landscape mode and a secreen overlay is presented to the user in portrait.
+
 ### register.html:
+![register](media/readme-images/lighthouse-register-mb.png)
+
 ### login.html:
+![login](media/readme-images/lighthouse-login-mb.png)
+
 ### leaderboard.html:
+![leaderboard](media/readme-images/lighthouse-leaderboard-mb.png)
+
 ### how-to-play.html:
+![how-to-play](media/readme-images/lighthouse-how-to-play-mb.png)
+
 ### wiki.html:
+![wiki](media/readme-images/lighthouse-wiki-mb.png)
+
 <br>
 
 # Bugs encountered during development and their fixes:
