@@ -455,7 +455,8 @@
                             <div class="row">
                                 <!-- !! first classname needs to be the action name for javascript to function -->
                                 <i
-                                    class="healing fas m-2 action-icon fa-heart 
+                                    class="healing fas m-2 action-icon fa-heart
+                                    {% if current_game_floor.current_phase == '5' %}text-muted {% endif %}
                                     {% if not player.healing_power %}text-muted {% endif %}
                                     {% if player.healing_cost > player.mana_current %}text-muted {% endif %}
                                     stroke"></i>
@@ -479,6 +480,7 @@
                                 <!-- !! first classname needs to be the action name for javascript to function -->
                                 <i
                                     class="drain fas m-2 action-icon fa-skull 
+                                    {% if current_game_floor.current_phase == '5' %}text-muted {% endif %}
                                     {% if not player.drain_attack_power %}text-muted {% endif %}
                                     {% if player.drain_attack_cost > player.mana_current %}text-muted {% endif %}
                                     stroke"></i>

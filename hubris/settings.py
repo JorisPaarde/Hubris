@@ -241,7 +241,7 @@ ALLOWED_PHASES = (
     ('3', 'III'),
     ('4', 'IV'),
     ('5', 'V'),
-    ('ALL', 'I-V'),
+    ('ALL', 'I-IV'),
     ('NONE', ''),
 )
 
