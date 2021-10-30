@@ -347,3 +347,4 @@ When killing enemys or being attacked, the order of the enemy's changed in the t
 Some actions where available in phase V, which allowed for enemies to be killed when the game was actually over. This broke the game.|Added line to block use of these actions in phase V to template.
 User was allowed to select multiple inputs for filtering in wiki page.|Altered form filed to choicefield.
 When completing the game the last played gamefloor was not counted.|This was normally handled in the start next floor view, but this is not reached in the last case. Added an increase of one to the total_gamefloors_played when finishing the game.
+When completing the full version and returning to the game that the player was playing after that, the game is empty.|This bug was not fixed due to time restrictions, and the fact that starting a new game fixes this.
