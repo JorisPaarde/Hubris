@@ -33,13 +33,13 @@ class WikiForm(forms.Form):
     And filtering by skill-style and/or allowed-phase
     """
     search_full_version = forms.BooleanField(required=False)
-    skill_style = forms.MultipleChoiceField(
+    skill_style = forms.ChoiceField(
         choices=SEARCH_SKILL_STYLES,
-        widget=forms.SelectMultiple,
+        widget=forms.Select,
         required=False
         )
-    alowed_phase = forms.MultipleChoiceField(
+    alowed_phase = forms.ChoiceField(
         choices=SEARCH_ALLOWED_PHASES,
-        widget=forms.SelectMultiple,
+        widget=forms.Select,
         required=False
         )

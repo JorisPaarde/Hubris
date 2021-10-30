@@ -34,18 +34,18 @@ def wiki(request):
                 cards = cards.filter(in_freeversion=search_free_version)
             # if all skill styles selected keep all cards in the query
             if skill_style:
-                if skill_style[0] == 'AL':
+                if skill_style == 'AL':
                     pass
                 # if not filter out the cards with this skill type
                 else:
-                    cards = cards.filter(skill_style=skill_style[0])
+                    cards = cards.filter(skill_style=skill_style)
             # if any phase is selected keep all cards in the query
             if alowed_phase:
-                if alowed_phase[0] == 'ANY':
+                if alowed_phase == 'ANY':
                     pass
                 # if not filter out the allowed cards for this phase
                 else:
-                    cards = cards.filter(allowed_in_phase=alowed_phase[0])
+                    cards = cards.filter(allowed_in_phase=alowed_phase)
 
             context = {
                 'form': form,
