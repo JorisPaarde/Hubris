@@ -386,6 +386,7 @@
                             <div class="row">
                                 <!-- !! first classname needs to be the action name for javascript to function -->
                                 <i class="lightning fas m-2 action-icon fa-bolt 
+                                    {% if current_game_floor.current_phase == '5' %}text-muted {% endif %}
                                     {% if current_game_floor.get_current_phase_display|lower != player.get_lightning_attack_phase_display|lower %}text-muted {% endif %}
                                     {% if not player.lightning_attack_power %}text-muted {% endif %}
                                     {% if player.lightning_attack_cost > player.mana_current %}text-muted {% endif %}
@@ -410,6 +411,7 @@
                             <div class="row">
                                 <!-- !! first classname needs to be the action name for javascript to function -->
                                 <i class="fire fas m-2 action-icon fa-fire-alt
+                                    {% if current_game_floor.current_phase == '5' %}text-muted {% endif %}
                                     {% if current_game_floor.get_current_phase_display|lower != player.get_fire_attack_phase_display|lower %}text-muted {% endif %}
                                     {% if not player.fire_attack_power %}text-muted {% endif %}
                                     {% if player.fire_attack_cost > player.mana_current %}text-muted {% endif %}
@@ -434,6 +436,7 @@
                             <div class="row">
                                 <!-- !! first classname needs to be the action name for javascript to function -->
                                 <i class="ice fas m-2 action-icon fa-snowflake 
+                                            {% if current_game_floor.current_phase == '5' %}text-muted {% endif %}
                                             {% if current_game_floor.get_current_phase_display|lower != player.get_ice_attack_phase_display|lower %}text-muted {% endif %}
                                             {% if not player.ice_attack_power %}text-muted {% endif %}
                                             {% if player.ice_attack_cost > player.mana_current %}text-muted {% endif %}
@@ -510,6 +513,7 @@
                             <div class="row">
                                 <!-- !! first classname needs to be the action name for javascript to function -->
                                 <i class="golem fas m-2 action-icon fa-robot 
+                                    {% if current_game_floor.current_phase == '5' %}text-muted {% endif %}
                                     {% if current_game_floor.get_current_phase_display|lower != player.get_golem_attack_phase_display|lower %}text-muted {% endif %}
                                     {% if not player.golem_attack_power %}text-muted {% endif %}
                                     {% if player.golem_attack_cost > player.mana_current %}text-muted {% endif %}
