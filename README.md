@@ -203,7 +203,7 @@ Install all requirements through the requirements.txt file:
 pip install -r requirements.txt
 ```
 
-## To deploy this Project:
+## To deploy this Project on Heroku:
 
 ### Create your heroku account:
 - Create your account on Heroku here: https://signup.heroku.com/login
@@ -223,7 +223,7 @@ Under deployment method, select github.
 ![postgres](media/readme-images/postgres.png)
 
 ### Set up your AWS s3 bucket:[here](https://aws.amazon.com/s3/)
-    - To obtain your AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY.
+- To obtain your AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY.
 
 ### Get your Django SECRET-KEY: [here](https://djecrety.ir/)
 
@@ -239,6 +239,28 @@ Under deployment method, select github.
 
 - Go back to heroku, settings, config vars and enter the variables for:<br>
 ![github connect](media/readme-images/config-vars.png)<br>
+
+- Log into heroku in your commandline using:
+
+```
+heroku login -i
+```
+- run the following command to migrate the database:
+```
+heroku run python manage.py migrate -a yourappname
+```
+Your database is now set up.
+- Load the basic database imputs into the database using:
+```
+manage.py loaddata db.json
+```
+- create a superuser:
+```
+python manage.py createsuperuser
+```
+- Go to:
+https://yourappname.herokuapp.com/admin/
+And log in as superuser to see the current full contents of the database.
 
 <br><br>
 - Go to deploy and at the bottom of the page manually deploy your main github branch.
