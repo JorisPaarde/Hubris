@@ -139,13 +139,13 @@ Animations on selections of enemies|Monsters get glowing effect after selecting 
 
 # Browser testing
 
-Browser|layout correct|functionality correct|Issues
+Browser|layout correct|functionality correct|fix
 ---|---|---|---
 Opera|Yes|Yes|None
 Chrome|Yes|Yes|None
 Edge|Yes|Yes|None
-Firefox|Yes|Yes|None
-
+Firefox|Layout on the action bar in the battle screen was broken as shown below.|Yes|Adjusted width and height to include -moz-fit-content.
+![firefox-errors](media/readme-images/moz-action-bar.png)
 <br>
 
 # Validators
