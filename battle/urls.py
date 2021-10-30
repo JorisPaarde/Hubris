@@ -15,4 +15,5 @@ urlpatterns = [
          name='proceed_to_next_floor'),
     path('next-floor-start/<choice>', views.next_floor_start,
          name='next-floor-start'),
+    path('winner/', views.won_game, name='won-game'),
 ]

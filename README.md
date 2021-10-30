@@ -309,8 +309,8 @@ Images made possible by: [craftpix](https://craftpix.net/all-game-assets/)<br>
 
 The following code was copied (and in some cases slightly altered) from external sources:
 
-- in profile.models
-https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html#onetoone
+- in profile.forms and profile.views
+https://overiq.com/django-1-10/django-creating-users-using-usercreationform/
 - in settings
 https://github.com/Code-Institute-Solutions/boutique_ado_v1/blob/a07c1ca5a3b973eb47e5c944829cea06ead3936d/boutique_ado/settings.py
 - in checkout.views:

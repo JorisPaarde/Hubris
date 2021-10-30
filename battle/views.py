@@ -196,7 +196,7 @@ def proceed_to_next_floor(request):
         # delete gamefloor
         current_game_floor.delete()
         # redirect to victory score page
-        return redirect("home:leaderboard")
+        return redirect("battle:won-game")
     context = {
         "game": game,
         "player": player,
@@ -283,3 +283,21 @@ def enemy_attack_processor(request, request_data):
 
     damage = attack_power
     attack_target(request, target_player, damage)
+
+
+def won_game(request):
+    """view to return win the game page"""
+    current_user = request.user
+    player = Player.objects.get(user=current_user)
+    games = Game.objects.all()
+    player_games = games.filter(player=player)
+    player_games = player_games.order_by('-pk')
+    last_game = player_games[0]
+
+    context = {
+        "last_game": last_game,
+        "player_games": player_games,
+        "player": player,
+    }
+
+    return render(request, 'battle/won-game/winner.html', context)
