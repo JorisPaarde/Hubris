@@ -189,6 +189,8 @@ def proceed_to_next_floor(request):
         messages.info(request, "Please select a card to discard")
     #  if the game is finished:
     if game.current_game_floor_number == 15:
+        # player completed a floor
+        game.total_gamefloors_played = game.total_gamefloors_played + 1
         game.completed = True
         game.save()
         # delete gamefloor

@@ -345,4 +345,5 @@ When starting a new game, all scores where deleted from a player, because the pl
 Enemies had mana or heal skill selected, resulting in attack icon errors. |Added separate enemy attackstyle list to settings.
 When killing enemys or being attacked, the order of the enemy's changed in the template due to the data not being deterministic. |Added a meta base class to order the data by pk.
 Some actions where available in phase V, which allowed for enemies to be killed when the game was actually over. This broke the game.|Added line to block use of these actions in phase V to template.
-User was allowed to select multiple inputs for filtering in wiki page. Altered form filed to choicefield.
+User was allowed to select multiple inputs for filtering in wiki page.|Altered form filed to choicefield.
+When completing the game the last played gamefloor was not counted.|This was normally handled in the start next floor view, but this is not reached in the last case. Added an increase of one to the total_gamefloors_played when finishing the game.
