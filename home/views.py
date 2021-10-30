@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from .forms import NewUserForm
+from .forms import CustomUserCreationForm
 
 from battle.models import Game
 
@@ -40,25 +40,23 @@ def leaderboard(request):
 
     return render(request, template, context)
 
-# https://www.ordinarycoders.com/blog/article/django-allauth
+# https://overiq.com/django-1-10/django-creating-users-using-usercreationform/
 
 
 def register_request(request):
     """view to return register page"""
-    if request.method == "POST":
-        form = NewUserForm(request.POST)
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            username = form.cleaned_data.get('username')
-            messages.success(request, f"New account created: {username}")
-            login(request, user,
-                  backend='django.contrib.auth.backends.ModelBackend')
-        else:
-            messages.error(request, "Account creation failed.")
+            if user is not None:
+                login(request, user,
+                      backend='django.contrib.auth.backends.ModelBackend')
+            messages.success(request, 'Account created successfully')
+            return redirect("home:main-menu")
 
-        return redirect("home:main-menu")
-
-    form = NewUserForm()
+    else:
+        form = CustomUserCreationForm()
 
     template = "register/register.html"
 
@@ -66,7 +64,7 @@ def register_request(request):
 
     return render(request, template, context)
 
-# https://www.ordinarycoders.com/blog/article/django-allauth
+# https://overiq.com/django-1-10/django-creating-users-using-usercreationform/
 
 
 def login_request(request):
