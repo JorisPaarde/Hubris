@@ -125,7 +125,7 @@ Wiki page.|All buttons and title are fully visible on screen, both on landscape 
 
 feature|expected behaviour|testing|result|Fix(if needed)
 ---|---|---|---|---
-Main menu with adaptive buttons|Buttons only show when applicable and have hover effect|mouse over , login, logout and paying the full version all have the desired effect.|None.
+Main menu with adaptive buttons|Buttons only show when applicable and have hover effect|mouse over , login, logout and paying the full version all have the desired effect.|Correct|None.
 Cards selection menu|selecting a card removes it from the players hand and adds the corect stats to the player|Played all cards and checked db and player stats after playing.|Correct|None.
 Player selection menu|Player is presented with a continue option if a game is unfinished, player starts game with corrct player type and stats when selectiong a player.|Start new game and try to start a new game after having left this game.|Correct.|None.
 Continue current game if there is one|Game starts at point where the player left off after leaving the last game.|Stop a game aftr playing a few floors, then restart the game via the continue button.|Correct.|None.
