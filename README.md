@@ -198,11 +198,6 @@ In Windows:
 
 follow [these](https://www.jcchouinard.com/clone-github-repository-on-windows/) steps.
 
-Install all requirements through the requirements.txt file:
-```
-pip install -r requirements.txt
-```
-
 ## To deploy this Project on Heroku:
 
 ### Create your heroku account:
@@ -252,7 +247,7 @@ heroku run python manage.py migrate -a yourappname
 Your database is now set up.
 - Load the basic database imputs into the database using:
 ```
-manage.py loaddata db.json
+heroku run python manage.py loaddata db.json
 ```
 - create a superuser:
 ```
@@ -261,12 +256,40 @@ python manage.py createsuperuser
 - Go to:
 https://yourappname.herokuapp.com/admin/
 And log in as superuser to see the current full contents of the database.
-
-<br><br>
-- Go to deploy and at the bottom of the page manually deploy your main github branch.
-
+<br>
+- Go to deploy and at the bottom of the page to manually deploy your main github branch.
 Your app is now deployed and ready to run.
 At the top of the page in heroku click open app to run it.
+
+<br>
+
+## To run this project locally:
+
+### Install all requirements through the requirements.txt file:
+```
+pip install -r requirements.txt
+```
+
+### Run the following commands to set up the database:
+```
+python manage.py makemigrations
+python manage.py migrate
+python manage.py loaddata db.json
+```
+### Set up the following environment variables either in your gipod wokspace, or locally using [this](https://django-environ.readthedocs.io/en/latest/getting-started.html) method.:
+```
+DEVELOPMENT = True
+SECRET_KEY = Get one [here](https://djecrety.ir/)
+STRIPE_PUBLIC_KEY (retrieved from your [stripe](https://stripe.com/) account as shown in the heroku setup)
+STRIPE_SECRET_KEY (retrieved from your [stripe](https://stripe.com/) account as shown in the heroku setup)
+STRIPE_WH_SECRET (retrieved from your [stripe](https://stripe.com/) account as shown in the heroku setup)
+```
+
+## run the project using:
+```
+python manage.py runserver
+```
+<br>
 
 # Credits
 
@@ -279,6 +302,7 @@ Thanks to Alan for the moral support:<br>
 ![support](media/readme-images/moral-support.png)<br>
 Special thanks to Chris Zielinski who had ALL the answers, for everyone on the full stack frameworks slack channel.<br>
 And of course all the fine people on slack.<br>
+Images made possible by: [craftpix](https://craftpix.net/all-game-assets/)<br>
 
 
 ## Code
