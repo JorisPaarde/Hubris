@@ -160,6 +160,7 @@ Firefox|Layout on the action bar in the battle screen was broken as shown below.
 ## proceed-to-next-floor: no errors.
 ## register: no erros.
 ## login: no errors.
+## winner: no errors.
 ## leaderboard: no errors.
 ## how-to-play:
 ![how-to-play-errors](media/readme-images/html-check-how-to-play.png)
@@ -286,6 +287,8 @@ Constant name "app_name" doesn't conform to UPPER_CASE naming style: Changing th
 ### wiki.html:
 ![wiki](media/readme-images/lighthouse-wiki.png)
 
+### winner.html:
+![wiki](media/readme-images/lighthouse-winner.png)
 
 ## mobile
 ### index.html:
@@ -320,6 +323,9 @@ Constant name "app_name" doesn't conform to UPPER_CASE naming style: Changing th
 
 ### wiki.html:
 ![wiki](media/readme-images/lighthouse-wiki-mb.png)
+
+### winner.html:
+![wiki](media/readme-images/lighthouse-winner-mb.png)
 
 <br>
 

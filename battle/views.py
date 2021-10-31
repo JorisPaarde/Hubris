@@ -296,7 +296,6 @@ def won_game(request):
 
     context = {
         "last_game": last_game,
-        "player_games": player_games,
         "player": player,
     }
 
