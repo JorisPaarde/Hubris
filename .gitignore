@@ -6,3 +6,5 @@ __pycache__/
 *.py[cod]
 node_modules/
 .github/
+Python-3.11.3/
+Python-3.11.3.tar.xz
